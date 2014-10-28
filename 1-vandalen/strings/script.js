@@ -10,7 +10,9 @@ window.onload = function(){
 		// Returnera den konverterade strängen.
 		// Vid fel, kasta ett undantag med ett meddelande till användaren.
 		for (var char in str) {
-			if (str[char] === upperCaseStr[char]) {
+			if(upperCaseStr[char] === "A"){
+				convertedStr += "#";
+			}else if (str[char] === upperCaseStr[char]) {
 				convertedStr += str[char].toLowerCase();
 			} else {
 				convertedStr += upperCaseStr[char];
