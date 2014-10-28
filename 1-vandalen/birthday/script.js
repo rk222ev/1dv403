@@ -6,17 +6,25 @@ window.onload = function(){
 	var birthday = function(date){
 		if (Date.parse(date)) {
 			// Can I make it a constant somehow?
+			var birthday;
+			var msToBirthday;
 			var msPerDay = 1.15740740740741E-08;
 			var today = new Date();
+
 			today.setHours(0);
-			var birthday = new Date(date);
-			var msToBirthday =  birthday.getTime() - today.getTime();
-
-			console.log(date);
-
+			birthday = new Date(date);
+			if (birthday < today) {
+				console.log(today.getFullYear());
+				today.setYear(today.getFullYear() + 1);
+				console.log(today.getFullYear());
+				msToBirthday = birthday.getTime() - today.getTime();
+			} else {
+				msToBirthday = birthday.getTime() - today.getTime();
+			}
 			return Math.floor(msToBirthday *  msPerDay);
+
 		} else {
-			throw new Error("Du måste skicka med ett komplett datum!");
+			throw new Error("Du måste ange ett korrekt datum!");
 		}
 
 	};
