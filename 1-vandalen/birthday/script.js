@@ -11,16 +11,12 @@ window.onload = function(){
 			var msPerDay = 1.15740740740741E-08;
 			var today = new Date();
 
+
 			today.setHours(0);
 			birthday = new Date(date);
-			if (birthday < today) {
-				console.log(today.getFullYear());
-				today.setYear(today.getFullYear() + 1);
-				console.log(today.getFullYear());
-				msToBirthday = birthday.getTime() - today.getTime();
-			} else {
-				msToBirthday = birthday.getTime() - today.getTime();
-			}
+			birthday.setYear(today.getFullYear());
+
+			msToBirthday = birthday.getTime() - today.getTime();
 			return Math.floor(msToBirthday *  msPerDay);
 
 		} else {
