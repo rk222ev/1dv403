@@ -5,18 +5,18 @@ window.onload = function(){
 
 	var birthday = function(date){
 		if (Date.parse(date)) {
-			// Can I make it a constant somehow?
-			var birthday;
+			var nextBirthday;
 			var msToBirthday;
 			var msPerDay = 1.15740740740741E-08;
 			var today = new Date();
 
 
 			today.setHours(0);
-			birthday = new Date(date);
-			birthday.setYear(today.getFullYear());
+			nextBirthday = new Date(date);
+			nextBirthday.setYear(today.getFullYear());
+			if (nextBirthday < today) nextBirthday.setYear(today.getFullYear() + 1);
 
-			msToBirthday = birthday.getTime() - today.getTime();
+			msToBirthday = nextBirthday.getTime() - today.getTime();
 			return Math.floor(msToBirthday *  msPerDay);
 
 		} else {
