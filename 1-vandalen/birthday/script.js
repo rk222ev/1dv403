@@ -9,8 +9,7 @@ window.onload = function(){
 			var nextBirthday = new Date(date);
 			var today = new Date();
 
-			today.setHours(0);
-			today.setMinutes(0);
+			today.setHours(0,0,0);
 			nextBirthday.setYear(today.getFullYear());
 
 			if (nextBirthday < today) nextBirthday.setYear(today.getFullYear() + 1);
