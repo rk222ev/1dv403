@@ -1,6 +1,6 @@
 //"use strict";
 window.onload = function(){
-    var secret = 50; // Detta tal behöver bytas ut mot ett slumpat tal.
+    var secret = Math.floor(Math.random() * 100) + 1;
     var guesses = 0;
 
     // I denna funktion ska du skriva koden för att hantera "spelet"
