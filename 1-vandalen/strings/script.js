@@ -6,26 +6,26 @@ window.onload = function(){
 	var convertString = function(str){
 		upperCaseStr = str.toUpperCase();
 		convertedStr = "";
-		// Plats för förändring.
-		// Returnera den konverterade strängen.
-		// Vid fel, kasta ett undantag med ett meddelande till användaren.
+
 		try {
 			if (str !== "") {
 				for (var charPos in str) {
-					if(upperCaseStr[charPos] === "A"){
+					if(upperCaseStr.charAt(charPos) === "A"){
 						convertedStr += "#";
-					}else if (str[charPos] === upperCaseStr[charPos]) {
-						convertedStr += str[charPos].toLowerCase();
+
+					}else if (str.charAt(charPos) === upperCaseStr.charAt(charPos)) {
+						convertedStr += str.charAt(charPos).toLowerCase();
+
 					} else {
-						convertedStr += upperCaseStr[charPos];
+						convertedStr += upperCaseStr.charAt(charPos);
 					}
 				}
 
-				console.log(typeof(str));
 				return convertedStr;
 			} else {
 				throw "Strängen får inte vara tom!";
 			}
+
 		} catch(e) {
 			return e;
 		}
