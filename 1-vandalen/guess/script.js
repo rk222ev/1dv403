@@ -17,7 +17,7 @@ window.onload = function(){
         guesses += 1;
 
         if (+number === secret) {
-            return [true, "Grattis du vann! Det hemliga talet var "+ secret +" och du behövde "+guesses+" gissningar för att hitta det."];
+            return [true, "Grattis du vann! Det hemliga talet var "+secret+" och du behövde "+guesses+" gissningar för att hitta det."];
         } else if (number < 1 || number > 100) {
             return [false, "Talet är utanför intervallet 0 - 100"];
         } else if (number < secret) {
@@ -25,13 +25,6 @@ window.onload = function(){
         } else if (number > secret) {
             return [false, "Det hemliga talet är lägre!"];
         }
-
-
-    	// Returnera exempelvis:
-    	// [true, "Grattis du vann! Det hemliga talet var X och du behövde Y gissningar för att hitta det."]
-    	// [false, "Det hemliga talet är högre!"]
-    	// [false, "Det hemliga talet är lägre!"]
-    	// [false, "Talet är utanför intervallet 0 - 100"]
     };
 
 	// ------------------------------------------------------------------------------
