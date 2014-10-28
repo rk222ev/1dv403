@@ -2,12 +2,10 @@
 
 var makePerson = function(persArr){
 	var persons = persArr.concat();
-	var today = new Date();
 	var names= [];
 	var ages = [];
 	var sum = 0;
 
-	// Collectes and sorts the names
 	persons.forEach(function(person){
 		names.push(person.name);
 		ages.push(person.age);
