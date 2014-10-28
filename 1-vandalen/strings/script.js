@@ -8,23 +8,21 @@ window.onload = function(){
 		convertedStr = "";
 
 		try {
-			if (str !== "") {
-				for (var charPos in str) {
-					if(upperCaseStr.charAt(charPos) === "A"){
-						convertedStr += "#";
+			if (str === "") throw "Strängen får inte vara tom!";
 
-					}else if (str.charAt(charPos) === upperCaseStr.charAt(charPos)) {
-						convertedStr += str.charAt(charPos).toLowerCase();
+			for (var charPos in str) {
+				if(upperCaseStr.charAt(charPos) === "A"){
+					convertedStr += "#";
 
-					} else {
-						convertedStr += upperCaseStr.charAt(charPos);
-					}
+				}else if (str.charAt(charPos) === upperCaseStr.charAt(charPos)) {
+					convertedStr += str.charAt(charPos).toLowerCase();
+
+				} else {
+					convertedStr += upperCaseStr.charAt(charPos);
 				}
-
-				return convertedStr;
-			} else {
-				throw "Strängen får inte vara tom!";
 			}
+
+			return convertedStr;
 
 		} catch(e) {
 			return e;
