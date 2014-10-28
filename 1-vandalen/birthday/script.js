@@ -5,9 +5,9 @@ window.onload = function(){
 
 	var birthday = function(date){
 		if (Date.parse(date)) {
+			var msPerDay = 1.15740740740741E-08;
 			var nextBirthday;
 			var msToBirthday;
-			var msPerDay = 1.15740740740741E-08;
 			var today = new Date();
 
 			today.setHours(0);
