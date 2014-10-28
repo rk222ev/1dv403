@@ -2,7 +2,8 @@
 
 var makePerson = function(persArr){
 	var persons = persArr.concat();
-	var names= [];
+	var collator = new Intl.Collator(["se"]);
+	var names = [];
 	var ages = [];
 	var sum = 0;
 
@@ -15,7 +16,7 @@ var makePerson = function(persArr){
 	ages.sort();
 
 	return {
-		names: names.sort().join(", "),
+		names: names.sort(collator.compare).join(", "),
 		minAge: ages[0],
 		maxAge: ages[ages.length -1],
 		averageAge: Math.round(sum/ages.length),
