@@ -9,20 +9,26 @@ window.onload = function(){
 		// Plats för förändring.
 		// Returnera den konverterade strängen.
 		// Vid fel, kasta ett undantag med ett meddelande till användaren.
-		for (var char in str) {
-			if(upperCaseStr[char] === "A"){
-				convertedStr += "#";
-			}else if (str[char] === upperCaseStr[char]) {
-				convertedStr += str[char].toLowerCase();
+		try {
+			if (str !== "") {
+				for (var charPos in str) {
+					if(upperCaseStr[charPos] === "A"){
+						convertedStr += "#";
+					}else if (str[charPos] === upperCaseStr[charPos]) {
+						convertedStr += str[charPos].toLowerCase();
+					} else {
+						convertedStr += upperCaseStr[charPos];
+					}
+				}
+
+				console.log(typeof(str));
+				return convertedStr;
 			} else {
-				convertedStr += upperCaseStr[char];
+				throw "Strängen får inte vara tom!";
 			}
+		} catch(e) {
+			return e;
 		}
-
-		return convertedStr;
-
-
-
 
 	};
 	// ------------------------------------------------------------------------------
