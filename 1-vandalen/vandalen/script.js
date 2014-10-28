@@ -15,11 +15,11 @@ var makePerson = function(persArr){
 	});
 
 	ages.sort();
-	
+
 	return {
 		names: names.sort().join(", "),
 		minAge: ages[0],
 		maxAge: ages[ages.length -1],
-		averageAge: Math.floor(sum/ages.length),
+		averageAge: Math.round(sum/ages.length),
 	};
 };
