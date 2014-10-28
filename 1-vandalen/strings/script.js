@@ -1,11 +1,11 @@
-//"use strict";
+"use strict";
 
 window.onload = function(){
 
 	// I denna funktion ska du skriva koden för att hantera "spelet"
 	var convertString = function(str){
-		upperCaseStr = str.toUpperCase();
-		convertedStr = "";
+		var upperCaseStr = str.toUpperCase();
+		var convertedStr = "";
 
 		try {
 			if (str === "") throw "Strängen får inte vara tom!";
