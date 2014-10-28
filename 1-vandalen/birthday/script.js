@@ -2,15 +2,22 @@
 
 window.onload = function(){
 
-	
+
 	var birthday = function(date){
-		
+		if (Date.parse(date)) {
+			// Can I make it a constant somehow?
+			var msPerDay = 1.15740740740741E-08;
+			var today = new Date();
+			today.setHours(0);
+			var birthday = new Date(date);
+			var msToBirthday =  birthday.getTime() - today.getTime();
 
+			console.log(date);
 
-			// Din kod här.
-
-
-
+			return Math.floor(msToBirthday *  msPerDay);
+		} else {
+			throw new Error("Du måste skicka med ett komplett datum!");
+		}
 
 	};
 	// ------------------------------------------------------------------------------
@@ -28,7 +35,7 @@ window.onload = function(){
 		p.classList.remove( "error");
 
 		try {
-			var answer = birthday(input.value) // Läser in texten från textrutan och skickar till funktionen "convertString"
+			var answer = birthday(input.value); // Läser in texten från textrutan och skickar till funktionen "convertString"
 			var message;
 			switch (answer){
 				case 0: message = "Grattis på födelsedagen!";
@@ -44,7 +51,7 @@ window.onload = function(){
 			p.classList.add( "error"); // Växla CSS-klass, IE10+
 			p.innerHTML = error.message;
 		}
-	
+
 	});
 
 
