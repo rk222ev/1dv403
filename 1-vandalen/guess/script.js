@@ -22,7 +22,7 @@ window.onload = function(){
             return [false, "Talet är utanför intervallet 0 - 100"];
         } else if (number < secret) {
             return [false, "Det hemliga talet är högre!"];
-        } else if (number > secret) {
+        } else {
             return [false, "Det hemliga talet är lägre!"];
         }
     };
