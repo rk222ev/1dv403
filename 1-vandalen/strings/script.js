@@ -7,7 +7,9 @@ window.onload = function(){
 		var upperCaseStr = str.toUpperCase();
 		var convertedStr = "";
 
-		if (str === "") throw new Error("Strängen får inte vara tom!");
+		if (str === "") {
+			throw new Error("Strängen får inte vara tom!");
+		}
 
 		for (var charPos in str) {
 			if(upperCaseStr.charAt(charPos) === "A"){
