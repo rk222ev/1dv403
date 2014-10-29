@@ -6,12 +6,12 @@ window.onload = function(){
 	var birthday = function(date){
 		if (Date.parse(date)) {
 			var msPerDay = 1.15740740740741E-08;
-			var nextBirthday ;
 			var today = new Date();
+			var nextBirthday = new Date(date);
 
-			today.setHours(0,0,0);
-			nextBirthday = new Date(date).setYear(today.getFullYear());
-			if (nextBirthday < today) nextBirthday.setYear(today.getFullYear() + 1);
+			today.setHours(0,0,0,0);
+			nextBirthday.setYear(today.getFullYear());
+			if (nextBirthday.getTime() < today.getTime()) nextBirthday.setYear(today.getFullYear() + 1);
 
 			return Math.floor((nextBirthday.getTime() - today.getTime()) *  msPerDay);
 
