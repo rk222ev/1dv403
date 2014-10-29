@@ -7,26 +7,21 @@ window.onload = function(){
 		var upperCaseStr = str.toUpperCase();
 		var convertedStr = "";
 
-		try {
-			if (str === "") throw "Strängen får inte vara tom!";
+		if (str === "") throw new Error("Strängen får inte vara tom!");
 
-			for (var charPos in str) {
-				if(upperCaseStr.charAt(charPos) === "A"){
-					convertedStr += "#";
+		for (var charPos in str) {
+			if(upperCaseStr.charAt(charPos) === "A"){
+				convertedStr += "#";
 
-				}else if (str.charAt(charPos) === upperCaseStr.charAt(charPos)) {
-					convertedStr += str.charAt(charPos).toLowerCase();
+			}else if (str.charAt(charPos) === upperCaseStr.charAt(charPos)) {
+				convertedStr += str.charAt(charPos).toLowerCase();
 
-				} else {
-					convertedStr += upperCaseStr.charAt(charPos);
-				}
+			} else {
+				convertedStr += upperCaseStr.charAt(charPos);
 			}
-
-			return convertedStr;
-
-		} catch(e) {
-			return e;
 		}
+
+		return convertedStr;
 
 	};
 	// ------------------------------------------------------------------------------
