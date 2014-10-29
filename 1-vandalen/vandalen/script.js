@@ -8,7 +8,7 @@ var makePerson = function(persArr){
 			return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
 	}
 
-	persArr.map(function(person){
+	persArr.forEach(function(person){
 		names.push(person.name);
 		ages.push(person.age);
 	});
