@@ -5,15 +5,21 @@ window.onload = function(){
 
 	var birthday = function(date){
 		if (Date.parse(date)) {
-			var msPerDay = 1.15740740740741E-08;
-			var today = new Date();
-			var nextBirthday = new Date(date);
+			var daysToDate = function(date){
+				var msPerDay = 1.15740740740741E-08;
+				var today = new Date();
+				var nextDate = 	new Date(date);
+				var diff;
 
-			today.setHours(0,0,0,0);
-			nextBirthday.setYear(today.getFullYear());
-			if (nextBirthday.getTime() < today.getTime()) nextBirthday.setYear(today.getFullYear() + 1);
+				today.setHours(1,0,0,0);
+				nextDate.setFullYear(today.getFullYear());
+				if (today > nextDate) nextDate.setFullYear(nextDate.getFullYear() + 1);
+				diff = nextDate.getTime() - today.getTime();
 
-			return Math.floor((nextBirthday.getTime() - today.getTime()) *  msPerDay);
+				return Math.floor(diff * msPerDay);
+			};
+
+			return daysToDate(new Date(date));
 
 		} else {
 			throw new Error("Du måste ange ett korrekt datum!");
