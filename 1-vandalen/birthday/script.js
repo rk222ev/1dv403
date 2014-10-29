@@ -12,7 +12,9 @@ window.onload = function(){
 
 			today.setHours(1,0,0,0);
 			nextDate.setFullYear(today.getFullYear());
-			if (today > nextDate) nextDate.setFullYear(nextDate.getFullYear() + 1);
+			if (today > nextDate) {
+				nextDate.setFullYear(nextDate.getFullYear() + 1);
+			}
 
 			return Math.floor((nextDate.getTime() - today.getTime()) * msPerDay);
 
