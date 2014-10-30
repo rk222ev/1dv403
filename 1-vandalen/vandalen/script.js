@@ -1,24 +1,29 @@
 "use strict";
 
 var makePerson = function(persArr){
-	var names = [];
 	var ages = [];
 
 	function average(numbers) {
-			return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
+		return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
 	}
 
-	persArr.forEach(function(person){
-		names.push(person.name);
-		ages.push(person.age);
-	});
+	function getKeyValues(key, arr) {
+		var data = [];
 
-	ages.sort();
+		arr.forEach(function(object) {
+			 data[data.length] = object[key];
+		});
+
+		return data;
+	}
+
+	ages = getKeyValues("age", persArr);
 
 	return {
-		names: names.sort(function(a, b) { return a.localeCompare(b); }).join(", "),
-		minAge: ages[0],
-		maxAge: ages[ages.length - 1],
+		// Sorterar alla nycklar från perArr med lokalatecken och joinar med , mellan varje medlem.
+		names: 		getKeyValues("name", persArr).sort(function(a, b) { return a.localeCompare(b); }).join(", "),
+		minAge: 	Math.min.apply(null, ages),
+		maxAge: 	Math.max.apply(null, ages),
 		averageAge: Math.round(average(ages))
 	};
 };
