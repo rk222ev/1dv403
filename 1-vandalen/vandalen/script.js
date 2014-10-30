@@ -10,8 +10,8 @@ var makePerson = function(persArr){
 	function getKeyValues(key, arr) {
 		var data = [];
 
-		arr.forEach(function(object) {
-			 data[data.length] = object[key];
+		arr.forEach(function(arr) {
+			 data[data.length] = arr[key];
 		});
 
 		return data;
