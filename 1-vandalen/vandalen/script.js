@@ -1,23 +1,21 @@
 "use strict";
 
 var makePerson = function(persArr){
-	var ages = [];
 
+	var ages = getKeyValues("age", persArr);
+	
 	function average(numbers) {
 		return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
 	}
 
 	function getKeyValues(key, arr) {
-		var data = [];
 
-		arr.forEach(function(arr) {
-			 data[data.length] = arr[key];
+		return arr.map(function(arr) {
+			 return arr[key];
 		});
 
-		return data;
 	}
 
-	ages = getKeyValues("age", persArr);
 
 	return {
 		// Sorterar alla nycklar från perArr med lokalatecken och joinar med , mellan varje medlem.
