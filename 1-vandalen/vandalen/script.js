@@ -1,16 +1,13 @@
 "use strict";
 
 var makePerson = function(persArr){
-		var ages = [];
-		var average;
-		var names = [];
-
 	try {
 
+		if(!(Array.isArray(persArr))) {
+			throw new TypeError("Data is not an array of names and ages or birthdates.");
+		}
 
-		names = persArr.map(function(person) {return person.name;}).sort(function(a, b) { return a.localeCompare(b); }).join(", ");
-
-		ages = persArr.map(
+		var ages = persArr.map(
 			function(person) {
 				if ("age" in person) {
 					return person.age;
@@ -22,10 +19,11 @@ var makePerson = function(persArr){
 			}
 		);
 
-
-	 	average = function(numbers) {
+	 	var average = function(numbers) {
 			return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
 		};
+
+		var names = persArr.map(function(person) {return person.name;}).sort(function(a, b) { return a.localeCompare(b); }).join(", ");
 
 		return {
 			names: 		names,
@@ -35,6 +33,6 @@ var makePerson = function(persArr){
 		};
 	} catch (error){
 		//console.log(error);
-		throw new Error(error);
+		throw error;
 	}
 };
