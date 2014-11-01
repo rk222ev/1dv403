@@ -2,7 +2,7 @@
 
 var makePerson = function(persArr){
 
-	if(persArr[0] === undefined) {
+	if(!(Array.isArray(persArr)) && persArr[0] === undefined) {
 		throw new TypeError("Data is not an array of names and ages or birthdates.");
 	}
 
