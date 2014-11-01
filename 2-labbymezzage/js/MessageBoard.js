@@ -1,4 +1,4 @@
-/*global document, console, window */
+/*global document, console, window Message*/
 
 function MessageBoard(name) {
     "use strict";
@@ -7,7 +7,6 @@ function MessageBoard(name) {
         inputButton = document.createElement("input"),
         div = document.getElementById(name);
 
-    that.messages = [];
 
     // Send button.
     inputButton.type = "button";
@@ -22,6 +21,8 @@ function MessageBoard(name) {
 
     // Initialises the object.
     that.init = function () {
+        that.messages = [];
+
         if (that.messages[0] !== undefined) {
             that.renderMessages();
         }
@@ -42,7 +43,7 @@ function MessageBoard(name) {
 
         console.log(message);
 
-        p.appendChild(document.createTextNode(message.text));
+        p.appendChild(document.createTextNode(message.getText()));
         messageArea.appendChild(p);
     };
 
@@ -50,11 +51,11 @@ function MessageBoard(name) {
     // Send a message.
     that.sendMessage = function () {
         var textarea = div.getElementsByClassName("message")[0],
-            message = {text: textarea.value, time: new Date()};
+            newMessage = new Message(textarea.value, new Date());
 
-        that.messages.push(message);
+        that.messages.push(newMessage);
+        that.renderMessage(newMessage);
         textarea.value = "";
-        that.renderMessage(message);
     };
 }
 
