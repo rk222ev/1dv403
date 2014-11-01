@@ -1,9 +1,12 @@
 "use strict";
 window.onload = function() {
+    engine.init();
+};
 
-    var test = new Message("Testar massa", new Date());
+var engine = {
+        init: function () {
+            var test = new Message("Testar massa", new Date());
 
-
-    console.log(test);
-
+            console.log(test);
+        }
 };
