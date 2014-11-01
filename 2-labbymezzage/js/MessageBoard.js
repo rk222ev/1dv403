@@ -1,53 +1,44 @@
-"use strict";
+/*global document, console, window */
 
-// var MessageBoard= {
-//
-//         messages: [],
-//
-//         init: function () {
-//             var test = new Message("Testar massa", new Date());
-//
-//             console.log(test);
-//         }
-// };
+function MessageBoard(name) {
+    "use strict";
 
-
-
-function MessageBoard (name) {
-    var that = this;
-    var div = document.getElementById(name);
+    var that = this,
+        inputButton = document.createElement("input"),
+        div = document.getElementById(name);
 
     that.messages = [];
 
-    // Send button
-    var inputButton = document.createElement("input");
+    // Send button.
     inputButton.type = "button";
     inputButton.value = "skriv";
 
-    inputButton.onclick = function (e) {
+    inputButton.onclick = function () {
         that.sendMessage();
         return false;
     };
-
     div.appendChild(inputButton);
 
 
+    // Initialises the object.
     that.init = function () {
-        if(that.messages[0] !== undefined) {
+        if (that.messages[0] !== undefined) {
             that.renderMessages();
         }
 
     };
 
+    // Renders all messages.
     that.renderMessages = function () {
         that.messages.forEach(function (message) {
             that.renderMessage(message);
         });
     };
 
+    // Renders a single message.
     that.renderMessage = function (message) {
-        var messageArea = div.getElementsByClassName("messages-div")[0];
-        var p = document.createElement("p");
+        var messageArea = div.getElementsByClassName("messages-div")[0],
+            p = document.createElement("p");
 
         console.log(message);
 
@@ -56,9 +47,10 @@ function MessageBoard (name) {
     };
 
 
+    // Send a message.
     that.sendMessage = function () {
-        var textarea = div.getElementsByClassName("message")[0];
-        var message = {text: textarea.value, time: new Date()};
+        var textarea = div.getElementsByClassName("message")[0],
+            message = {text: textarea.value, time: new Date()};
 
         that.messages.push(message);
         textarea.value = "";
@@ -66,10 +58,11 @@ function MessageBoard (name) {
     };
 }
 
-window.onload = function() {
-    var MessageBoard1 = new MessageBoard("board1");
-    var MessageBoard2 = new MessageBoard("board2");
+window.onload = function () {
+    "use strict";
+    var MessageBoard1 = new MessageBoard("board1"),
+        MessageBoard2 = new MessageBoard("board2");
 
     MessageBoard1.init();
-    // MessageBoard1.renderMessage({text: "Hohohohooh", time: new Date()});
+    MessageBoard2.init();
 };
