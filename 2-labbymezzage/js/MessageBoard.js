@@ -32,7 +32,7 @@ function MessageBoard (name) {
     div.appendChild(inputButton);
 
     that.sendMessage = function (message) {
-        that.messages.push(message);
+        that.messages.push({message: message, time: new Date()});
     };
 
     that.messages = [];
