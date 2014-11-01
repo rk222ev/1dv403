@@ -22,7 +22,14 @@ var makePerson = function(persArr){
 		return numbers.reduce(function(a, b) { return a + b;}) / numbers.length;
 	};
 
-	var names = persArr.map(function(person) {return person.name;}).sort(function(a, b) { return a.localeCompare(b); }).join(", ");
+	var names = persArr.map(function(person) {
+		if ("name" in person) {
+			return person.name;
+		}
+		throw new Error("The person does not contain the key name.");
+	}).sort(function(a, b) {
+			return a.localeCompare(b);
+	}).join(", ");
 
 	return {
 		names: 		names,
