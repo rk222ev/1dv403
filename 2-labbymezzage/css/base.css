@@ -5,3 +5,31 @@ body {
 header {
     text-align: center;
 }
+
+.board {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    max-width: 400px;
+    padding: 10px;
+}
+
+.board input {
+    float: right;
+}
+
+textarea {
+    width: 98%;
+    min-height:100px;
+    resize: none;
+}
+
+
+#last-header-letter {
+    color: #c09;
+    font-size: 1.3em;
+}
+
+.info-amount-of-messages {
+    text-align: right;
+}
