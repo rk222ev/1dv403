@@ -3,7 +3,7 @@
 var makePerson = function(persArr){
 
 	if(!(Array.isArray(persArr)) && persArr[0] === undefined) {
-		throw new TypeError("Data is not an array of names and ages or birthdates.");
+		throw new TypeError("The argument is empty or it is not an array.");
 	}
 
 	var ages = persArr.map(
@@ -14,7 +14,7 @@ var makePerson = function(persArr){
 				return new Date().getFullYear() - new Date(person.born).getFullYear();
 			}
 
-			throw new Error("Data does not contain a key named age or born.");
+			throw new Error("The person does not contain the key age or the key born.");
 		}
 	);
 
