@@ -44,6 +44,7 @@ function MessageBoard(name) {
     // ignores shift-enter.
     div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
         if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
+            e.preventDefault();
             that.sendMessage();
         }
     };
@@ -85,18 +86,21 @@ function MessageBoard(name) {
     // updates the message counter.
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
+            messageDiv = document.createElement("div"),
             messageP = document.createElement("p"),
             messageFooter = document.createElement("footer");
 
         messageP.appendChild(document.createTextNode(message.getText()));
 
-        messageFooter.className = "message";
         messageFooter.appendChild(document.createTextNode(message.getTime()));
         messageFooter.appendChild(infoButton);
         messageFooter.appendChild(deleteButton);
 
-        messageArea.appendChild(messageP);
-        messageArea.appendChild(messageFooter);
+        messageDiv.className = "message";
+        messageDiv.appendChild(messageP);
+        messageDiv.appendChild(messageFooter);
+
+        messageArea.appendChild(messageDiv);
 
         that.updateMessageCounter();
     };
@@ -109,10 +113,11 @@ function MessageBoard(name) {
     that.sendMessage = function () {
         var textarea = div.getElementsByClassName("message-input")[0],
             newMessage = new Message(textarea.value, new Date());
-
-        that.messages.push(newMessage);
-        that.renderMessage(newMessage);
-        textarea.value = "";
+        if (textarea.value !== "") {
+            that.messages.push(newMessage);
+            that.renderMessage(newMessage);
+            textarea.value = "";
+        }
     };
 
     that.updateMessageCounter = function () {
