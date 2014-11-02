@@ -33,3 +33,9 @@ textarea {
 .info-amount-of-messages {
     text-align: right;
 }
+
+.message-box {
+    background-color: #9c0;
+    padding: 5px;
+    margin-bottom: 5px;
+}

@@ -1,8 +1,8 @@
 /*global document, window, Message*/
 
 function MessageBoard(name) {
-	
-	"use strict";
+
+    "use strict";
 
     var that = this,
         inputButton = document.createElement("input"),
@@ -20,6 +20,15 @@ function MessageBoard(name) {
     div.appendChild(inputButton);
 
 
+    // Clears the message Area
+    that.clearMessages = function () {
+        var element = div.getElementsByClassName("messages-div")[0],
+            newElement = document.createElement("div");
+
+        newElement.className = "messages-div";
+        div.replaceChild(newElement, element);
+    };
+
     // Initialises the object.
     that.init = function () {
         that.messages = [];
@@ -27,7 +36,6 @@ function MessageBoard(name) {
         if (that.messages[0] !== undefined) {
             that.renderMessages();
         }
-
     };
 
     // Renders all messages.
@@ -40,16 +48,20 @@ function MessageBoard(name) {
     // Renders a single message.
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
+            messageDiv = document.createElement("div"),
             p = document.createElement("p");
 
+        messageDiv.className = "message-box";
+
         p.appendChild(document.createTextNode(message.getText()));
-        messageArea.appendChild(p);
+        messageDiv.appendChild(p);
+        messageArea.appendChild(messageDiv);
     };
 
 
     // Send a message.
     that.sendMessage = function () {
-        var textarea = div.getElementsByClassName("message")[0],
+        var textarea = div.getElementsByClassName("message-input")[0],
             newMessage = new Message(textarea.value, new Date());
 
         that.messages.push(newMessage);
