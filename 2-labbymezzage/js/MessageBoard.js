@@ -62,6 +62,7 @@ function MessageBoard(name) {
         Object.keys(newMessage).forEach(function (key) {messageDiv.appendChild(newMessage[key]); });
         messageArea.appendChild(messageDiv);
         message.getTime();
+        that.updateMessageCounter();
     };
 
 
@@ -73,6 +74,10 @@ function MessageBoard(name) {
         that.messages.push(newMessage);
         that.renderMessage(newMessage);
         textarea.value = "";
+    };
+
+    that.updateMessageCounter = function () {
+        div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
     };
 }
 
