@@ -6,6 +6,8 @@ function MessageBoard(name) {
 
     var that = this,
         inputButton = document.createElement("input"),
+        deleteButton = document.createElement("img"),
+        infoButton = document.createElement("img"),
         div = document.getElementById(name);
 
 
@@ -19,6 +21,19 @@ function MessageBoard(name) {
     };
     div.appendChild(inputButton);
 
+    // Delete button
+    deleteButton.src = "pics/x.png";
+
+    deleteButton.onclick = function () {
+        console.log("Deletebutton onclick.");
+    };
+
+    // Info button
+    infoButton.src = "pics/i.png";
+
+    infoButton.onclick = function () {
+        console.log("InfoButton onclick");
+    };
 
     // Clears the message Area
     that.clearMessages = function () {
@@ -48,15 +63,17 @@ function MessageBoard(name) {
     // Renders a single message.
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
-            messageDiv = document.createElement("p"),
+            messageP = document.createElement("p"),
             messageFooter = document.createElement("footer");
 
-        messageDiv.appendChild(document.createTextNode(message.getText()));
+        messageP.appendChild(document.createTextNode(message.getText()));
 
         messageFooter.className = "message";
         messageFooter.appendChild(document.createTextNode(message.getTime()));
+        messageFooter.appendChild(infoButton);
+        messageFooter.appendChild(deleteButton);
 
-        messageArea.appendChild(messageDiv);
+        messageArea.appendChild(messageP);
         messageArea.appendChild(messageFooter);
 
         that.updateMessageCounter();
