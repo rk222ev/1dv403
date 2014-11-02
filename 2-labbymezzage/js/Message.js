@@ -17,10 +17,6 @@ function Message(message, date) {
     this.setDate = function (argDate) {
         date = argDate;
     };
-
-    //this.getTime = function () {
-        //console.log(date);
-    //};
 }
 
 Message.prototype.toString = function () {
