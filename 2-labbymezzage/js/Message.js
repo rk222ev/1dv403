@@ -34,6 +34,7 @@ Message.prototype.getHTMLText = function () {
 };
 
 Message.prototype.getTime = function () {
+    "use strict";
     var date = this.getDate();
     return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 };
