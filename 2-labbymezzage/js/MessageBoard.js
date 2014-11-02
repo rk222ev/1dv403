@@ -48,20 +48,17 @@ function MessageBoard(name) {
     // Renders a single message.
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
-            messageDiv = document.createElement("div"),
-            newMessage = {
-                text: document.createElement("p"),
-                date: document.createElement("p")
-            };
+            messageDiv = document.createElement("p"),
+            messageFooter = document.createElement("footer");
 
+        messageDiv.appendChild(document.createTextNode(message.getText()));
 
-        messageDiv.className = "message-box";
+        messageFooter.className = "message";
+        messageFooter.appendChild(document.createTextNode(message.getTime()));
 
-        newMessage.text.appendChild(document.createTextNode(message.getText()));
-        newMessage.date.appendChild(document.createTextNode(message.getTime()));
-        Object.keys(newMessage).forEach(function (key) {messageDiv.appendChild(newMessage[key]); });
         messageArea.appendChild(messageDiv);
-        message.getTime();
+        messageArea.appendChild(messageFooter);
+
         that.updateMessageCounter();
     };
 
