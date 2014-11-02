@@ -21,6 +21,7 @@ function MessageBoard(name) {
     };
     div.appendChild(inputButton);
 
+
     // Delete button
     deleteButton.src = "pics/x.png";
 
@@ -28,12 +29,22 @@ function MessageBoard(name) {
         console.log("Deletebutton onclick.");
     };
 
+
     // Info button
     infoButton.src = "pics/i.png";
 
     infoButton.onclick = function () {
         console.log("InfoButton onclick");
     };
+
+
+    // Keyboardcontrols
+    div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
+        if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
+            that.sendMessage();
+        }
+    };
+
 
     // Clears the message Area
     that.clearMessages = function () {
@@ -44,6 +55,7 @@ function MessageBoard(name) {
         div.replaceChild(newElement, element);
     };
 
+
     // Initialises the object.
     that.init = function () {
         that.messages = [];
@@ -53,12 +65,14 @@ function MessageBoard(name) {
         }
     };
 
+
     // Renders all messages.
     that.renderMessages = function () {
         that.messages.forEach(function (message) {
             that.renderMessage(message);
         });
     };
+
 
     // Renders a single message.
     that.renderMessage = function (message) {
