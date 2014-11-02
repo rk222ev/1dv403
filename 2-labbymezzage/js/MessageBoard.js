@@ -49,13 +49,19 @@ function MessageBoard(name) {
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
             messageDiv = document.createElement("div"),
-            p = document.createElement("p");
+            newMessage = {
+                text: document.createElement("p"),
+                date: document.createElement("p")
+            };
+
 
         messageDiv.className = "message-box";
 
-        p.appendChild(document.createTextNode(message.getText()));
-        messageDiv.appendChild(p);
+        newMessage.text.appendChild(document.createTextNode(message.getText()));
+        newMessage.date.appendChild(document.createTextNode(message.getTime()));
+        Object.keys(newMessage).forEach(function (key) {messageDiv.appendChild(newMessage[key]); });
         messageArea.appendChild(messageDiv);
+        message.getTime();
     };
 
 
