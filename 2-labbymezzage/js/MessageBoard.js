@@ -1,7 +1,8 @@
-/*global document, console, window Message*/
+/*global document, window, Message*/
 
 function MessageBoard(name) {
-    "use strict";
+	
+	"use strict";
 
     var that = this,
         inputButton = document.createElement("input"),
@@ -40,8 +41,6 @@ function MessageBoard(name) {
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
             p = document.createElement("p");
-
-        console.log(message);
 
         p.appendChild(document.createTextNode(message.getText()));
         messageArea.appendChild(p);
