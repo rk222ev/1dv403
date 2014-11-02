@@ -10,6 +10,7 @@ function MessageBoard(name) {
         infoButton = document.createElement("img"),
         div = document.getElementById(name);
 
+// --------------- BUTTONS -------------
 
     // Send button.
     inputButton.type = "button";
@@ -37,14 +38,18 @@ function MessageBoard(name) {
         console.log("InfoButton onclick");
     };
 
+// --------------- KEYBOARD CONTROLS ------------------
 
-    // Keyboardcontrols
+    // Listen for enter when a message-input is selected.
+    // ignores shift-enter.
     div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
         if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
             that.sendMessage();
         }
     };
 
+
+// ----------------- Methods ---------------------
 
     // Clears the message Area
     that.clearMessages = function () {
@@ -66,6 +71,7 @@ function MessageBoard(name) {
     };
 
 
+    // Method renderMessages
     // Renders all messages.
     that.renderMessages = function () {
         that.messages.forEach(function (message) {
@@ -74,7 +80,9 @@ function MessageBoard(name) {
     };
 
 
-    // Renders a single message.
+    // Method renderMessage
+    // Renders a single message and
+    // updates the message counter.
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
             messageP = document.createElement("p"),
@@ -94,7 +102,10 @@ function MessageBoard(name) {
     };
 
 
-    // Send a message.
+    // Method sendMessage
+    // Adds a new message to the messages array,
+    // clears the textarea and
+    // updates the message counter.
     that.sendMessage = function () {
         var textarea = div.getElementsByClassName("message-input")[0],
             newMessage = new Message(textarea.value, new Date());
