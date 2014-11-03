@@ -2,6 +2,7 @@
 window.onload = function(){
     var secret = Math.floor(Math.random() * 100) + 1;
     var guesses = 0;
+    var numbers = [];
 
     // I denna funktion ska du skriva koden för att hantera "spelet"
     var guess = function (number) {
@@ -10,11 +11,14 @@ window.onload = function(){
 
         if (number < 1 || number > 100) {
             return [false, "Talet är utanför intervallet 0 - 100"];
+        } else if (numbers.indexOf(number) !== -1) {
+            return [false, "Du har redan gissat på " + number + "!"];
         } else if (isNaN(number)) {
             return [false, "Gissningen kunde inte tolkas som en siffra."];
         }
 
         guesses += 1;
+        numbers.push(number);
 
         if (+number === secret) {
             return [true, "Grattis du vann! Det hemliga talet var "+secret+" och du behövde "+guesses+" gissningar för att hitta det."];
