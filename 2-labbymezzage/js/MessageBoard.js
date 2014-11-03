@@ -1,6 +1,6 @@
 /*global document, window, Message*/
 
-var MessageBoard = function(name) {
+var MessageBoard = function (name) {
 
     "use strict";
 
@@ -91,7 +91,7 @@ var MessageBoard = function(name) {
         deleteButton.src = "pics/x.png";
         deleteButton.alt = index;
         deleteButton.onclick = function () {
-            if(confirm("Är du säker på att du vill radera meddelandet?")) {
+            if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
                 that.removeMessage(index);
             }
         };
@@ -99,7 +99,7 @@ var MessageBoard = function(name) {
         // Info button
         infoButton.src = "pics/i.png";
         infoButton.onclick = function () {
-            alert("Inlägget skapdes " + message.getDate());
+            window.alert("Inlägget skapdes " + message.getDate());
         };
 
         dateP.appendChild(document.createTextNode(message.getTime()));
