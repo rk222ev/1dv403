@@ -5,19 +5,16 @@ var MessageBoard = function (name) {
     "use strict";
 
     var that = this,
-        inputButton = document.createElement("input"),
-        div = document.getElementById(name);
-
-// --------------- BUTTONS -------------
+        div = document.getElementById(name),
+        inputButton = that.createButton("input", null,
+            function () {
+                that.sendMessage();
+                return false;
+            });
 
     // Send button.
     inputButton.type = "button";
     inputButton.value = "skriv";
-
-    inputButton.onclick = function () {
-        that.sendMessage();
-        return false;
-    };
     div.appendChild(inputButton);
 
 
@@ -38,9 +35,7 @@ var MessageBoard = function (name) {
     // Clears the message Area
     that.clearMessages = function () {
         var element = div.getElementsByClassName("messages-div")[0],
-            newElement = document.createElement("div");
-
-        newElement.className = "messages-div";
+            newElement = that.buildElement("div", "messages-div");
         div.replaceChild(newElement, element);
     };
 
@@ -65,13 +60,13 @@ var MessageBoard = function (name) {
             wrapper = that.buildElement("div", "message"),
             footer = document.createElement("footer"),
 
-            deleteButton = that.createButton("pics/x.png", function () {
+            deleteButton = that.createButton("img", "pics/x.png", function () {
                 if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
                     that.removeMessage(that.messages.indexOf(message));
                 }
             }),
 
-            infoButton = that.createButton("pics/i.png", function () {
+            infoButton = that.createButton("img", "pics/i.png", function () {
                 window.alert("Inlägget skapades " + message.getDate());
             }),
 
@@ -122,11 +117,13 @@ window.onload = function () {
     messageBoard2.init();
 };
 
-MessageBoard.prototype.createButton = function (src, action) {
+MessageBoard.prototype.createButton = function (tag, src, action) {
     "use strict";
-    var element = document.createElement("img");
-    element.src = src;
+    var element = document.createElement(tag);
     element.onclick = action;
+    if (src !== null) {
+        element.src = src;
+    }
     return element;
 };
 
