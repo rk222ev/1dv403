@@ -8,7 +8,6 @@ var MessageBoard = function (name) {
         inputButton = document.createElement("input"),
         div = document.getElementById(name);
 
-
 // --------------- BUTTONS -------------
 
     // Send button.
@@ -46,17 +45,11 @@ var MessageBoard = function (name) {
     };
 
 
-    // Initialises the object.
-    that.init = function () {
-        that.messages = [];
-    };
-
-
-
     that.removeMessage = function (pos) {
         that.messages.splice(pos, 1);
         that.clearMessages();
         that.renderMessage(that.messages);
+        that.updateMessageCounter();
     };
 
 
@@ -69,10 +62,8 @@ var MessageBoard = function (name) {
             return;
         }
         var messageArea = div.getElementsByClassName("messages-div")[0],
-            messageDiv = document.createElement("div"),
-            messageP = document.createElement("p"),
-            dateP = document.createElement("p"),
-            messageFooter = document.createElement("footer"),
+            wrapper = that.buildElement("div", "message"),
+            footer = document.createElement("footer"),
 
             deleteButton = that.createButton("pics/x.png", function () {
                 if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
@@ -82,24 +73,22 @@ var MessageBoard = function (name) {
 
             infoButton = that.createButton("pics/i.png", function () {
                 window.alert("Inlägget skapades " + message.getDate());
-            });
+            }),
+
+            newMessage = {
+                text: that.buildElement("p", "message-text", message.getHTMLText()),
+                date: that.buildElement("p", null, message.getTime()),
+                buttons: [infoButton, deleteButton]
+            };
 
 
-        messageP.className = "message-text";
-        messageP.innerHTML = message.getHTMLText();
+        footer.appendChild(newMessage.date);
+        newMessage.buttons.forEach(function (button) {footer.appendChild(button); });
 
-        dateP.appendChild(document.createTextNode(message.getTime()));
-        messageFooter.appendChild(dateP);
-        messageFooter.appendChild(infoButton);
-        messageFooter.appendChild(deleteButton);
+        wrapper.appendChild(newMessage.text);
+        wrapper.appendChild(footer);
 
-        messageDiv.className = "message";
-        messageDiv.appendChild(messageP);
-        messageDiv.appendChild(messageFooter);
-
-        messageArea.appendChild(messageDiv);
-
-        that.updateMessageCounter();
+        messageArea.appendChild(wrapper);
     };
 
 
@@ -114,21 +103,23 @@ var MessageBoard = function (name) {
             that.messages.push(newMessage);
             that.renderMessage(newMessage);
             textarea.value = "";
+            that.updateMessageCounter();
         }
     };
 
     that.updateMessageCounter = function () {
         div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
     };
+
+    that.init = function () { that.messages = []; };
 };
 
 window.onload = function () {
     "use strict";
-    var MessageBoard1 = new MessageBoard("board1"),
-        MessageBoard2 = new MessageBoard("board2");
-
-    MessageBoard1.init();
-    MessageBoard2.init();
+    var messageBoard1 =  new MessageBoard("board1"),
+        messageBoard2 = new MessageBoard("board2");
+    messageBoard1.init();
+    messageBoard2.init();
 };
 
 MessageBoard.prototype.createButton = function (src, action) {
@@ -136,5 +127,23 @@ MessageBoard.prototype.createButton = function (src, action) {
     var element = document.createElement("img");
     element.src = src;
     element.onclick = action;
+    return element;
+};
+
+MessageBoard.prototype.buildElement = function (tag, className, innerHTML) {
+    "use strict";
+    var element = document.createElement(tag);
+    if (Array.isArray(tag)) {
+        return tag.forEach(function (data) { return this.buildElement(data); });
+    }
+
+    if (className !== null) {
+        element.className = className;
+    }
+
+    if (innerHTML !== undefined) {
+        element.innerHTML = innerHTML;
+    }
+
     return element;
 };
