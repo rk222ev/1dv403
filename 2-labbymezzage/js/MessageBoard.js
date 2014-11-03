@@ -80,9 +80,11 @@ var MessageBoard = function(name) {
             deleteButton = document.createElement("img"),
             infoButton = document.createElement("img"),
             messageP = document.createElement("p"),
+            dateP = document.createElement("p"),
             messageFooter = document.createElement("footer"),
             index = that.messages.indexOf(message);
 
+        messageP.className = "message-text";
         messageP.appendChild(document.createTextNode(message.getText()));
 
         // Delete button
@@ -94,12 +96,11 @@ var MessageBoard = function(name) {
 
         // Info button
         infoButton.src = "pics/i.png";
-
         infoButton.onclick = function () {
         };
 
-
-        messageFooter.appendChild(document.createTextNode(message.getTime()));
+        dateP.appendChild(document.createTextNode(message.getTime()));
+        messageFooter.appendChild(dateP);
         messageFooter.appendChild(infoButton);
         messageFooter.appendChild(deleteButton);
 

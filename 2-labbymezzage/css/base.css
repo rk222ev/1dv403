@@ -6,12 +6,20 @@ header {
     text-align: center;
 }
 
+main {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .board {
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    max-width: 400px;
+    width: 400px;
     padding: 10px;
+    float:left;
+    margin: 10px;
 }
 
 .board input {
@@ -34,8 +42,20 @@ textarea {
     text-align: right;
 }
 
-.message-box {
+.message {
     background-color: #9c0;
     padding: 5px;
     margin-bottom: 5px;
+    overflow: auto;
+    border: solid;
+}
+
+
+.message footer {
+    float: right;
+}
+
+.message-text {
+    float: left;
+    max-width: 80%;
 }
