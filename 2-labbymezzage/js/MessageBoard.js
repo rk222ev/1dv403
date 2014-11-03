@@ -8,6 +8,7 @@ var MessageBoard = function (name) {
         inputButton = document.createElement("input"),
         div = document.getElementById(name);
 
+
 // --------------- BUTTONS -------------
 
     // Send button.
@@ -69,30 +70,23 @@ var MessageBoard = function (name) {
         }
         var messageArea = div.getElementsByClassName("messages-div")[0],
             messageDiv = document.createElement("div"),
-            deleteButton = document.createElement("img"),
-            infoButton = document.createElement("img"),
             messageP = document.createElement("p"),
             dateP = document.createElement("p"),
             messageFooter = document.createElement("footer"),
-            index = that.messages.indexOf(message);
+
+            deleteButton = that.createButton("pics/x.png", function () {
+                if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
+                    that.removeMessage(that.messages.indexOf(message));
+                }
+            }),
+
+            infoButton = that.createButton("pics/i.png", function () {
+                window.alert("Inlägget skapades " + message.getDate());
+            });
+
 
         messageP.className = "message-text";
         messageP.innerHTML = message.getHTMLText();
-
-        // Delete button
-        deleteButton.src = "pics/x.png";
-        deleteButton.alt = index;
-        deleteButton.onclick = function () {
-            if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
-                that.removeMessage(index);
-            }
-        };
-
-        // Info button
-        infoButton.src = "pics/i.png";
-        infoButton.onclick = function () {
-            window.alert("Inlägget skapdes " + message.getDate());
-        };
 
         dateP.appendChild(document.createTextNode(message.getTime()));
         messageFooter.appendChild(dateP);
@@ -135,4 +129,12 @@ window.onload = function () {
 
     MessageBoard1.init();
     MessageBoard2.init();
+};
+
+MessageBoard.prototype.createButton = function (src, action) {
+    "use strict";
+    var element = document.createElement("img");
+    element.src = src;
+    element.onclick = action;
+    return element;
 };
