@@ -26,7 +26,7 @@ var MessageBoard = function(name) {
     // Listen for enter when a message-input is selected.
     // ignores shift-enter.
     div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
-        if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
+        if (e.keyCode === 13 && e.shiftKey === false) {
             e.preventDefault();
             that.sendMessage();
         }
