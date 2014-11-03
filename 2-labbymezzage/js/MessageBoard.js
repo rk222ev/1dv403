@@ -48,26 +48,14 @@ var MessageBoard = function (name) {
     // Initialises the object.
     that.init = function () {
         that.messages = [];
-
-        if (that.messages[0] !== undefined) {
-            that.renderMessages();
-        }
     };
 
 
-    // Method renderMessages
-    // Renders all messages.
-    that.renderMessages = function () {
-        that.messages.forEach(function (message) {
-            that.renderMessage(message);
-        });
-    };
 
     that.removeMessage = function (pos) {
         that.messages.splice(pos, 1);
         that.clearMessages();
-        that.renderMessages();
-        that.updateMessageCounter();
+        that.renderMessage(that.messages);
     };
 
 
@@ -75,6 +63,10 @@ var MessageBoard = function (name) {
     // Renders a single message and
     // updates the message counter.
     that.renderMessage = function (message) {
+        if (Array.isArray(message)) {
+            message.forEach(function (message) { that.renderMessage(message); });
+            return;
+        }
         var messageArea = div.getElementsByClassName("messages-div")[0],
             messageDiv = document.createElement("div"),
             deleteButton = document.createElement("img"),
