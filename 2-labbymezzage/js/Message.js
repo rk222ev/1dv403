@@ -31,6 +31,13 @@ Message.prototype.getHTMLText = function () {
 
 Message.prototype.getTime = function () {
     "use strict";
-    var date = this.getDate();
-    return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    var date = this.getDate(),
+        zeroPrefix = function (number) {
+            if (Array.isArray(number)) {
+                zeroPrefix(number[0]);
+            }
+            return (number < 10) ? ("0" + number) : number;
+        };
+
+    return zeroPrefix([date.getHours(), date.getMinutes(), date.getSeconds()]).join(":");
 };
