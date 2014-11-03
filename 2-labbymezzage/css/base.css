@@ -1,0 +1,61 @@
+body {
+    background-color: lightblue;
+}
+
+header {
+    text-align: center;
+}
+
+main {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.board {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    width: 400px;
+    padding: 10px;
+    float:left;
+    margin: 10px;
+}
+
+.board input {
+    float: right;
+}
+
+textarea {
+    width: 98%;
+    min-height:100px;
+    resize: none;
+}
+
+
+#last-header-letter {
+    color: #c09;
+    font-size: 1.3em;
+}
+
+.info-amount-of-messages {
+    text-align: right;
+}
+
+.message {
+    background-color: #9c0;
+    padding: 5px;
+    margin-bottom: 5px;
+    overflow: auto;
+    border: solid;
+}
+
+
+.message footer {
+    float: right;
+}
+
+.message-text {
+    float: left;
+    max-width: 80%;
+}
