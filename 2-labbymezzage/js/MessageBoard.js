@@ -18,8 +18,6 @@ var MessageBoard = function (name) {
     div.appendChild(inputButton);
 
 
-// --------------- KEYBOARD CONTROLS ------------------
-
     // Listen for enter when a message-input is selected.
     // ignores shift-enter.
     div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
@@ -29,8 +27,6 @@ var MessageBoard = function (name) {
         }
     };
 
-
-// ----------------- Methods ---------------------
 
     // Clears the message Area
     that.clearMessages = function () {
