@@ -1,6 +1,6 @@
 /*global document, window, Message*/
 
-function MessageBoard(name) {
+var MessageBoard = function(name) {
 
     "use strict";
 
@@ -130,7 +130,7 @@ function MessageBoard(name) {
     that.updateMessageCounter = function () {
         div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
     };
-}
+};
 
 window.onload = function () {
     "use strict";
