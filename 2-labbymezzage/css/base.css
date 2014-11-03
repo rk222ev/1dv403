@@ -48,6 +48,7 @@ textarea {
     margin-bottom: 5px;
     overflow: auto;
     border: solid;
+    text-color: grey;
 }
 
 

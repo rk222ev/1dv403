@@ -1,6 +1,5 @@
 var makePerson = function (persArr) {
     "use strict";
-    persArr = [{age: 15, name: "R"}];
 
     if (!(Array.isArray(persArr)) && persArr[0] === undefined) {
         throw new TypeError("The argument is empty or it is not an array.");
@@ -12,7 +11,7 @@ var makePerson = function (persArr) {
                 return person.age;
             }
 
-            if (person.HasOwnProperty("born")) {
+            if (person.hasOwnProperty("born")) {
                 return new Date().getFullYear() - new Date(person.born).getFullYear();
             }
             throw new Error("The person does not contain the key age or the key born.");
@@ -24,7 +23,7 @@ var makePerson = function (persArr) {
         },
 
         names = persArr.map(function (person) {
-            if (person.HasOwnProperty("name")) {
+            if (person.hasOwnProperty("name")) {
                 return person.name;
             }
             throw new Error("The person does not contain the key name.");
