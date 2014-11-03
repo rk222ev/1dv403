@@ -85,7 +85,7 @@ var MessageBoard = function(name) {
             index = that.messages.indexOf(message);
 
         messageP.className = "message-text";
-        messageP.appendChild(document.createTextNode(message.getText()));
+        messageP.innerHTML = message.getHTMLText();
 
         // Delete button
         deleteButton.src = "pics/x.png";

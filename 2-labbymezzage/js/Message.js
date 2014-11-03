@@ -26,7 +26,7 @@ Message.prototype.toString = function () {
 
 Message.prototype.getHTMLText = function () {
     "use strict";
-    return this.getText() + "<br>";
+    return this.getText().replace(/\n/g, "<br>");
 };
 
 Message.prototype.getTime = function () {
