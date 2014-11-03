@@ -91,13 +91,15 @@ var MessageBoard = function(name) {
         deleteButton.src = "pics/x.png";
         deleteButton.alt = index;
         deleteButton.onclick = function () {
-            that.removeMessage(index);
+            if(confirm("Är du säker på att du vill radera meddelandet?")) {
+                that.removeMessage(index);
+            }
         };
 
         // Info button
         infoButton.src = "pics/i.png";
         infoButton.onclick = function () {
-            alert("Inlägget skapdes" + message.getDate());
+            alert("Inlägget skapdes " + message.getDate());
         };
 
         dateP.appendChild(document.createTextNode(message.getTime()));
