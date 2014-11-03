@@ -6,8 +6,6 @@ function MessageBoard(name) {
 
     var that = this,
         inputButton = document.createElement("input"),
-        deleteButton = document.createElement("img"),
-        infoButton = document.createElement("img"),
         div = document.getElementById(name);
 
 // --------------- BUTTONS -------------
@@ -22,21 +20,6 @@ function MessageBoard(name) {
     };
     div.appendChild(inputButton);
 
-
-    // Delete button
-    deleteButton.src = "pics/x.png";
-
-    deleteButton.onclick = function () {
-        console.log("Deletebutton onclick.");
-    };
-
-
-    // Info button
-    infoButton.src = "pics/i.png";
-
-    infoButton.onclick = function () {
-        console.log("InfoButton onclick");
-    };
 
 // --------------- KEYBOARD CONTROLS ------------------
 
@@ -80,6 +63,13 @@ function MessageBoard(name) {
         });
     };
 
+    that.removeMessage = function (pos) {
+        that.messages.splice(pos, 1);
+        that.clearMessages();
+        that.renderMessages();
+        that.updateMessageCounter();
+    };
+
 
     // Method renderMessage
     // Renders a single message and
@@ -87,10 +77,27 @@ function MessageBoard(name) {
     that.renderMessage = function (message) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
             messageDiv = document.createElement("div"),
+            deleteButton = document.createElement("img"),
+            infoButton = document.createElement("img"),
             messageP = document.createElement("p"),
-            messageFooter = document.createElement("footer");
+            messageFooter = document.createElement("footer"),
+            index = that.messages.indexOf(message);
 
         messageP.appendChild(document.createTextNode(message.getText()));
+
+        // Delete button
+        deleteButton.src = "pics/x.png";
+        deleteButton.alt = index;
+        deleteButton.onclick = function () {
+            that.removeMessage(index);
+        };
+
+        // Info button
+        infoButton.src = "pics/i.png";
+
+        infoButton.onclick = function () {
+        };
+
 
         messageFooter.appendChild(document.createTextNode(message.getTime()));
         messageFooter.appendChild(infoButton);
