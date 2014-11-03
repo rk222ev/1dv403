@@ -55,7 +55,8 @@ var MessageBoard = function (name) {
         var messageArea = div.getElementsByClassName("messages-div")[0],
             wrapper = that.buildElement("div", "message"),
             footer = document.createElement("footer"),
-
+            text = that.buildElement("p", "message-text", message.getHTMLText()),
+            date = that.buildElement("p", null, message.getTime()),
             deleteButton = that.createButton("img", "pics/x.png", function () {
                 if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
                     that.removeMessage(that.messages.indexOf(message));
@@ -65,18 +66,12 @@ var MessageBoard = function (name) {
             infoButton = that.createButton("img", "pics/i.png", function () {
                 window.alert("Inlägget skapades " + message.getDate());
             }),
+            buttons = [infoButton, deleteButton];
 
-            newMessage = {
-                text: that.buildElement("p", "message-text", message.getHTMLText()),
-                date: that.buildElement("p", null, message.getTime()),
-                buttons: [infoButton, deleteButton]
-            };
+        footer.appendChild(date);
+        buttons.forEach(function (button) {footer.appendChild(button); });
 
-
-        footer.appendChild(newMessage.date);
-        newMessage.buttons.forEach(function (button) {footer.appendChild(button); });
-
-        wrapper.appendChild(newMessage.text);
+        wrapper.appendChild(text);
         wrapper.appendChild(footer);
 
         messageArea.appendChild(wrapper);
