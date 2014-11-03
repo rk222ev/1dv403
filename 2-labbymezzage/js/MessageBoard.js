@@ -97,6 +97,7 @@ var MessageBoard = function(name) {
         // Info button
         infoButton.src = "pics/i.png";
         infoButton.onclick = function () {
+            alert("Inlägget skapdes" + message.getDate());
         };
 
         dateP.appendChild(document.createTextNode(message.getTime()));
