@@ -1,7 +1,6 @@
 /*global document, window, Message*/
 
-var MessageBoard = function (name) {
-
+function MessageBoard (name) {
     "use strict";
 
     var that = this,
@@ -77,10 +76,10 @@ var MessageBoard = function (name) {
     };
 
 
-   // Method sendMessage
-  // Adds a new message to the messages array,
-  // clears the textarea and
-  // updates the message counter.
+    // Method sendMessage
+    // Adds a new message to the messages array,
+    // clears the textarea and
+    // updates the message counter.
     that.sendMessage = function () {
       var textarea = div.getElementsByClassName("message-input")[0],
         newMessage = new Message(textarea.value, new Date());
@@ -99,7 +98,7 @@ var MessageBoard = function (name) {
 
     that.init = function () { that.messages = []; };
 
-  };
+  }
 
 window.onload = function () {
   "use strict";
