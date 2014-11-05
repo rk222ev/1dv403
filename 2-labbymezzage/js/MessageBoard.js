@@ -11,6 +11,7 @@ function MessageBoard (name) {
           return false;
         });
 
+
     // Send button.
     inputButton.type = "button";
     inputButton.value = "skriv";
@@ -28,14 +29,14 @@ function MessageBoard (name) {
 
 
   // Clears the message Area
-    that.clearMessages = function () {
+    this.clearMessages = function () {
       var element = div.getElementsByClassName("messages-div")[0],
         newElement = that.buildElement("div", "messages-div");
       div.replaceChild(newElement, element);
     };
 
 
-    that.removeMessage = function (pos) {
+    this.removeMessage = function (pos) {
       that.messages.splice(pos, 1);
       that.clearMessages();
       that.renderMessage(that.messages);
@@ -45,7 +46,7 @@ function MessageBoard (name) {
     // Method renderMessage
     // Renders a single message and
     // updates the message counter.
-    that.renderMessage = function (message) {
+    this.renderMessage = function (message) {
       if (Array.isArray(message)) {
         message.forEach(function (message) { that.renderMessage(message); });
         return;
@@ -80,7 +81,7 @@ function MessageBoard (name) {
     // Adds a new message to the messages array,
     // clears the textarea and
     // updates the message counter.
-    that.sendMessage = function () {
+    this.sendMessage = function () {
       var textarea = div.getElementsByClassName("message-input")[0],
         newMessage = new Message(textarea.value, new Date());
 
@@ -92,21 +93,13 @@ function MessageBoard (name) {
       }
     };
 
-    that.updateMessageCounter = function () {
-      div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
-    };
+  this.updateMessageCounter = function () {
+    div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
+  };
 
-    that.init = function () { that.messages = []; };
+    this.init = function () { that.messages = []; };
 
   }
-
-window.onload = function () {
-  "use strict";
-  var messageBoard1 =  new MessageBoard("board1"),
-    messageBoard2 = new MessageBoard("board2");
-  messageBoard1.init();
-  messageBoard2.init();
-};
 
 MessageBoard.prototype.createButton = function (tag, src, action) {
   "use strict";
@@ -134,3 +127,4 @@ MessageBoard.prototype.buildElement = function (tag, className, innerHTML) {
 
   return element;
 };
+
