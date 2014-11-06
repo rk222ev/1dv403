@@ -84,40 +84,49 @@ function MessageBoard (name) {
     }
 
   function updateMessageCounter () {
-    MessageBoard.prototype.artoo.getNode(name, "amount").innerHTML = that.messages.length;
+    MessageBoard.prototype.artoo.getNode(name, "info-amount-of-messages")
+      .innerHTML = "Antal meddelanden : " + that.messages.length;
   }
 
-    this.init = function () {
-      that.messages = [];
-     MessageBoard.prototype.artoo.getNode(name)
-      .appendChild(
+  this.init = function () {
+    var mainNode = MessageBoard.prototype.artoo.getNode(name);
+    that.messages = [];
+
+    mainNode.appendChild(
+      MessageBoard.prototype.artoo.buildElement({
+        element: "p",
+        className: "info-amount-of-messages",
+        innerHTML: "Antal meddelanden : " + that.messages.length
+      })
+    );
+
+    mainNode.appendChild(
+      MessageBoard.prototype.artoo.buildElement({
+        element: "textarea",
+        className: "message-input",
+      })
+    );
+
+     mainNode.appendChild(
         MessageBoard.prototype.artoo.buildElement({
-          element: "textarea",
-          className: "message-input"
+          element: "input",
+          value: "skriv",
+          type: "button",
+          onclick: function () {
+            sendMessage();
+            return false;
+          }
         })
       );
 
-      MessageBoard.prototype.artoo.getNode(name)
-        .appendChild(
-          MessageBoard.prototype.artoo.buildElement({
-            element: "input",
-            value: "skriv",
-            type: "button",
-            onclick: function () {
-              sendMessage();
-              return false;
-            }
-          })
-        );
-
-    MessageBoard.prototype.artoo.getNode(name, "message-input")
-      .addEventListener("keydown", function (key) {
-        if (key.keyCode === 13 && key.shiftKey === false) {
-          key.preventDefault();
-          sendMessage();
-        }
-      });
-    };
+  MessageBoard.prototype.artoo.getNode(name, "message-input")
+    .addEventListener("keydown", function (key) {
+      if (key.keyCode === 13 && key.shiftKey === false) {
+        key.preventDefault();
+        sendMessage();
+      }
+    });
+  };
 }
 
 MessageBoard.prototype.artoo = artooSchematic();
