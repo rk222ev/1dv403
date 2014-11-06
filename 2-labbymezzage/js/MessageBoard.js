@@ -9,7 +9,7 @@ function MessageBoard (name) {
       that.messages.splice(pos, 1);
       MessageBoard.prototype.clearMessages(name);
       renderMessage(that.messages);
-      updateMessageCounter();
+      MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
     }
 
     function renderMessage (message) {
@@ -68,14 +68,9 @@ function MessageBoard (name) {
         that.messages.push(newMessage);
         renderMessage(newMessage);
         textarea.value = "";
-        updateMessageCounter();
+        MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
       }
     }
-
-  function updateMessageCounter () {
-    artoo.getNode(name, "info-amount-of-messages")
-      .innerHTML = "Antal meddelanden : " + that.messages.length;
-  }
 
   this.init = function () {
     var mainNode = artoo.getNode(name);
@@ -132,5 +127,10 @@ MessageBoard.prototype.clearMessages = function (board) {
       element: "div",
       className: "messages-div"
   }), element);
+};
+
+MessageBoard.prototype.updateMessageCounter = function (name, length) {
+  artoo.getNode(name, "info-amount-of-messages")
+    .innerHTML = "Antal meddelanden : " + length;
 };
 
