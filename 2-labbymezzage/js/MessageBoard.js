@@ -1,76 +1,76 @@
 /*global document, window, Message, artoo*/
 
 function MessageBoard (name) {
-    "use strict";
+  "use strict";
 
-    var that = this;
+  var that = this;
 
-    function removeMessage (pos) {
-      that.messages.splice(pos, 1);
-      MessageBoard.prototype.clearMessages(name);
-      renderMessage(that.messages);
+  function removeMessage (pos) {
+    that.messages.splice(pos, 1);
+    MessageBoard.prototype.clearMessages(name);
+    renderMessage(that.messages);
+    MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
+  }
+
+  function renderMessage (message) {
+    if (Array.isArray(message)) {
+      message.forEach(function (message) { renderMessage(message); });
+      return;
+    }
+
+    var messageArea = artoo.getNode(name, "messages-div"),
+      wrapper = artoo.buildElement({
+        element: "div",
+        className: "message"
+      }),
+      footer = document.createElement("footer");
+
+    footer.appendChild(artoo.buildElement({
+      element: "p",
+      innerHTML: message.getTime()
+    }));
+
+    footer.appendChild(artoo.buildElement({
+      element: "img",
+      src: "pics/i.png",
+      onclick: function () {
+        window.alert("Inlägget skapades " + message.getDate());
+      }
+    }));
+
+    footer.appendChild(artoo.buildElement({
+      element: "img",
+      src: "pics/x.png",
+      onclick: function () {
+        if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
+          removeMessage(that.messages.indexOf(message));
+        }
+      }
+    }));
+
+    wrapper.appendChild(artoo.buildElement({
+      element: "p",
+      className: "message-text",
+      innerHTML: message.getHTMLText()
+    }));
+
+    wrapper.appendChild(footer);
+
+    messageArea.appendChild(wrapper);
+  }
+
+
+  function sendMessage () {
+    var textarea = artoo.getNode(name, "message-input"),
+      newMessage = new Message(textarea.value, new Date());
+
+    if (textarea.value !== "") {
+      that.messages.push(newMessage);
+      renderMessage(newMessage);
+      textarea.value = "";
       MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
     }
-
-    function renderMessage (message) {
-      if (Array.isArray(message)) {
-        message.forEach(function (message) { renderMessage(message); });
-        return;
-      }
-
-      var messageArea = artoo.getNode(name, "messages-div"),
-        wrapper = artoo.buildElement({
-          element: "div",
-          className: "message"
-        }),
-        footer = document.createElement("footer");
-
-      footer.appendChild(artoo.buildElement({
-        element: "p",
-        innerHTML: message.getTime()
-      }));
-
-      footer.appendChild(artoo.buildElement({
-        element: "img",
-        src: "pics/i.png",
-        onclick: function () {
-          window.alert("Inlägget skapades " + message.getDate());
-        }
-      }));
-
-      footer.appendChild(artoo.buildElement({
-        element: "img",
-        src: "pics/x.png",
-        onclick: function () {
-          if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
-            removeMessage(that.messages.indexOf(message));
-          }
-        }
-      }));
-
-      wrapper.appendChild(artoo.buildElement({
-        element: "p",
-        className: "message-text",
-        innerHTML: message.getHTMLText()
-      }));
-
-      wrapper.appendChild(footer);
-
-      messageArea.appendChild(wrapper);
-    }
-
-
-    function sendMessage () {
-      var textarea = artoo.getNode(name, "message-input"),
-        newMessage = new Message(textarea.value, new Date());
-
-      if (textarea.value !== "") {
-        that.messages.push(newMessage);
-        renderMessage(newMessage);
-        textarea.value = "";
-        MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
-      }
-    }
+  }
 
   this.init = function () {
     var mainNode = artoo.getNode(name);
@@ -98,7 +98,7 @@ function MessageBoard (name) {
       })
     );
 
-     mainNode.appendChild(
+      mainNode.appendChild(
         artoo.buildElement({
           element: "input",
           value: "skriv",
@@ -110,15 +110,15 @@ function MessageBoard (name) {
         })
       );
 
-  artoo.getNode(name, "message-input")
-    .addEventListener("keydown", function (key) {
-      if (key.keyCode === 13 && key.shiftKey === false) {
-        key.preventDefault();
-        sendMessage();
-      }
-    });
-  };
-}
+    artoo.getNode(name, "message-input")
+      .addEventListener("keydown", function (key) {
+        if (key.keyCode === 13 && key.shiftKey === false) {
+          key.preventDefault();
+          sendMessage();
+        }
+      });
+    };
+  }
 
 MessageBoard.prototype.clearMessages = function (board) {
   var element = artoo.getNode(board, "messages-div");
