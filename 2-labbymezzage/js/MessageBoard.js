@@ -94,6 +94,13 @@ function MessageBoard (name) {
 
     mainNode.appendChild(
       MessageBoard.prototype.artoo.buildElement({
+        element:"div",
+        className: "messages-div"
+      })
+    );
+
+    mainNode.appendChild(
+      MessageBoard.prototype.artoo.buildElement({
         element: "p",
         className: "info-amount-of-messages",
         innerHTML: "Antal meddelanden : " + that.messages.length
