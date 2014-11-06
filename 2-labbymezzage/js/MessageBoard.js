@@ -3,8 +3,7 @@
 function MessageBoard (name) {
     "use strict";
 
-    var that = this,
-      div = document.getElementById(name);
+    var that = this;
 
     function clearMessages () {
       var element = MessageBoard.prototype.artoo.getNode(name, "messages-div");
@@ -122,14 +121,3 @@ function MessageBoard (name) {
 }
 
 MessageBoard.prototype.artoo = artooSchematic();
-
-MessageBoard.prototype.createButton = function (tag, src, action) {
-  "use strict";
-  var element = document.createElement(tag);
-  element.onclick = action;
-  if (src !== null) {
-    element.src = src;
-  }
-  return element;
-};
-
