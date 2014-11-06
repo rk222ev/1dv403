@@ -5,18 +5,9 @@ function MessageBoard (name) {
 
     var that = this;
 
-    function clearMessages () {
-      var element = artoo.getNode(name, "messages-div");
-
-      artoo.getNode(name).replaceChild(artoo.buildElement({
-          element: "div",
-          className: "messages-div"
-      }), element);
-    }
-
     function removeMessage (pos) {
       that.messages.splice(pos, 1);
-      clearMessages();
+      MessageBoard.prototype.clearMessages(name);
       renderMessage(that.messages);
       updateMessageCounter();
     }
@@ -132,5 +123,16 @@ function MessageBoard (name) {
       }
     });
   };
+
+  that.getName = function () { return name; };
 }
+
+MessageBoard.prototype.clearMessages = function (board) {
+  var element = artoo.getNode(board, "messages-div");
+
+  artoo.getNode(board).replaceChild(artoo.buildElement({
+      element: "div",
+      className: "messages-div"
+  }), element);
+};
 
