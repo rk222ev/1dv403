@@ -123,8 +123,6 @@ function MessageBoard (name) {
       }
     });
   };
-
-  that.getName = function () { return name; };
 }
 
 MessageBoard.prototype.clearMessages = function (board) {
