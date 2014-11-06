@@ -98,27 +98,26 @@ function MessageBoard (name) {
       })
     );
 
-      mainNode.appendChild(
-        artoo.buildElement({
-          element: "input",
-          value: "skriv",
-          type: "button",
-          onclick: function () {
-            sendMessage();
-            return false;
-          }
-        })
-      );
-
-    artoo.getNode(name, "message-input")
-      .addEventListener("keydown", function (key) {
-        if (key.keyCode === 13 && key.shiftKey === false) {
-          key.preventDefault();
+    mainNode.appendChild(
+      artoo.buildElement({
+        element: "input",
+        value: "skriv",
+        type: "button",
+        onclick: function () {
           sendMessage();
+          return false;
         }
-      });
-    };
-  }
+      })
+    );
+
+    artoo.getNode(name, "message-input").addEventListener("keydown", function (key) {
+      if (key.keyCode === 13 && key.shiftKey === false) {
+        key.preventDefault();
+        sendMessage();
+      }
+    });
+  };
+}
 
 MessageBoard.prototype.clearMessages = function (board) {
   var element = artoo.getNode(board, "messages-div");
