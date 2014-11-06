@@ -31,13 +31,15 @@ Message.prototype.getHTMLText = function () {
 
 Message.prototype.getTime = function () {
     "use strict";
-    var date = this.getDate(),
-        zeroPrefix = function (number) {
-            if (Array.isArray(number)) {
-                zeroPrefix(number[0]);
-            }
-            return (number < 10) ? ("0" + number) : number;
-        };
+
+    var date = this.getDate();
+
+    function zeroPrefix (number) {
+        if (Array.isArray(number)) {
+            return number.map(function (n) { return zeroPrefix(n); });
+        }
+        return (number < 10) ? ("0" + number) : number;
+    }
 
     return zeroPrefix([date.getHours(), date.getMinutes(), date.getSeconds()]).join(":");
 };
