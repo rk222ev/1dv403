@@ -30,11 +30,14 @@ function MessageBoard (name) {
 
   // Clears the message Area
     this.clearMessages = function () {
-      var element = div.getElementsByClassName("messages-div")[0],
-        newElement = that.buildElement("div", "messages-div");
-      div.replaceChild(newElement, element);
-    };
+      var element = div.getElementsByClassName("messages-div")[0];
 
+
+      div.replaceChild(MessageBoard.prototype.artoo.buildElement({
+          element: "div",
+          className: "messages-div"
+        }), element);
+    };
 
     this.removeMessage = function (pos) {
       that.messages.splice(pos, 1);
@@ -51,26 +54,45 @@ function MessageBoard (name) {
         message.forEach(function (message) { that.renderMessage(message); });
         return;
       }
+
       var messageArea = div.getElementsByClassName("messages-div")[0],
-        wrapper = that.buildElement("div", "message"),
-        footer = document.createElement("footer"),
-        text = that.buildElement("p", "message-text", message.getHTMLText()),
-        date = that.buildElement("p", null, message.getTime()),
-        deleteButton = that.createButton("img", "pics/x.png", function () {
+
+        wrapper = MessageBoard.prototype.artoo.buildElement({
+          element: "div",
+          className: "message"
+        }),
+
+        footer = document.createElement("footer");
+
+      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+        element: "p",
+        innerHTML: message.getTime()
+      }));
+
+      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+        element: "img",
+        src: "pics/i.png",
+        onclick: function () {
+          window.alert("Inlägget skapades " + message.getDate());
+        }
+      }));
+
+      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+        element: "img",
+        src: "pics/x.png",
+        onclick: function () {
           if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
             that.removeMessage(that.messages.indexOf(message));
           }
-        }),
+        }
+      }));
 
-        infoButton = that.createButton("img", "pics/i.png", function () {
-          window.alert("Inlägget skapades " + message.getDate());
-        }),
-        buttons = [infoButton, deleteButton];
+      wrapper.appendChild(MessageBoard.prototype.artoo.buildElement({
+        element: "p",
+        className: "message-text",
+        innerHTML: message.getHTMLText()
+      }));
 
-      footer.appendChild(date);
-      buttons.forEach(function (button) {footer.appendChild(button); });
-
-      wrapper.appendChild(text);
       wrapper.appendChild(footer);
 
       messageArea.appendChild(wrapper);
@@ -100,6 +122,8 @@ function MessageBoard (name) {
     this.init = function () { that.messages = []; };
 
   }
+
+MessageBoard.prototype.artoo = artooSchematics();
 
 MessageBoard.prototype.createButton = function (tag, src, action) {
   "use strict";
