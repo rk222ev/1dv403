@@ -4,12 +4,15 @@ body {
 
 header {
     text-align: center;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 1.5em;
 }
 
 main {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .board {
@@ -20,6 +23,7 @@ main {
     padding: 10px;
     float:left;
     margin: 10px;
+    border: solid;
 }
 
 .board input {
@@ -33,7 +37,7 @@ textarea {
 }
 
 
-#last-header-letter {
+header span {
     color: #c09;
     font-size: 1.3em;
 }
@@ -43,11 +47,12 @@ textarea {
 }
 
 .message {
-    background-color: #9c0;
+    background-color: yellowgreen;
     padding: 5px;
     margin-bottom: 5px;
     overflow: auto;
     border: solid;
+    border-color: darkgreen;
     text-color: grey;
 }
 
