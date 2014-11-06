@@ -6,26 +6,25 @@ function MessageBoard (name) {
     var that = this,
       div = document.getElementById(name);
 
-  // Clears the message Area
-    this.clearMessages = function () {
+    function clearMessages () {
       var element = MessageBoard.prototype.artoo.getNode(name, "messages-div");
 
       MessageBoard.prototype.artoo.getNode(name).replaceChild(MessageBoard.prototype.artoo.buildElement({
           element: "div",
           className: "messages-div"
       }), element);
-    };
+    }
 
-    this.removeMessage = function (pos) {
+    function removeMessage (pos) {
       that.messages.splice(pos, 1);
-      that.clearMessages();
-      that.renderMessage(that.messages);
-      that.updateMessageCounter();
-    };
+      clearMessages();
+      renderMessage(that.messages);
+      updateMessageCounter();
+    }
 
-    this.renderMessage = function (message) {
+    function renderMessage (message) {
       if (Array.isArray(message)) {
-        message.forEach(function (message) { that.renderMessage(message); });
+        message.forEach(function (message) { renderMessage(message); });
         return;
       }
 
@@ -56,7 +55,7 @@ function MessageBoard (name) {
         src: "pics/x.png",
         onclick: function () {
           if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
-            that.removeMessage(that.messages.indexOf(message));
+            removeMessage(that.messages.indexOf(message));
           }
         }
       }));
@@ -70,24 +69,24 @@ function MessageBoard (name) {
       wrapper.appendChild(footer);
 
       messageArea.appendChild(wrapper);
-    };
+    }
 
 
-    this.sendMessage = function () {
+    function sendMessage () {
       var textarea = MessageBoard.prototype.artoo.getNode(name, "message-input"),
         newMessage = new Message(textarea.value, new Date());
 
       if (textarea.value !== "") {
         that.messages.push(newMessage);
-        that.renderMessage(newMessage);
+        renderMessage(newMessage);
         textarea.value = "";
-        that.updateMessageCounter();
+        updateMessageCounter();
       }
-    };
+    }
 
-  this.updateMessageCounter = function () {
+  function updateMessageCounter () {
     MessageBoard.prototype.artoo.getNode(name, "amount").innerHTML = that.messages.length;
-  };
+  }
 
     this.init = function () {
       that.messages = [];
@@ -106,7 +105,7 @@ function MessageBoard (name) {
             value: "skriv",
             type: "button",
             onclick: function () {
-              that.sendMessage();
+              sendMessage();
               return false;
             }
           })
@@ -116,7 +115,7 @@ function MessageBoard (name) {
       .addEventListener("keydown", function (key) {
         if (key.keyCode === 13 && key.shiftKey === false) {
           key.preventDefault();
-          that.sendMessage();
+          sendMessage();
         }
       });
     };
