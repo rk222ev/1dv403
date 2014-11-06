@@ -50,3 +50,5 @@ var artooSchematic = function () {
 
 	return that;
 };
+
+var artoo = artooSchematic();

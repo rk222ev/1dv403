@@ -6,9 +6,9 @@ function MessageBoard (name) {
     var that = this;
 
     function clearMessages () {
-      var element = MessageBoard.prototype.artoo.getNode(name, "messages-div");
+      var element = artoo.getNode(name, "messages-div");
 
-      MessageBoard.prototype.artoo.getNode(name).replaceChild(MessageBoard.prototype.artoo.buildElement({
+      artoo.getNode(name).replaceChild(artoo.buildElement({
           element: "div",
           className: "messages-div"
       }), element);
@@ -27,21 +27,19 @@ function MessageBoard (name) {
         return;
       }
 
-      var messageArea = MessageBoard.prototype.artoo.getNode(name, "messages-div"),
-
-        wrapper = MessageBoard.prototype.artoo.buildElement({
+      var messageArea = artoo.getNode(name, "messages-div"),
+        wrapper = artoo.buildElement({
           element: "div",
           className: "message"
         }),
-
         footer = document.createElement("footer");
 
-      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+      footer.appendChild(artoo.buildElement({
         element: "p",
         innerHTML: message.getTime()
       }));
 
-      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+      footer.appendChild(artoo.buildElement({
         element: "img",
         src: "pics/i.png",
         onclick: function () {
@@ -49,7 +47,7 @@ function MessageBoard (name) {
         }
       }));
 
-      footer.appendChild(MessageBoard.prototype.artoo.buildElement({
+      footer.appendChild(artoo.buildElement({
         element: "img",
         src: "pics/x.png",
         onclick: function () {
@@ -59,7 +57,7 @@ function MessageBoard (name) {
         }
       }));
 
-      wrapper.appendChild(MessageBoard.prototype.artoo.buildElement({
+      wrapper.appendChild(artoo.buildElement({
         element: "p",
         className: "message-text",
         innerHTML: message.getHTMLText()
@@ -72,7 +70,7 @@ function MessageBoard (name) {
 
 
     function sendMessage () {
-      var textarea = MessageBoard.prototype.artoo.getNode(name, "message-input"),
+      var textarea = artoo.getNode(name, "message-input"),
         newMessage = new Message(textarea.value, new Date());
 
       if (textarea.value !== "") {
@@ -84,23 +82,23 @@ function MessageBoard (name) {
     }
 
   function updateMessageCounter () {
-    MessageBoard.prototype.artoo.getNode(name, "info-amount-of-messages")
+    artoo.getNode(name, "info-amount-of-messages")
       .innerHTML = "Antal meddelanden : " + that.messages.length;
   }
 
   this.init = function () {
-    var mainNode = MessageBoard.prototype.artoo.getNode(name);
+    var mainNode = artoo.getNode(name);
     that.messages = [];
 
     mainNode.appendChild(
-      MessageBoard.prototype.artoo.buildElement({
+      artoo.buildElement({
         element:"div",
         className: "messages-div"
       })
     );
 
     mainNode.appendChild(
-      MessageBoard.prototype.artoo.buildElement({
+      artoo.buildElement({
         element: "p",
         className: "info-amount-of-messages",
         innerHTML: "Antal meddelanden : " + that.messages.length
@@ -108,14 +106,14 @@ function MessageBoard (name) {
     );
 
     mainNode.appendChild(
-      MessageBoard.prototype.artoo.buildElement({
+      artoo.buildElement({
         element: "textarea",
         className: "message-input",
       })
     );
 
      mainNode.appendChild(
-        MessageBoard.prototype.artoo.buildElement({
+        artoo.buildElement({
           element: "input",
           value: "skriv",
           type: "button",
@@ -126,7 +124,7 @@ function MessageBoard (name) {
         })
       );
 
-  MessageBoard.prototype.artoo.getNode(name, "message-input")
+  artoo.getNode(name, "message-input")
     .addEventListener("keydown", function (key) {
       if (key.keyCode === 13 && key.shiftKey === false) {
         key.preventDefault();
@@ -136,4 +134,3 @@ function MessageBoard (name) {
   };
 }
 
-MessageBoard.prototype.artoo = artooSchematic();
