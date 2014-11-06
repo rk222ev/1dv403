@@ -1,4 +1,4 @@
-var artooSchematic = function () {
+var  artoo = (function () {
 	"use strict";
 	var that ={};
 
@@ -49,6 +49,4 @@ var artooSchematic = function () {
   	};
 
 	return that;
-};
-
-var artoo = artooSchematic();
+})();
