@@ -4,39 +4,16 @@ function MessageBoard (name) {
     "use strict";
 
     var that = this,
-      div = document.getElementById(name),
-      inputButton = that.createButton("input", null,
-        function () {
-          that.sendMessage();
-          return false;
-        });
-
-
-    // Send button.
-    inputButton.type = "button";
-    inputButton.value = "skriv";
-    div.appendChild(inputButton);
-
-
-    // Listen for enter when a message-input is selected.
-    // ignores shift-enter.
-    div.getElementsByClassName("message-input")[0].onkeypress = function (e) {
-      if (e.keyCode === 13 && e.shiftKey === false) {
-        e.preventDefault();
-        that.sendMessage();
-      }
-    };
-
+      div = document.getElementById(name);
 
   // Clears the message Area
     this.clearMessages = function () {
-      var element = div.getElementsByClassName("messages-div")[0];
+      var element = MessageBoard.prototype.artoo.getNode(name, "messages-div");
 
-
-      div.replaceChild(MessageBoard.prototype.artoo.buildElement({
+      MessageBoard.prototype.artoo.getNode(name).replaceChild(MessageBoard.prototype.artoo.buildElement({
           element: "div",
           className: "messages-div"
-        }), element);
+      }), element);
     };
 
     this.removeMessage = function (pos) {
@@ -46,16 +23,13 @@ function MessageBoard (name) {
       that.updateMessageCounter();
     };
 
-    // Method renderMessage
-    // Renders a single message and
-    // updates the message counter.
     this.renderMessage = function (message) {
       if (Array.isArray(message)) {
         message.forEach(function (message) { that.renderMessage(message); });
         return;
       }
 
-      var messageArea = div.getElementsByClassName("messages-div")[0],
+      var messageArea = MessageBoard.prototype.artoo.getNode(name, "messages-div"),
 
         wrapper = MessageBoard.prototype.artoo.buildElement({
           element: "div",
@@ -99,12 +73,8 @@ function MessageBoard (name) {
     };
 
 
-    // Method sendMessage
-    // Adds a new message to the messages array,
-    // clears the textarea and
-    // updates the message counter.
     this.sendMessage = function () {
-      var textarea = div.getElementsByClassName("message-input")[0],
+      var textarea = MessageBoard.prototype.artoo.getNode(name, "message-input"),
         newMessage = new Message(textarea.value, new Date());
 
       if (textarea.value !== "") {
@@ -116,12 +86,41 @@ function MessageBoard (name) {
     };
 
   this.updateMessageCounter = function () {
-    div.getElementsByClassName("amount")[0].innerHTML = that.messages.length;
+    MessageBoard.prototype.artoo.getNode(name, "amount").innerHTML = that.messages.length;
   };
 
-    this.init = function () { that.messages = []; };
+    this.init = function () {
+      that.messages = [];
+     MessageBoard.prototype.artoo.getNode(name)
+      .appendChild(
+        MessageBoard.prototype.artoo.buildElement({
+          element: "textarea",
+          className: "message-input"
+        })
+      );
 
-  }
+      MessageBoard.prototype.artoo.getNode(name)
+        .appendChild(
+          MessageBoard.prototype.artoo.buildElement({
+            element: "input",
+            value: "skriv",
+            type: "button",
+            onclick: function () {
+              that.sendMessage();
+              return false;
+            }
+          })
+        );
+
+    MessageBoard.prototype.artoo.getNode(name, "message-input")
+      .addEventListener("keydown", function (key) {
+        if (key.keyCode === 13 && key.shiftKey === false) {
+          key.preventDefault();
+          that.sendMessage();
+        }
+      });
+    };
+}
 
 MessageBoard.prototype.artoo = artooSchematic();
 
