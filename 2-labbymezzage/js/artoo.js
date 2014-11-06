@@ -1,4 +1,4 @@
-var artooSchematics = function () {
+var artooSchematic = function () {
 	"use strict";
 	var that ={};
 

@@ -123,7 +123,7 @@ function MessageBoard (name) {
 
   }
 
-MessageBoard.prototype.artoo = artooSchematics();
+MessageBoard.prototype.artoo = artooSchematic();
 
 MessageBoard.prototype.createButton = function (tag, src, action) {
   "use strict";
@@ -132,23 +132,6 @@ MessageBoard.prototype.createButton = function (tag, src, action) {
   if (src !== null) {
     element.src = src;
   }
-  return element;
-};
-
-MessageBoard.prototype.buildElement = function (tag, className, innerHTML) {
-  "use strict";
-  var element = document.createElement(tag);
-  if (Array.isArray(tag)) {
-    return tag.forEach(function (data) { return this.buildElement(data); });
-  }
-  if (className !== null) {
-    element.className = className;
-  }
-
-  if (innerHTML !== undefined) {
-    element.innerHTML = innerHTML;
-  }
-
   return element;
 };
 
