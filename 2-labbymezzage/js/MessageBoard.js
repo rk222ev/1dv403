@@ -1,4 +1,4 @@
-/*global document, window, Message*/
+/*global document, window, Message, artoo*/
 
 function MessageBoard (name) {
     "use strict";
