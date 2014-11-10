@@ -18,19 +18,19 @@ function MessageBoard (name) {
       return;
     }
 
-    var messageArea = artoo.getNode(name, "messages-div"),
-      wrapper = artoo.buildElement({
+    var messageArea = document.getNode(name, "messages-div"),
+      wrapper = document.buildElement({
         element: "div",
         className: "message"
       }),
       footer = document.createElement("footer");
 
-    footer.appendChild(artoo.buildElement({
+    footer.appendChild(document.buildElement({
       element: "p",
       innerHTML: message.getTime()
     }));
 
-    footer.appendChild(artoo.buildElement({
+    footer.appendChild(document.buildElement({
       element: "img",
       src: "pics/i.png",
       onclick: function () {
@@ -38,7 +38,7 @@ function MessageBoard (name) {
       }
     }));
 
-    footer.appendChild(artoo.buildElement({
+    footer.appendChild(document.buildElement({
       element: "img",
       src: "pics/x.png",
       onclick: function () {
@@ -48,7 +48,7 @@ function MessageBoard (name) {
       }
     }));
 
-    wrapper.appendChild(artoo.buildElement({
+    wrapper.appendChild(document.buildElement({
       element: "p",
       className: "message-text",
       innerHTML: message.getHTMLText()
@@ -61,7 +61,7 @@ function MessageBoard (name) {
 
 
   function sendMessage () {
-    var textarea = artoo.getNode(name, "message-input"),
+    var textarea = document.getNode(name, "message-input"),
       newMessage = new Message(textarea.value, new Date());
 
     if (textarea.value !== "") {
@@ -73,18 +73,18 @@ function MessageBoard (name) {
   }
 
   this.init = function () {
-    var mainNode = artoo.getNode(name);
+    var mainNode = document.getNode(name);
     that.messages = [];
 
     mainNode.appendChild(
-      artoo.buildElement({
+      document.buildElement({
         element:"div",
         className: "messages-div"
       })
     );
 
     mainNode.appendChild(
-      artoo.buildElement({
+      document.buildElement({
         element: "p",
         className: "info-amount-of-messages",
         innerHTML: "Antal meddelanden : " + that.messages.length
@@ -92,14 +92,14 @@ function MessageBoard (name) {
     );
 
     mainNode.appendChild(
-      artoo.buildElement({
+      document.buildElement({
         element: "textarea",
         className: "message-input",
       })
     );
 
     mainNode.appendChild(
-      artoo.buildElement({
+      document.buildElement({
         element: "input",
         value: "skriv",
         type: "button",
@@ -110,7 +110,7 @@ function MessageBoard (name) {
       })
     );
 
-    artoo.getNode(name, "message-input").addEventListener("keydown", function (key) {
+    document.getNode(name, "message-input").addEventListener("keydown", function (key) {
       if (key.keyCode === 13 && key.shiftKey === false) {
         key.preventDefault();
         sendMessage();
@@ -120,16 +120,15 @@ function MessageBoard (name) {
 }
 
 MessageBoard.prototype.clearMessages = function (board) {
-  var element = artoo.getNode(board, "messages-div");
+  var element = document.getNode(board, "messages-div");
 
-  artoo.getNode(board).replaceChild(artoo.buildElement({
+  document.getNode(board).replaceChild(document.buildElement({
       element: "div",
       className: "messages-div"
   }), element);
 };
 
 MessageBoard.prototype.updateMessageCounter = function (name, length) {
-  artoo.getNode(name, "info-amount-of-messages")
+  document.getNode(name, "info-amount-of-messages")
     .innerHTML = "Antal meddelanden : " + length;
 };
-

@@ -1,7 +1,5 @@
-var  artoo = {
 
-
-	buildElement: function (params) {
+	document.buildElement = function (params) {
 
 		if (params.hasOwnProperty("element")) {
 			element = document.createElement(params.element);
@@ -32,9 +30,9 @@ var  artoo = {
 		}
 
 		return element;
-	},
+	};
 
-	getNode :  function (element, className) {
+	document.getNode =  function (element, className) {
 	    var boardNode =  document.getElementById(element);
 
 	    if(className === undefined)  {
@@ -42,6 +40,5 @@ var  artoo = {
 	    }
 
     	return boardNode.getElementsByClassName(className)[0];
-  	}
+  	};
 
-};
