@@ -1,11 +1,7 @@
-var  artoo = (function () {
-	"use strict";
-	var that ={};
+var  artoo = {
 
 
-	that.buildElement =  function (params) {
-
-		var element;
+	buildElement: function (params) {
 
 		if (params.hasOwnProperty("element")) {
 			element = document.createElement(params.element);
@@ -36,9 +32,9 @@ var  artoo = (function () {
 		}
 
 		return element;
-	};
+	},
 
-	that.getNode =  function (element, className) {
+	getNode :  function (element, className) {
 	    var boardNode =  document.getElementById(element);
 
 	    if(className === undefined)  {
@@ -46,7 +42,6 @@ var  artoo = (function () {
 	    }
 
     	return boardNode.getElementsByClassName(className)[0];
-  	};
+  	}
 
-	return that;
-})();
+};
