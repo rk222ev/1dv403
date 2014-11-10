@@ -3,16 +3,16 @@
 function MessageBoard (name) {
   "use strict";
 
-  var that = this;
+  var that = this,
 
-  function removeMessage (pos) {
+  removeMessage = function (pos) {
     that.messages.splice(pos, 1);
     MessageBoard.prototype.clearMessages(name);
     renderMessage(that.messages);
     MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
-  }
+  },
 
-  function renderMessage (message) {
+  renderMessage = function (message) {
     if (Array.isArray(message)) {
       message.forEach(function (message) { renderMessage(message); });
       return;
@@ -57,10 +57,10 @@ function MessageBoard (name) {
     wrapper.appendChild(footer);
 
     messageArea.appendChild(wrapper);
-  }
+  },
 
 
-  function sendMessage () {
+  sendMessage = function() {
     var textarea = document.getNode(name, "message-input"),
       newMessage = new Message(textarea.value, new Date());
 
@@ -70,7 +70,7 @@ function MessageBoard (name) {
       textarea.value = "";
       MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
     }
-  }
+  };
 
   this.init = function () {
     var mainNode = document.getNode(name);
@@ -116,6 +116,7 @@ function MessageBoard (name) {
         sendMessage();
       }
     });
+
   };
 }
 
@@ -132,3 +133,49 @@ MessageBoard.prototype.updateMessageCounter = function (name, length) {
   document.getNode(name, "info-amount-of-messages")
     .innerHTML = "Antal meddelanden : " + length;
 };
+
+
+document.buildElement = function (params) {
+
+  if (params.hasOwnProperty("element")) {
+    element = document.createElement(params.element);
+  }
+
+  if (params.hasOwnProperty("className")) {
+    element.className = params.className;
+  }
+
+  if (params.hasOwnProperty("innerHTML")) {
+    element.innerHTML = params.innerHTML;
+  }
+
+  if (params.hasOwnProperty("onclick")) {
+    element.onclick = params.onclick;
+  }
+
+  if (params.hasOwnProperty("src")) {
+    element.src = params.src;
+  }
+
+  if (params.hasOwnProperty("type")) {
+    element.type = params.type;
+  }
+
+  if (params.hasOwnProperty("value")) {
+    element.value = params.value;
+  }
+
+  return element;
+};
+
+document.getNode =  function (element, className) {
+    var boardNode =  document.getElementById(element);
+
+    if(className === undefined)  {
+      return boardNode;
+    }
+
+    return boardNode.getElementsByClassName(className)[0];
+  };
+
+
