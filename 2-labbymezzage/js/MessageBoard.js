@@ -10,7 +10,8 @@ function MessageBoard (name, messages) {
   this.init();
 }
 
-
+// Clears the board by making a new empty node and replacing.
+// the one that exists.
 MessageBoard.prototype.clearMessages = function (board) {
   var element = document.getNode(board, "messages-div");
 
@@ -21,6 +22,8 @@ MessageBoard.prototype.clearMessages = function (board) {
 };
 
 
+// Creates the messageboard elements we will need
+// this includes delete buttons and info buttons etc.
 MessageBoard.prototype.init = function () {
   var that = this;
     mainNode = document.getNode(this.getName());
@@ -68,7 +71,9 @@ document.getNode(this.getName(), "message-input").addEventListener("keydown", fu
 
 };
 
-
+// Removes a message at a certain index in the array and also
+// makes renderMessage() reprint the remaining messages.
+// Lastly it updates the message counter.
 MessageBoard.prototype.removeMessage = function (pos) {
 
   this.messages.splice(pos, 1);
@@ -77,6 +82,10 @@ MessageBoard.prototype.removeMessage = function (pos) {
   this.updateMessageCounter(this.getName(), this.messages.length);
 };
 
+
+// Renders messages and prints this to our HTML doc.
+// if the input is a array of messages it calls itself
+// recursively and renders each message.
 MessageBoard.prototype.renderMessage = function (message) {
 
   var that = this,
@@ -127,7 +136,10 @@ MessageBoard.prototype.renderMessage = function (message) {
   messageArea.appendChild(wrapper);
 };
 
-
+// Creates a new message from the textarea value,
+// adds this to messages[],
+// prints the message by calling printMessage
+// and updates the message counter.
 MessageBoard.prototype.sendMessage = function() {
   var textarea = document.getNode(this.getName(), "message-input"),
     newMessage = new Message(textarea.value, new Date());
