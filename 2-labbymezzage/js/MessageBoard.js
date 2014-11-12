@@ -1,27 +1,13 @@
-/*global document, window, Message, artoo*/
+/*global document, window, Message*/
 
-function MessageBoard (name) {
+function MessageBoard (name, messages) {
   "use strict";
 
-  var that = this;
+  this.messages = messages || [];
 
-  that.messages = [];
+  this.getName = function () { return name; };
 
-  that.getName = function () { return name; };
-
-  that.getMessages = function () { return messages; };
-
-  that.setMessages = function (msgs) { messages = msgs; };
-
-  that.removeMessage = function (pos) {
-
-    that.messages.splice(pos, 1);
-    MessageBoard.prototype.clearMessages(name);
-    MessageBoard.prototype.renderMessage(that.messages, that);
-    MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
-  };
-
-  MessageBoard.prototype.init(that);
+  this.init();
 }
 
 
@@ -35,8 +21,9 @@ MessageBoard.prototype.clearMessages = function (board) {
 };
 
 
-MessageBoard.prototype.init = function (that) {
-  var mainNode = document.getNode(that.getName());
+MessageBoard.prototype.init = function () {
+  var that = this;
+    mainNode = document.getNode(this.getName());
 
   mainNode.appendChild(
     document.buildElement({
@@ -49,7 +36,7 @@ MessageBoard.prototype.init = function (that) {
     document.buildElement({
       element: "p",
       className: "info-amount-of-messages",
-      innerHTML: "Antal meddelanden : " + that.messages.length
+      innerHTML: "Antal meddelanden : " + this.messages.length
     })
   );
 
@@ -66,33 +53,45 @@ MessageBoard.prototype.init = function (that) {
       value: "skriv",
       type: "button",
       onclick: function () {
-        that.sendMessage(that);
+        that.sendMessage();
         return false;
       }
     })
   );
 
-document.getNode(that.getName(), "message-input").addEventListener("keydown", function (key) {
+document.getNode(this.getName(), "message-input").addEventListener("keydown", function (key) {
     if (key.keyCode === 13 && key.shiftKey === false) {
       key.preventDefault();
-      that.sendMessage(that);
+      that.sendMessage();
     }
   });
+
 };
 
 
-MessageBoard.prototype.renderMessage = function (message, that) {
-  if (Array.isArray(message)) {
-    message.forEach(function (message) { MessageBoard.prototype.renderMessage(message, that); });
-    return;
-  }
+MessageBoard.prototype.removeMessage = function (pos) {
 
-  var messageArea = document.getNode(that.getName(), "messages-div"),
+  this.messages.splice(pos, 1);
+  this.clearMessages(this.getName());
+  this.renderMessage(this.messages);
+  this.updateMessageCounter(this.getName(), this.messages.length);
+};
+
+MessageBoard.prototype.renderMessage = function (message) {
+
+  var that = this,
+    messageArea = document.getNode(this.getName(), "messages-div"),
     wrapper = document.buildElement({
       element: "div",
       className: "message"
     }),
     footer = document.createElement("footer");
+
+  if (Array.isArray(message)) {
+    message.forEach(function (message) { that.renderMessage(message); });
+    return;
+  }
+
 
   footer.appendChild(document.buildElement({
     element: "p",
@@ -129,23 +128,23 @@ MessageBoard.prototype.renderMessage = function (message, that) {
 };
 
 
-MessageBoard.prototype.sendMessage = function(that) {
-  var textarea = document.getNode(that.getName(), "message-input"),
+MessageBoard.prototype.sendMessage = function() {
+  var textarea = document.getNode(this.getName(), "message-input"),
     newMessage = new Message(textarea.value, new Date());
 
   if (textarea.value !== "") {
-    that.messages.push(newMessage);
-    that.renderMessage(newMessage, that);
+    this.messages.push(newMessage);
+    this.renderMessage(newMessage);
     textarea.value = "";
-    MessageBoard.prototype.updateMessageCounter(that.getName(), that.messages.length);
+   this.updateMessageCounter(this.getName(), this.messages.length);
   }
 };
 
 
 
-MessageBoard.prototype.updateMessageCounter = function (name, length) {
+MessageBoard.prototype.updateMessageCounter = function (name, numberOfMessages) {
   document.getNode(name, "info-amount-of-messages")
-    .innerHTML = "Antal meddelanden : " + length;
+    .innerHTML = "Antal meddelanden : " + numberOfMessages;
 };
 
 
