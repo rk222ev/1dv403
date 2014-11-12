@@ -3,14 +3,10 @@ window.onload = function () {
 
   var messageBoard1 =  new MessageBoard("board1"),
     messageBoard2 = new MessageBoard("board2");
-
-  messageBoard1.init();
-  messageBoard2.init();
-
 };
 
 
-
+// Builds an DOM node based on a object with certain keys.
 document.buildElement = function (params) {
 
   if (params.hasOwnProperty("element")) {
@@ -44,14 +40,16 @@ document.buildElement = function (params) {
   return element;
 };
 
+
+// Gets DOM nodes based on id and class.
 document.getNode =  function (element, className) {
-    var boardNode =  document.getElementById(element);
+  var boardNode =  document.getElementById(element);
 
-    if(className === undefined)  {
-      return boardNode;
-    }
+  if(className === undefined)  {
+    return boardNode;
+  }
 
-    return boardNode.getElementsByClassName(className)[0];
+  return boardNode.getElementsByClassName(className)[0];
 };
 
 

@@ -1,125 +1,17 @@
-/*global document, window, Message, artoo*/
+/*global document, window, Message*/
 
-function MessageBoard (name) {
+function MessageBoard (name, messages) {
   "use strict";
 
-  var that = this,
+  this.messages = messages || [];
 
-  removeMessage = function (pos) {
-    that.messages.splice(pos, 1);
-    MessageBoard.prototype.clearMessages(name);
-    renderMessage(that.messages);
-    MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
-  },
+  this.getName = function () { return name; };
 
-  renderMessage = function (message) {
-    if (Array.isArray(message)) {
-      message.forEach(function (message) { renderMessage(message); });
-      return;
-    }
-
-    var messageArea = document.getNode(name, "messages-div"),
-      wrapper = document.buildElement({
-        element: "div",
-        className: "message"
-      }),
-      footer = document.createElement("footer");
-
-    footer.appendChild(document.buildElement({
-      element: "p",
-      innerHTML: message.getTime()
-    }));
-
-    footer.appendChild(document.buildElement({
-      element: "img",
-      src: "pics/i.png",
-      onclick: function () {
-        window.alert("Inlägget skapades " + message.getDate());
-      }
-    }));
-
-    footer.appendChild(document.buildElement({
-      element: "img",
-      src: "pics/x.png",
-      onclick: function () {
-        if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
-          removeMessage(that.messages.indexOf(message));
-        }
-      }
-    }));
-
-    wrapper.appendChild(document.buildElement({
-      element: "p",
-      className: "message-text",
-      innerHTML: message.getHTMLText()
-    }));
-
-    wrapper.appendChild(footer);
-
-    messageArea.appendChild(wrapper);
-  },
-
-
-  sendMessage = function() {
-    var textarea = document.getNode(name, "message-input"),
-      newMessage = new Message(textarea.value, new Date());
-
-    if (textarea.value !== "") {
-      that.messages.push(newMessage);
-      renderMessage(newMessage);
-      textarea.value = "";
-      MessageBoard.prototype.updateMessageCounter(name, that.messages.length);
-    }
-  };
-
-  this.init = function () {
-    var mainNode = document.getNode(name);
-    that.messages = [];
-
-    mainNode.appendChild(
-      document.buildElement({
-        element:"div",
-        className: "messages-div"
-      })
-    );
-
-    mainNode.appendChild(
-      document.buildElement({
-        element: "p",
-        className: "info-amount-of-messages",
-        innerHTML: "Antal meddelanden : " + that.messages.length
-      })
-    );
-
-    mainNode.appendChild(
-      document.buildElement({
-        element: "textarea",
-        className: "message-input",
-      })
-    );
-
-    mainNode.appendChild(
-      document.buildElement({
-        element: "input",
-        value: "skriv",
-        type: "button",
-        onclick: function () {
-          sendMessage();
-          return false;
-        }
-      })
-    );
-
-    document.getNode(name, "message-input").addEventListener("keydown", function (key) {
-      if (key.keyCode === 13 && key.shiftKey === false) {
-        key.preventDefault();
-        sendMessage();
-      }
-    });
-
-  };
+  this.init();
 }
 
+// Clears the board by making a new empty node and replacing.
+// the one that exists.
 MessageBoard.prototype.clearMessages = function (board) {
   var element = document.getNode(board, "messages-div");
 
@@ -129,53 +21,140 @@ MessageBoard.prototype.clearMessages = function (board) {
   }), element);
 };
 
-MessageBoard.prototype.updateMessageCounter = function (name, length) {
-  document.getNode(name, "info-amount-of-messages")
-    .innerHTML = "Antal meddelanden : " + length;
-};
 
+// Creates the messageboard elements we will need
+// this includes delete buttons and info buttons etc.
+MessageBoard.prototype.init = function () {
+  var that = this;
+    mainNode = document.getNode(this.getName());
 
-document.buildElement = function (params) {
+  mainNode.appendChild(
+    document.buildElement({
+      element:"div",
+      className: "messages-div"
+    })
+  );
 
-  if (params.hasOwnProperty("element")) {
-    element = document.createElement(params.element);
-  }
+  mainNode.appendChild(
+    document.buildElement({
+      element: "p",
+      className: "info-amount-of-messages",
+      innerHTML: "Antal meddelanden : " + this.messages.length
+    })
+  );
 
-  if (params.hasOwnProperty("className")) {
-    element.className = params.className;
-  }
+  mainNode.appendChild(
+    document.buildElement({
+      element: "textarea",
+      className: "message-input",
+    })
+  );
 
-  if (params.hasOwnProperty("innerHTML")) {
-    element.innerHTML = params.innerHTML;
-  }
+  mainNode.appendChild(
+    document.buildElement({
+      element: "input",
+      value: "skriv",
+      type: "button",
+      onclick: function () {
+        that.sendMessage();
+        return false;
+      }
+    })
+  );
 
-  if (params.hasOwnProperty("onclick")) {
-    element.onclick = params.onclick;
-  }
-
-  if (params.hasOwnProperty("src")) {
-    element.src = params.src;
-  }
-
-  if (params.hasOwnProperty("type")) {
-    element.type = params.type;
-  }
-
-  if (params.hasOwnProperty("value")) {
-    element.value = params.value;
-  }
-
-  return element;
-};
-
-document.getNode =  function (element, className) {
-    var boardNode =  document.getElementById(element);
-
-    if(className === undefined)  {
-      return boardNode;
+document.getNode(this.getName(), "message-input").addEventListener("keydown", function (key) {
+    if (key.keyCode === 13 && key.shiftKey === false) {
+      key.preventDefault();
+      that.sendMessage();
     }
+  });
 
-    return boardNode.getElementsByClassName(className)[0];
-  };
+};
+
+// Removes a message at a certain index in the array and also
+// makes renderMessage() reprint the remaining messages.
+// Lastly it updates the message counter.
+MessageBoard.prototype.removeMessage = function (pos) {
+
+  this.messages.splice(pos, 1);
+  this.clearMessages(this.getName());
+  this.renderMessage(this.messages);
+  this.updateMessageCounter(this.getName(), this.messages.length);
+};
 
 
+// Renders messages and prints this to our HTML doc.
+// if the input is a array of messages it calls itself
+// recursively and renders each message.
+MessageBoard.prototype.renderMessage = function (message) {
+
+  var that = this,
+    messageArea = document.getNode(this.getName(), "messages-div"),
+    wrapper = document.buildElement({
+      element: "div",
+      className: "message"
+    }),
+    footer = document.createElement("footer");
+
+  if (Array.isArray(message)) {
+    message.forEach(function (message) { that.renderMessage(message); });
+    return;
+  }
+
+
+  footer.appendChild(document.buildElement({
+    element: "p",
+    innerHTML: message.getTime()
+  }));
+
+  footer.appendChild(document.buildElement({
+    element: "img",
+    src: "pics/i.png",
+    onclick: function () {
+      window.alert("Inlägget skapades " + message.getDate());
+    }
+  }));
+
+  footer.appendChild(document.buildElement({
+    element: "img",
+    src: "pics/x.png",
+    onclick: function () {
+      if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
+        that.removeMessage(that.messages.indexOf(message));
+      }
+    }
+  }));
+
+  wrapper.appendChild(document.buildElement({
+    element: "p",
+    className: "message-text",
+    innerHTML: message.getHTMLText()
+  }));
+
+  wrapper.appendChild(footer);
+
+  messageArea.appendChild(wrapper);
+};
+
+// Creates a new message from the textarea value,
+// adds this to messages[],
+// prints the message by calling printMessage
+// and updates the message counter.
+MessageBoard.prototype.sendMessage = function() {
+  var textarea = document.getNode(this.getName(), "message-input"),
+    newMessage = new Message(textarea.value, new Date());
+
+  if (textarea.value !== "") {
+    this.messages.push(newMessage);
+    this.renderMessage(newMessage);
+    textarea.value = "";
+   this.updateMessageCounter(this.getName(), this.messages.length);
+  }
+};
+
+
+
+MessageBoard.prototype.updateMessageCounter = function (name, numberOfMessages) {
+  document.getNode(name, "info-amount-of-messages")
+    .innerHTML = "Antal meddelanden : " + numberOfMessages;
+};
