@@ -13,16 +13,15 @@ function Memory (rows, cols, node) {
 
 Memory.prototype.start = function () {
 
-  var gameNode = document.getNode(this.getNodeName()),
-    oldBoard;
+  var oldBoard,
 
+    gameNode = document.getNode(this.getNodeName()),
 
-
-  var newBoard = document.buildElement({
-    element: "div",
-    className: "board",
-    innerHTML: "Test"
-  });
+    newBoard = document.buildElement({
+      element: "div",
+      className: "board",
+      innerHTML: "Test"
+    });
 
 
 
