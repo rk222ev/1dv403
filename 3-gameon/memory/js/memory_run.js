@@ -54,12 +54,18 @@ document.buildElement = function (params) {
 
 // Gets DOM nodes based on id and class.
 document.getNode =  function (element, className) {
-  var boardNode =  document.getElementById(element);
+  var boardNode =  document.getElementById(element),
+    classNode;
+
 
   if(className === undefined)  {
     return boardNode;
   }
 
-  return boardNode.getElementsByClassName(className)[0];
+  classNode = boardNode.getElementsByClassName(className)[0];
+
+  return classNode;
+
+
 };
 

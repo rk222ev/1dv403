@@ -4,7 +4,7 @@ function Memory (rows, cols, node) {
 
   var pictures = [];
 
-  this.getNode = function () { return document.getNode(node); };
+  this.getNodeName = function () { return node; };
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
 
@@ -13,17 +13,29 @@ function Memory (rows, cols, node) {
 
 Memory.prototype.start = function () {
 
-  var gameNode = this.getNode();
+  var gameNode = document.getNode(this.getNodeName()),
+    oldBoard;
 
-  console.log("At start()");
 
-  var board = document.buildElement({
+
+  var newBoard = document.buildElement({
     element: "div",
     className: "board",
     innerHTML: "Test"
   });
 
-  gameNode.appendChild(board);
+
+
+if(gameNode.hasChildNodes()) {
+
+  oldBoard = document.getNode(this.getNodeName(), "board");
+  gameNode.replaceChild(oldBoard, newBoard);
+
+} else {
+
+  gameNode.appendChild(newBoard);
+
+}
 
 
 
