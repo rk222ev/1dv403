@@ -17,7 +17,11 @@ Memory.prototype.start = function () {
 
   console.log("At start()");
 
-  var board = document.buildElement({ element: "div", className: "board", innerHTML: "Test"});
+  var board = document.buildElement({
+    element: "div",
+    className: "board",
+    innerHTML: "Test"
+  });
 
   gameNode.appendChild(board);
 
