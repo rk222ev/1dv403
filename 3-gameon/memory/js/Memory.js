@@ -2,6 +2,7 @@
 
 function Memory (rows, cols, node) {
 
+  var pictures = [];
 
   this.getNode = function () { return document.getNode(node); };
 
