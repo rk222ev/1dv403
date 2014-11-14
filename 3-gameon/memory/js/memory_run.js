@@ -11,7 +11,9 @@ var MemoryApp = {
       .getPictureArray(mem1.getSize())
     );
 
-    // mem2.start();
+    // mem2.start(RandomGenerator
+    //   .getPictureArray(mem2.getSize())
+    // );
   },
 };
 
