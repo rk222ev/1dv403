@@ -1,12 +1,14 @@
 "use strict";
 
-var Memory = function (rows, cols, node) {
+function Memory (rows, cols, node) {
+
 
   this.getNode = function () { return document.getNode(node); };
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
 
-};
+}
+
 
 Memory.prototype.start = function () {
 
