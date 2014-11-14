@@ -11,7 +11,7 @@ function Memory (rows, cols, node) {
 }
 
 
-Memory.prototype.start = function () {
+Memory.prototype.start = function (pics) {
 
   var oldBoard,
 
@@ -24,6 +24,7 @@ Memory.prototype.start = function () {
     });
 
 
+  console.log(pics);
 
 if(gameNode.hasChildNodes()) {
 
@@ -35,8 +36,6 @@ if(gameNode.hasChildNodes()) {
   gameNode.appendChild(newBoard);
 
 }
-
-
 
 
 
