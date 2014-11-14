@@ -20,13 +20,12 @@ Memory.prototype.start = function (pics) {
     newBoard = document.buildElement({
       element: "div",
       className: "board",
-    });
+    }),
+
+    game = Memory.prototype.generateTable(pics, this.getSize().cols);
 
 
-    var game = Memory.prototype.generateTable(pics, this.getSize().cols);
-    newBoard.appendChild(game);
-
-  console.log(pics);
+  newBoard.appendChild(game);
 
   if(gameNode.hasChildNodes()) {
 
