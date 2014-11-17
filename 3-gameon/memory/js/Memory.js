@@ -2,15 +2,43 @@
 
 function Memory (cols, rows, nodeName) {
 
-  var pictures = [];
+  var pictures = [],
+    turnedPics = [];
   
   this.node = (function () { return document.querySelector("#" + nodeName) })();
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
+  
+  this.getTurnedPics = function () { return turnedPics; };
+  
+  this.turnPic = function (pic, picLink) { 
+    
+    var that = this,
+      obj = {
+        img: pic.getElementsByTagName("img")[0],
+        link: picLink,
+      };
+    
+    obj.img.src = "pics/" + picLink +".png"; 
+    
+    turnedPics.push(obj);
+    
+    if (turnedPics.length === 2) {
+      
+      if (turnedPics[0].link !== turnedPics[1].link) {
+        
+        window.setTimeout(function () { that.resetImages.call(that, that.resetImages()), 2000; });
+      }
+      
+      turnedPics = [];
+    }
+  };
 
 }
 
-
+// ***************************************
+// Creates and starts the game.
+// ***************************************
 Memory.prototype.start = function (pics) {
 
   var oldBoard,
@@ -22,7 +50,7 @@ Memory.prototype.start = function (pics) {
       className: "board",
     }),
 
-    game = Memory.prototype.generateTable(pics, this.getSize().cols);
+    game = this.generateTable(pics, this.getSize().cols);
 
 
   newBoard.appendChild(game);
@@ -37,26 +65,29 @@ Memory.prototype.start = function (pics) {
     gameNode.appendChild(newBoard);
 
   }
-
-
-
 };
 
 
+// ***************************************
+// Paints the playing board.
+// Returns the new table Element.
+// ***************************************
 Memory.prototype.generateTable = function (array, cols) {
 
-  var i,
+  var that = this,
+    i,
     tr = document.createElement("tr"),
     rowMembers = 0,
     table = document.createElement("table");
 
   array.forEach( function (pic) {
 
-    var td = document.createElement("td"),
+    var a = document.createElement("a"),
+      td = document.createElement("td"),
 
       img = document.buildElement({
         element: "img",
-        src: "pics/" + pic +".png"
+        src: "pics/0.png"
       });
 
     if (rowMembers === cols) {
@@ -65,12 +96,24 @@ Memory.prototype.generateTable = function (array, cols) {
       rowMembers = 0;
 
     }
-
-    td.appendChild(img);
+    
+    a.onclick = function () { 
+      that.turnPic(this, pic);
+    };
+    a.href = "#";
+    a.appendChild(img);
+    td.appendChild(a);
     tr.appendChild(td);
     rowMembers += 1;
 
   });
 
   return table;
+};
+
+
+Memory.prototype.resetImages = function () {
+  console.log(this);
+  
+  this.getTurnedPics().forEach(function (pic) { pic.img.src = "pics/0.png"; });
 };
