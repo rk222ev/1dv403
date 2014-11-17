@@ -58,7 +58,6 @@ MessageBoard.prototype.init = function () {
       type: "button",
       onclick: function () {
         that.sendMessage();
-        return false;
       }
     })
   );
