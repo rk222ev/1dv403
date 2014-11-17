@@ -1,8 +1,8 @@
 /*global document, window, Message*/
+"use strict";
 
 function MessageBoard (name, messages) {
-  "use strict";
-
+  
   this.messages = messages || [];
 
   this.node = (function () { return document.querySelector("#" + name); })();
