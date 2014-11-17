@@ -1,10 +1,10 @@
 "use strict";
 
-function Memory (cols, rows, node) {
+function Memory (cols, rows, nodeName) {
 
   var pictures = [];
-
-  this.getNodeName = function () { return node; };
+  
+  this.node = (function () { return document.querySelector("#" + nodeName) })();
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
 
@@ -15,7 +15,7 @@ Memory.prototype.start = function (pics) {
 
   var oldBoard,
 
-    gameNode = document.getNode(this.getNodeName()),
+    gameNode = this.node,
 
     newBoard = document.buildElement({
       element: "div",
@@ -29,7 +29,7 @@ Memory.prototype.start = function (pics) {
 
   if(gameNode.hasChildNodes()) {
 
-    oldBoard = document.getNode(this.getNodeName(), "board");
+    oldBoard = this.node.querySelector(".board");
     gameNode.replaceChild(oldBoard, newBoard);
 
   } else {
