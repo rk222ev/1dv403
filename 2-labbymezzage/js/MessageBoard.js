@@ -5,7 +5,7 @@ function MessageBoard (name, messages) {
 
   this.messages = messages || [];
 
-  this.getName = function () { return name; };
+  this.node = (function () { return document.querySelector("#" + name); })();
 
   this.init();
 }
@@ -13,9 +13,10 @@ function MessageBoard (name, messages) {
 // Clears the board by making a new empty node and replacing.
 // the one that exists.
 MessageBoard.prototype.clearMessages = function (board) {
-  var element = document.getNode(board, "messages-div");
+  var element = board.querySelector(".messages-div");
 
-  document.getNode(board).replaceChild(document.buildElement({
+  
+  board.replaceChild(document.buildElement({
       element: "div",
       className: "messages-div"
   }), element);
@@ -25,8 +26,8 @@ MessageBoard.prototype.clearMessages = function (board) {
 // Creates the messageboard elements we will need
 // this includes delete buttons and info buttons etc.
 MessageBoard.prototype.init = function () {
-  var that = this;
-    mainNode = document.getNode(this.getName());
+  var that = this,
+    mainNode = this.node;
 
   mainNode.appendChild(
     document.buildElement({
@@ -62,7 +63,7 @@ MessageBoard.prototype.init = function () {
     })
   );
 
-document.getNode(this.getName(), "message-input").addEventListener("keydown", function (key) {
+  mainNode.querySelector(".message-input").addEventListener("keydown", function (key) {
     if (key.keyCode === 13 && key.shiftKey === false) {
       key.preventDefault();
       that.sendMessage();
@@ -75,11 +76,11 @@ document.getNode(this.getName(), "message-input").addEventListener("keydown", fu
 // makes renderMessage() reprint the remaining messages.
 // Lastly it updates the message counter.
 MessageBoard.prototype.removeMessage = function (pos) {
-
+  
   this.messages.splice(pos, 1);
-  this.clearMessages(this.getName());
+  this.clearMessages(this.node);
   this.renderMessage(this.messages);
-  this.updateMessageCounter(this.getName(), this.messages.length);
+  this.updateMessageCounter();
 };
 
 
@@ -89,7 +90,7 @@ MessageBoard.prototype.removeMessage = function (pos) {
 MessageBoard.prototype.renderMessage = function (message) {
 
   var that = this,
-    messageArea = document.getNode(this.getName(), "messages-div"),
+    messageArea = this.node.querySelector(".messages-div"),
     wrapper = document.buildElement({
       element: "div",
       className: "message"
@@ -141,20 +142,20 @@ MessageBoard.prototype.renderMessage = function (message) {
 // prints the message by calling printMessage
 // and updates the message counter.
 MessageBoard.prototype.sendMessage = function() {
-  var textarea = document.getNode(this.getName(), "message-input"),
+  var textarea = this.node.querySelector(".message-input"),
     newMessage = new Message(textarea.value, new Date());
 
   if (textarea.value !== "") {
     this.messages.push(newMessage);
     this.renderMessage(newMessage);
     textarea.value = "";
-   this.updateMessageCounter(this.getName(), this.messages.length);
+   this.updateMessageCounter();
   }
 };
 
 
 
-MessageBoard.prototype.updateMessageCounter = function (name, numberOfMessages) {
-  document.getNode(name, "info-amount-of-messages")
-    .innerHTML = "Antal meddelanden : " + numberOfMessages;
+MessageBoard.prototype.updateMessageCounter = function () {
+  this.node.querySelector(".info-amount-of-messages")
+    .innerHTML = "Antal meddelanden : " + this.messages.length;
 };
