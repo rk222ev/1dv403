@@ -10,6 +10,7 @@ window.onload = function () {
 if (document.buildElement === undefined) {
   // Builds an DOM node based on a object with certain keys.
   document.buildElement = function (params) {
+    var element;
   
     if (params.hasOwnProperty("element")) {
       element = document.createElement(params.element);
