@@ -1,35 +1,38 @@
 "use strict";
 
+/*global document, window*/
+
 function Memory (cols, rows, nodeName) {
 
   var pictures = [],
     turnedPics = [];
-  
-  this.node = (function () { return document.querySelector("#" + nodeName) })();
+
+  this.node = (function () { return document.querySelector("#" + nodeName); })();
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
-  
+
   this.getTurnedPics = function () { return turnedPics; };
-  
-  this.turnPic = function (pic, picLink) { 
-    
+
+  this.turnPic = function (pic, picLink) {
+
     var that = this,
       obj = {
         img: pic.getElementsByTagName("img")[0],
         link: picLink,
       };
-    
-    obj.img.src = "pics/" + picLink +".png"; 
-    
+
+    obj.img.src = "pics/" + picLink +".png";
+
     turnedPics.push(obj);
-    
+
     if (turnedPics.length === 2) {
-      
+
       if (turnedPics[0].link !== turnedPics[1].link) {
-        
-        window.setTimeout(function () { that.resetImages.call(that, that.resetImages()), 2000; });
+
+        //window.setTimeout(that.resetImages, 2000);
+        window.setTimeout(that.resetImages, 1000);
       }
-      
+
       turnedPics = [];
     }
   };
@@ -42,17 +45,11 @@ function Memory (cols, rows, nodeName) {
 Memory.prototype.start = function (pics) {
 
   var oldBoard,
-
     gameNode = this.node,
-
-    newBoard = document.buildElement({
-      element: "div",
-      className: "board",
-    }),
-
+    newBoard = document.createElement("div"),
     game = this.generateTable(pics, this.getSize().cols);
 
-
+  newBoard.classList.add("board");
   newBoard.appendChild(game);
 
   if(gameNode.hasChildNodes()) {
@@ -85,10 +82,7 @@ Memory.prototype.generateTable = function (array, cols) {
     var a = document.createElement("a"),
       td = document.createElement("td"),
 
-      img = document.buildElement({
-        element: "img",
-        src: "pics/0.png"
-      });
+      img = document.createElement("img");
 
     if (rowMembers === cols) {
       table.appendChild(tr);
@@ -96,8 +90,10 @@ Memory.prototype.generateTable = function (array, cols) {
       rowMembers = 0;
 
     }
-    
-    a.onclick = function () { 
+
+    img.src = "pics/0.png";
+
+    a.onclick = function () {
       that.turnPic(this, pic);
     };
     a.href = "#";
@@ -112,8 +108,8 @@ Memory.prototype.generateTable = function (array, cols) {
 };
 
 
-Memory.prototype.resetImages = function () {
+Memory.prototype.resetImages = function (pic) {
+
   console.log(this);
-  
   this.getTurnedPics().forEach(function (pic) { pic.img.src = "pics/0.png"; });
 };
