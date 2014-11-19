@@ -22,9 +22,16 @@ function Memory (cols, rows, nodeName) {
     }
   };
 
-  this.addTry = function () { numberOfTries += 1; };
 
-  this.clearTurned = function () { turnedPics = []; };
+  this.addTry = function () {
+    numberOfTries += 1;
+
+    if ( numberOfTries % 2 === 0) {
+      this.checkMatch();
+    }
+  };
+
+  this.clearTurned = function () { this.turned = 0; turnedPics = []; };
 
   this.getPicFolder = function () { return picFolder; };
 
@@ -111,12 +118,10 @@ Memory.prototype.generateTable = function (picArray, cols) {
       rowMembers = 0;
     }
 
-
-
   });
 
   table.addEventListener("click", function (e) {
-   that.clicked(e);
+   that.clickEvent(e);
   });
 
   return table;
@@ -126,36 +131,32 @@ Memory.prototype.generateTable = function (picArray, cols) {
 // ********************************************
 // Handles the event when a picture is clicked
 // ********************************************
-Memory.prototype.clicked = function (e) {
+Memory.prototype.clickEvent = function (e) {
 
-  var turnedPics = this.getTurnedPics();
   var board = this.node.querySelectorAll("img");
   var target = e.target;
-  var that = this;
+  var turned = this.getTurnedPics().length;
 
-
-  if (target.tagName === "IMG") {
+  if (turned < 2 && target.tagName === "IMG" && target.src.indexOf("pics/0.png") !== -1) {
+    this.setPicAsTurned(target);
+    target.setAttribute("src", this.getPictureLink(target));
     this.addTry();
 
-    if (turnedPics.length  !== 2) {
-      target.setAttribute("src", this.getPictureLink(target));
-      this.setPicAsTurned(target);
-
-    }
-
-    if (turnedPics.length === 2) {
-
-      if (turnedPics[0].src === turnedPics[1].src) {
-        this.addMatch();
-        this.clearTurned();
-
-      } else {
-       window.setTimeout(function () { that.noMatch(turnedPics); }, 1000);
-
-      }
-    }
-
   }
+};
+
+Memory.prototype.checkMatch = function(first_argument) {
+  var that = this;
+  var pics = this.getTurnedPics();
+
+    if (pics[0].src === pics[1].src) {
+      this.addMatch();
+      this.clearTurned();
+
+    } else {
+     window.setTimeout(function () { that.noMatch(that.getTurnedPics()); }, 1000);
+
+    }
 
 };
 
