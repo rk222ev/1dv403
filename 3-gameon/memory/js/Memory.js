@@ -6,18 +6,25 @@ function Memory (cols, rows, nodeName) {
 
   var pictures = [],
     turnedPics = [],
-    picFolder = "pics/";
+    picFolder = "pics/",
+    numberOfTries = 0,
+    matches = 0,
+    possibleMatches = cols * rows / 2;
 
   // Gets assigned a reference to the game element node.
   this.node = (function () { return document.querySelector("#" + nodeName); })();
 
+  this.addMatch = function () {
+    matches += 1;
+    if (matches === possibleMatches) {
+     this.victory();
+
+    }
+  };
+
+  this.addTry = function () { numberOfTries += 1; };
+
   this.clearTurned = function () { turnedPics = []; };
-
-  this.getSize = function () { return { rows: rows, cols: cols }; };
-
-  this.getTurnedPics = function () { return turnedPics; };
-
-  this.setPicAsTurned = function (pic) { turnedPics.push(pic); };
 
   this.getPicFolder = function () { return picFolder; };
 
@@ -28,6 +35,15 @@ function Memory (cols, rows, nodeName) {
     return picFolder + pictures[index] + ".png";
 
   };
+
+  this.getSize = function () { return { rows: rows, cols: cols }; };
+
+  this.getTurnedPics = function () { return turnedPics; };
+
+  this.getTries = function () { return numberOfTries; };
+
+  this.setPicAsTurned = function (pic) { turnedPics.push(pic); };
+
 
   this.start = function (picsArray) {
     pictures = picsArray;
@@ -119,6 +135,8 @@ Memory.prototype.clicked = function (e) {
 
 
   if (target.tagName === "IMG") {
+    this.addTry();
+
     if (turnedPics.length  !== 2) {
       target.setAttribute("src", this.getPictureLink(target));
       this.setPicAsTurned(target);
@@ -128,6 +146,7 @@ Memory.prototype.clicked = function (e) {
     if (turnedPics.length === 2) {
 
       if (turnedPics[0].src === turnedPics[1].src) {
+        this.addMatch();
         this.clearTurned();
 
       } else {
@@ -154,4 +173,10 @@ Memory.prototype.noMatch = function (pics) {
   });
 
   this.clearTurned();
+};
+
+Memory.prototype.victory = function() {
+  var p = document.createElement("p");
+  p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
+  this.node.appendChild(p);
 };
