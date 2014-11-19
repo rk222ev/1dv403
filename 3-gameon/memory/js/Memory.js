@@ -31,6 +31,7 @@ function Memory (cols, rows, nodeName) {
 
   this.start = function (picsArray) {
     pictures = picsArray;
+    console.log(picsArray);
     this.buildBoard(pictures);
 
   };
@@ -123,17 +124,17 @@ Memory.prototype.clicked = function (e) {
       this.clearTurned();
 
     } else {
-     window.setTimeout(this.noMatch, 1000);
+     window.setTimeout(function () { that.noMatch(turnedPics); }, 1000);
 
     }
   }
 };
 
-Memory.prototype.noMatch = function () {
+Memory.prototype.noMatch = function (pics) {
 
   var that = this;
 
-  this.getTurnedPics.forEach( function (pic) {
+  pics.forEach( function (pic) {
     pic.setAttribute("src", that.getPicFolder() + "0.png");
 
   });
