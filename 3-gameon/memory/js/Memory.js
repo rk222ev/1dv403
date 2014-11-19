@@ -31,7 +31,7 @@ function Memory (cols, rows, nodeName) {
     }
   };
 
-  this.clearTurned = function () { this.turned = 0; turnedPics = []; };
+  this.clearTurned = function () { turnedPics = []; };
 
   this.getPicFolder = function () { return picFolder; };
 
@@ -47,7 +47,7 @@ function Memory (cols, rows, nodeName) {
 
   this.getTurnedPics = function () { return turnedPics; };
 
-  this.getTries = function () { return numberOfTries; };
+  this.getTries = function () { return numberOfTries / 2; };
 
   this.setPicAsTurned = function (pic) { turnedPics.push(pic); };
 
