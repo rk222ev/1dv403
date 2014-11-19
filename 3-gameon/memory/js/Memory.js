@@ -5,36 +5,34 @@
 function Memory (cols, rows, nodeName) {
 
   var pictures = [],
-    turnedPics = [];
+    turnedPics = [],
+    picFolder = "pics/";
+
 
   this.node = (function () { return document.querySelector("#" + nodeName); })();
+
+  this.clearTurned = function () { turnedPics = []; };
 
   this.getSize = function () { return { rows: rows, cols: cols }; };
 
   this.getTurnedPics = function () { return turnedPics; };
 
-  this.turnPic = function (pic, picLink) {
+  this.setPicAsTurned = function (pic) { turnedPics.push(pic); };
 
-    var that = this,
-      obj = {
-        img: pic.getElementsByTagName("img")[0],
-        link: picLink,
-      };
+  this.getPicFolder = function () { return picFolder; };
 
-    obj.img.src = "pics/" + picLink +".png";
+  this.getPictureLink = function (img) {
 
-    turnedPics.push(obj);
+    var index = Array.prototype.indexOf.call(this.node.querySelectorAll("img"), img);
 
-    if (turnedPics.length === 2) {
+    return picFolder + pictures[index] + ".png";
 
-      if (turnedPics[0].link !== turnedPics[1].link) {
+  };
 
-        //window.setTimeout(that.resetImages, 2000);
-        window.setTimeout(that.resetImages, 1000);
-      }
+  this.start = function (picsArray) {
+    pictures = picsArray;
+    this.buildBoard(pictures);
 
-      turnedPics = [];
-    }
   };
 
 }
@@ -42,7 +40,7 @@ function Memory (cols, rows, nodeName) {
 // ***************************************
 // Creates and starts the game.
 // ***************************************
-Memory.prototype.start = function (pics) {
+Memory.prototype.buildBoard = function (pics) {
 
   var oldBoard,
     gameNode = this.node,
@@ -69,34 +67,29 @@ Memory.prototype.start = function (pics) {
 // Paints the playing board.
 // Returns the new table Element.
 // ***************************************
-Memory.prototype.generateTable = function (array, cols) {
+Memory.prototype.generateTable = function (picArray, cols) {
 
   var that = this,
     i,
-    tr = document.createElement("tr"),
     rowMembers = 0,
+    tr = document.createElement("tr"),
     table = document.createElement("table");
 
-  array.forEach( function (pic) {
+  picArray.forEach( function (pic) {
 
     var a = document.createElement("a"),
       td = document.createElement("td"),
-
       img = document.createElement("img");
+
+    img.src = "pics/0.png";
 
     if (rowMembers === cols) {
       table.appendChild(tr);
       tr = document.createElement("tr");
       rowMembers = 0;
-
     }
 
-    img.src = "pics/0.png";
-
-    a.onclick = function () {
-      that.turnPic(this, pic);
-    };
-    a.href = "#";
+    a.setAttribute("href", "#");
     a.appendChild(img);
     td.appendChild(a);
     tr.appendChild(td);
@@ -104,12 +97,46 @@ Memory.prototype.generateTable = function (array, cols) {
 
   });
 
+  table.addEventListener("click", function (e) {
+   that.clicked(e);
+  });
+
   return table;
 };
 
+Memory.prototype.clicked = function (e) {
 
-Memory.prototype.resetImages = function (pic) {
+  var turnedPics = this.getTurnedPics();
+  var board = this.node.querySelectorAll("img");
+  var img = e.target;
+  var that = this;
 
-  console.log(this);
-  this.getTurnedPics().forEach(function (pic) { pic.img.src = "pics/0.png"; });
+  if (turnedPics.length  !== 2) {
+    img.setAttribute("src", this.getPictureLink(img));
+    this.setPicAsTurned(img);
+
+  }
+
+  if (turnedPics.length === 2) {
+
+    if (turnedPics[0].src === turnedPics[1].src) {
+      this.clearTurned();
+
+    } else {
+     window.setTimeout(this.noMatch, 1000);
+
+    }
+  }
+};
+
+Memory.prototype.noMatch = function () {
+
+  var that = this;
+
+  this.getTurnedPics.forEach( function (pic) {
+    pic.setAttribute("src", that.getPicFolder() + "0.png");
+
+  });
+
+  this.clearTurned();
 };
