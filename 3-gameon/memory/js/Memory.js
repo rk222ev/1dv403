@@ -8,7 +8,7 @@ function Memory (cols, rows, nodeName) {
     turnedPics = [],
     picFolder = "pics/";
 
-
+  // Gets assigned a reference to the game element node.
   this.node = (function () { return document.querySelector("#" + nodeName); })();
 
   this.clearTurned = function () { turnedPics = []; };
@@ -31,7 +31,6 @@ function Memory (cols, rows, nodeName) {
 
   this.start = function (picsArray) {
     pictures = picsArray;
-    console.log(picsArray);
     this.buildBoard(pictures);
 
   };
@@ -84,17 +83,19 @@ Memory.prototype.generateTable = function (picArray, cols) {
 
     img.src = "pics/0.png";
 
+    a.setAttribute("href", "#");
+    a.appendChild(img);
+    td.appendChild(a);
+    tr.appendChild(td);
+    rowMembers += 1;
+
     if (rowMembers === cols) {
       table.appendChild(tr);
       tr = document.createElement("tr");
       rowMembers = 0;
     }
 
-    a.setAttribute("href", "#");
-    a.appendChild(img);
-    td.appendChild(a);
-    tr.appendChild(td);
-    rowMembers += 1;
+
 
   });
 
@@ -105,31 +106,44 @@ Memory.prototype.generateTable = function (picArray, cols) {
   return table;
 };
 
+
+// ********************************************
+// Handles the event when a picture is clicked
+// ********************************************
 Memory.prototype.clicked = function (e) {
 
   var turnedPics = this.getTurnedPics();
   var board = this.node.querySelectorAll("img");
-  var img = e.target;
+  var target = e.target;
   var that = this;
 
-  if (turnedPics.length  !== 2) {
-    img.setAttribute("src", this.getPictureLink(img));
-    this.setPicAsTurned(img);
 
-  }
-
-  if (turnedPics.length === 2) {
-
-    if (turnedPics[0].src === turnedPics[1].src) {
-      this.clearTurned();
-
-    } else {
-     window.setTimeout(function () { that.noMatch(turnedPics); }, 1000);
+  if (target.tagName === "IMG") {
+    if (turnedPics.length  !== 2) {
+      target.setAttribute("src", this.getPictureLink(target));
+      this.setPicAsTurned(target);
 
     }
+
+    if (turnedPics.length === 2) {
+
+      if (turnedPics[0].src === turnedPics[1].src) {
+        this.clearTurned();
+
+      } else {
+       window.setTimeout(function () { that.noMatch(turnedPics); }, 1000);
+
+      }
+    }
+
   }
+
 };
 
+//**********************************
+// Resets the turned pics and
+// clears the turned pictures array.
+//**********************************
 Memory.prototype.noMatch = function (pics) {
 
   var that = this;
