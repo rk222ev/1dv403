@@ -2,7 +2,7 @@
 "use strict";
 
 function MessageBoard (name, messages) {
-  
+
   this.messages = messages || [];
 
   this.node = (function () { return document.querySelector("#" + name); })();
@@ -10,16 +10,14 @@ function MessageBoard (name, messages) {
   this.init();
 }
 
-// Clears the board by making a new empty node and replacing.
-// the one that exists.
-MessageBoard.prototype.clearMessages = function (board) {
-  var element = board.querySelector(".messages-div");
 
-  
-  board.replaceChild(document.buildElement({
-      element: "div",
-      className: "messages-div"
-  }), element);
+MessageBoard.prototype.clearMessages = function (board) {
+  var element = board.querySelector(".messages-div"),
+    newBoard = document.createElement("div");
+
+  newBoard.classList.add("messages-div");
+
+  board.replaceChild(newBoard, element);
 };
 
 
@@ -27,44 +25,30 @@ MessageBoard.prototype.clearMessages = function (board) {
 // this includes delete buttons and info buttons etc.
 MessageBoard.prototype.init = function () {
   var that = this,
-    mainNode = this.node;
+    mainNode = this.node,
+    messagesDiv = document.createElement("div"),
+    p = document.createElement("p"),
+    txtArea = document.createElement("textarea"),
+    input = document.createElement("input");
 
-  mainNode.appendChild(
-    document.buildElement({
-      element:"div",
-      className: "messages-div"
-    })
-  );
+  messagesDiv.classList.add("messages-div");
+  mainNode.appendChild(messagesDiv);
 
-  mainNode.appendChild(
-    document.buildElement({
-      element: "p",
-      className: "info-amount-of-messages",
-      innerHTML: "Antal meddelanden : " + this.messages.length
-    })
-  );
+  p.classList.add("info-amount-of-messages");
+  p.innerHTML = "Antal meddelanden : " + this.messages.length;
+  mainNode.appendChild(p);
 
-  mainNode.appendChild(
-    document.buildElement({
-      element: "textarea",
-      className: "message-input",
-    })
-  );
+  txtArea.classList.add("message-input");
+  mainNode.appendChild(txtArea);
 
-  mainNode.appendChild(
-    document.buildElement({
-      element: "input",
-      value: "skriv",
-      type: "button",
-      onclick: function () {
-        that.sendMessage();
-      }
-    })
-  );
+  input.setAttribute("value", "skriv");
+  input.setAttribute("type", "button");
+  input.setAttribute("click", this.sendMessage);
+  mainNode.appendChild(input);
 
-  mainNode.querySelector(".message-input").addEventListener("keydown", function (key) {
-    if (key.keyCode === 13 && key.shiftKey === false) {
-      key.preventDefault();
+  mainNode.querySelector(".message-input").addEventListener("keydown", function (e) {
+    if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
+      e.preventDefault();
       that.sendMessage();
     }
   });
@@ -75,7 +59,7 @@ MessageBoard.prototype.init = function () {
 // makes renderMessage() reprint the remaining messages.
 // Lastly it updates the message counter.
 MessageBoard.prototype.removeMessage = function (pos) {
-  
+
   this.messages.splice(pos, 1);
   this.clearMessages(this.node);
   this.renderMessage(this.messages);
@@ -90,11 +74,14 @@ MessageBoard.prototype.renderMessage = function (message) {
 
   var that = this,
     messageArea = this.node.querySelector(".messages-div"),
-    wrapper = document.buildElement({
-      element: "div",
-      className: "message"
-    }),
-    footer = document.createElement("footer");
+    wrapper = document.createElement("div"),
+    footer = document.createElement("footer"),
+    msgP = document.createElement("p"),
+    timeP = document.createElement("p"),
+    infoImg = document.createElement("img"),
+    delImg = document.createElement("img");
+
+
 
   if (Array.isArray(message)) {
     message.forEach(function (message) { that.renderMessage(message); });
@@ -102,35 +89,29 @@ MessageBoard.prototype.renderMessage = function (message) {
   }
 
 
-  footer.appendChild(document.buildElement({
-    element: "p",
-    innerHTML: message.getTime()
-  }));
+  timeP.innerHTML = message.getTime();
+  footer.appendChild(timeP);
 
-  footer.appendChild(document.buildElement({
-    element: "img",
-    src: "pics/i.png",
-    onclick: function () {
+  infoImg.setAttribute("src", "pics/i.png");
+  infoImg.addEventListener("click", function () {
       window.alert("Inlägget skapades " + message.getDate());
-    }
-  }));
+  });
+  footer.appendChild(infoImg);
 
-  footer.appendChild(document.buildElement({
-    element: "img",
-    src: "pics/x.png",
-    onclick: function () {
+  delImg.setAttribute("src", "pics/x.png");
+  delImg.addEventListener("click", function () {
       if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
         that.removeMessage(that.messages.indexOf(message));
       }
     }
-  }));
+  );
+  footer.appendChild(delImg);
 
-  wrapper.appendChild(document.buildElement({
-    element: "p",
-    className: "message-text",
-    innerHTML: message.getHTMLText()
-  }));
+  msgP.classList.add("message-text");
+  msgP.innerHTML = message.getHTMLText();
 
+  wrapper.classList.add("message");
+  wrapper.appendChild(msgP);
   wrapper.appendChild(footer);
 
   messageArea.appendChild(wrapper);
