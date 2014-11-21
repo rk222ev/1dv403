@@ -54,9 +54,7 @@ MessageBoard.prototype.init = function () {
 
 };
 
-// Removes a message at a certain index in the array and also
-// makes renderMessage() reprint the remaining messages.
-// Lastly it updates the message counter.
+
 MessageBoard.prototype.removeMessage = function (pos) {
 
   this.messages.splice(pos, 1);
@@ -116,10 +114,7 @@ MessageBoard.prototype.renderMessage = function (message) {
   messageArea.appendChild(wrapper);
 };
 
-// Creates a new message from the textarea value,
-// adds this to messages[],
-// prints the message by calling printMessage
-// and updates the message counter.
+
 MessageBoard.prototype.sendMessage = function() {
   var textarea = this.node.querySelector(".message-input"),
     newMessage = new Message(textarea.value, new Date());
