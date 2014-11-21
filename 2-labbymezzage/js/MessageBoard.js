@@ -10,13 +10,13 @@ function MessageBoard (name, messages) {
 }
 
 
-MessageBoard.prototype.clearMessages = function (board) {
-  var element = board.querySelector(".messages-div"),
+MessageBoard.prototype.clearMessages = function () {
+  var element = this.node.querySelector(".messages-div"),
     newBoard = document.createElement("div");
 
   newBoard.classList.add("messages-div");
 
-  board.replaceChild(newBoard, element);
+  this.node.replaceChild(newBoard, element);
 };
 
 
@@ -58,7 +58,7 @@ MessageBoard.prototype.init = function () {
 MessageBoard.prototype.removeMessage = function (pos) {
 
   this.messages.splice(pos, 1);
-  this.clearMessages(this.node);
+  this.clearMessages();
   this.renderMessage(this.messages);
   this.updateMessageCounter();
 };
