@@ -7,7 +7,6 @@ function MessageBoard (name, messages) {
 
   this.node = (function () { return document.querySelector("#" + name); })();
 
-  this.init();
 }
 
 
