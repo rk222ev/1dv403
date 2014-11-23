@@ -144,6 +144,7 @@ Memory.prototype.clickEvent = function (e) {
   }
 };
 
+
 Memory.prototype.checkMatch = function(first_argument) {
   var that = this;
   var pics = this.getTurnedPics();
@@ -174,6 +175,8 @@ Memory.prototype.noMatch = function (pics) {
 
   this.clearTurned();
 };
+
+
 
 Memory.prototype.victory = function() {
   var p = document.createElement("p");
