@@ -1,6 +1,6 @@
+"use strict";
 
 function Message(message, date) {
-    "use strict";
 
     this.getText = function () {
         return message;
@@ -20,18 +20,14 @@ function Message(message, date) {
 }
 
 Message.prototype.toString = function () {
-    "use strict";
     return this.getText() + " ( " + this.getDate() + ")";
 };
 
 Message.prototype.getHTMLText = function () {
-    "use strict";
     return this.getText().replace(/\n/g, "<br>");
 };
 
 Message.prototype.getTime = function () {
-    "use strict";
-
     var date = this.getDate();
 
     function zeroPrefix (number) {
