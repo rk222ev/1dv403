@@ -8,15 +8,14 @@ function Memory (cols, rows, nodeName) {
     turnedPics = [],
     picFolder = "pics/",
     numberOfTries = 0,
-    matches = 0,
-    possibleMatches = cols * rows / 2;
+    possibleMatches = (function () { return cols * rows / 2; })();
 
   // Gets assigned a reference to the game element node.
   this.node = (function () { return document.querySelector("#" + nodeName); })();
 
   this.addMatch = function () {
-    matches += 1;
-    if (matches === possibleMatches) {
+    possibleMatches -= 1;
+    if (possibleMatches === 0) {
      this.victory();
 
     }
