@@ -1,10 +1,9 @@
 "use strict";
 
-function Memory (cols, rows, nodeName) {
+function Memory (cols, rows, nodeName, picsFolder) {
 
   var pictures = [],
     turnedPics = [],
-    picFolder = "pics/",
     numberOfTries = 0,
     possibleMatches = (function () { return cols * rows / 2; })();
 
@@ -30,13 +29,13 @@ function Memory (cols, rows, nodeName) {
 
   this.clearTurned = function () { turnedPics = []; };
 
-  this.getPicFolder = function () { return picFolder; };
+  this.picFolder = (function () { return picsFolder || "pics/"; })();
 
   this.getPictureLink = function (img) {
 
     var index = Array.prototype.indexOf.call(this.node.querySelectorAll("img"), img);
 
-    return picFolder + pictures[index] + ".png";
+    return this.picFolder + pictures[index] + ".png";
 
   };
 
@@ -101,7 +100,7 @@ Memory.prototype.generateTable = function (picArray, cols) {
       td = document.createElement("td"),
       img = document.createElement("img");
 
-    img.src = "pics/0.png";
+    img.src = that.picFolder + "0.png";
 
     a.setAttribute("href", "#");
     a.appendChild(img);
@@ -177,7 +176,7 @@ Memory.prototype.noMatch = function (pics) {
   var that = this;
 
   pics.forEach( function (pic) {
-    pic.setAttribute("src", that.getPicFolder() + "0.png");
+    pic.setAttribute("src", that.picFolder + "0.png");
 
   });
 
