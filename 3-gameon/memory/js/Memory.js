@@ -135,11 +135,12 @@ Memory.prototype.generateTable = function (picArray, cols) {
 // Handles the event when a picture is clicked
 // ********************************************
 Memory.prototype.clickEvent = function (e) {
-  var board = this.node.querySelectorAll("img"),
-    target = e.target,
+    var target = e.target,
     turned = this.getTurnedPics().length;
   
 
+  // If target node is the a-element go to its firstChild.
+  // Should move everything from the img-element to the a-element.
   if (target.tagName !== "IMG") {
     target = target.firstChild;
   }
