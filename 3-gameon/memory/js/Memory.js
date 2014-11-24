@@ -120,6 +120,13 @@ Memory.prototype.generateTable = function (picArray, cols) {
   table.addEventListener("click", function (e) {
    that.clickEvent(e);
   });
+  
+  table.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13) {
+      that.clickEvent(e);  
+    }
+    
+  });
 
   return table;
 };
@@ -129,10 +136,14 @@ Memory.prototype.generateTable = function (picArray, cols) {
 // Handles the event when a picture is clicked
 // ********************************************
 Memory.prototype.clickEvent = function (e) {
+  var board = this.node.querySelectorAll("img"),
+    target = e.target,
+    turned = this.getTurnedPics().length;
+  
 
-  var board = this.node.querySelectorAll("img");
-  var target = e.target;
-  var turned = this.getTurnedPics().length;
+  if (target.tagName !== "IMG") {
+    target = target.firstChild;
+  }
 
   if (turned < 2 && target.tagName === "IMG" && target.src.indexOf("pics/0.png") !== -1) {
     this.setPicAsTurned(target);
@@ -144,8 +155,8 @@ Memory.prototype.clickEvent = function (e) {
 
 
 Memory.prototype.checkMatch = function(first_argument) {
-  var that = this;
-  var pics = this.getTurnedPics();
+  var that = this,
+    pics = this.getTurnedPics();
 
     if (pics[0].src === pics[1].src) {
       this.addMatch();
@@ -163,7 +174,6 @@ Memory.prototype.checkMatch = function(first_argument) {
 // clears the turned pictures array.
 //**********************************
 Memory.prototype.noMatch = function (pics) {
-
   var that = this;
 
   pics.forEach( function (pic) {
@@ -182,6 +192,7 @@ Memory.prototype.noMatch = function (pics) {
 //**********************************
 Memory.prototype.victory = function() {
   var p = document.createElement("p");
+  
   p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
   this.node.appendChild(p);
 };
