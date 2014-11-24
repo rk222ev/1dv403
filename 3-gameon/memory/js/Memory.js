@@ -1,5 +1,6 @@
 "use strict";
 
+
 /*global document, window*/
 
 function Memory (cols, rows, nodeName) {
