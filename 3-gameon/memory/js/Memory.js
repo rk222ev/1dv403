@@ -89,7 +89,6 @@ Memory.prototype.buildBoard = function (pics) {
 Memory.prototype.generateTable = function (picArray, cols) {
 
   var that = this,
-    i,
     rowMembers = 0,
     tr = document.createElement("tr"),
     table = document.createElement("table");
