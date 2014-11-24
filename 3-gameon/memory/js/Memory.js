@@ -1,7 +1,5 @@
 "use strict";
 
-/*global document, window*/
-
 function Memory (cols, rows, nodeName) {
 
   var pictures = [],
@@ -11,7 +9,7 @@ function Memory (cols, rows, nodeName) {
     possibleMatches = (function () { return cols * rows / 2; })();
 
   // Gets assigned a reference to the game element node.
-  this.node = (function () { return document.querySelector("#" + nodeName); })();
+  this.node = document.querySelector("#" + nodeName); 
 
   this.addMatch = function () {
     possibleMatches -= 1;
@@ -178,6 +176,10 @@ Memory.prototype.noMatch = function (pics) {
 
 
 
+//**********************************
+// Is called when all pics are
+// matched.
+//**********************************
 Memory.prototype.victory = function() {
   var p = document.createElement("p");
   p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
