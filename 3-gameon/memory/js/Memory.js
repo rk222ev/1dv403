@@ -3,16 +3,15 @@
 
 /*global document, window*/
 
-function Memory (cols, rows, nodeName) {
+function Memory (cols, rows, nodeName, picsFolder) {
 
   var pictures = [],
     turnedPics = [],
-    picFolder = "pics/",
     numberOfTries = 0,
     possibleMatches = (function () { return cols * rows / 2; })();
 
   // Gets assigned a reference to the game element node.
-  this.node = (function () { return document.querySelector("#" + nodeName); })();
+  this.node = document.querySelector("#" + nodeName);
 
   this.addMatch = function () {
     possibleMatches -= 1;
@@ -33,13 +32,13 @@ function Memory (cols, rows, nodeName) {
 
   this.clearTurned = function () { turnedPics = []; };
 
-  this.getPicFolder = function () { return picFolder; };
+  this.picFolder = (function () { return picsFolder || "pics/"; })();
 
   this.getPictureLink = function (img) {
 
     var index = Array.prototype.indexOf.call(this.node.querySelectorAll("img"), img);
 
-    return picFolder + pictures[index] + ".png";
+    return this.picFolder + pictures[index] + ".png";
 
   };
 
@@ -93,7 +92,6 @@ Memory.prototype.buildBoard = function (pics) {
 Memory.prototype.generateTable = function (picArray, cols) {
 
   var that = this,
-    i,
     rowMembers = 0,
     tr = document.createElement("tr"),
     table = document.createElement("table");
@@ -104,7 +102,7 @@ Memory.prototype.generateTable = function (picArray, cols) {
       td = document.createElement("td"),
       img = document.createElement("img");
 
-    img.src = "pics/0.png";
+    img.src = that.picFolder + "0.png";
 
     a.setAttribute("href", "#");
     a.appendChild(img);
@@ -124,6 +122,13 @@ Memory.prototype.generateTable = function (picArray, cols) {
    that.clickEvent(e);
   });
 
+  table.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13) {
+      that.clickEvent(e);
+    }
+
+  });
+
   return table;
 };
 
@@ -132,10 +137,15 @@ Memory.prototype.generateTable = function (picArray, cols) {
 // Handles the event when a picture is clicked
 // ********************************************
 Memory.prototype.clickEvent = function (e) {
+    var target = e.target,
+    turned = this.getTurnedPics().length;
 
-  var board = this.node.querySelectorAll("img");
-  var target = e.target;
-  var turned = this.getTurnedPics().length;
+
+  // If target node is the a-element go to its firstChild.
+  // Should move everything from the img-element to the a-element.
+  if (target.tagName !== "IMG") {
+    target = target.firstChild;
+  }
 
   if (turned < 2 && target.tagName === "IMG" && target.src.indexOf("pics/0.png") !== -1) {
     this.setPicAsTurned(target);
@@ -147,8 +157,8 @@ Memory.prototype.clickEvent = function (e) {
 
 
 Memory.prototype.checkMatch = function(first_argument) {
-  var that = this;
-  var pics = this.getTurnedPics();
+  var that = this,
+    pics = this.getTurnedPics();
 
     if (pics[0].src === pics[1].src) {
       this.addMatch();
@@ -166,11 +176,10 @@ Memory.prototype.checkMatch = function(first_argument) {
 // clears the turned pictures array.
 //**********************************
 Memory.prototype.noMatch = function (pics) {
-
   var that = this;
 
   pics.forEach( function (pic) {
-    pic.setAttribute("src", that.getPicFolder() + "0.png");
+    pic.setAttribute("src", that.picFolder + "0.png");
 
   });
 
@@ -179,8 +188,13 @@ Memory.prototype.noMatch = function (pics) {
 
 
 
+//**********************************
+// Is called when all pics are
+// matched.
+//**********************************
 Memory.prototype.victory = function() {
   var p = document.createElement("p");
+
   p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
   this.node.appendChild(p);
 };

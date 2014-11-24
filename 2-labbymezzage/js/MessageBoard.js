@@ -5,7 +5,7 @@ function MessageBoard (name, messages) {
 
   this.messages = messages || [];
 
-  this.node = (function () { return document.querySelector("#" + name); })();
+  this.node = document.querySelector("#" + name);
 
 }
 
@@ -46,7 +46,7 @@ MessageBoard.prototype.init = function () {
   mainNode.appendChild(input);
 
   mainNode.querySelector(".message-input").addEventListener("keydown", function (e) {
-    if (e.keyIdentifier === "Enter" && e.shiftKey === false) {
+    if (e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
       that.sendMessage();
     }
