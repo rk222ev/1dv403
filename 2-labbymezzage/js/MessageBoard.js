@@ -5,7 +5,6 @@ function MessageBoard (name, messages) {
 
   this.messages = messages || [];
 
-  // this.node = (function () { return document.querySelector("#" + name); })();
   this.node = document.querySelector("#" + name);
 
 }
