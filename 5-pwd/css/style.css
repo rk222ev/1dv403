@@ -7,21 +7,31 @@
 
 }
 
-.icon {
+.launcher {
+  float: left;
   width: 34px;
 }
 
 .window {
-  background-color: #E3F2FD;
   border: solid 1px;
   position: relative;
+  float: left;
 
 }
 
 .window-list {
   background-color: #2196F3;
-  height: 30px;
   border-bottom: solid 1px;
+  height: 30px;
+  text-align: center;
+}
+
+.window-list a {
+  float: right;
+}
+
+.window-list img {
+  width: 20px;
 }
 
 

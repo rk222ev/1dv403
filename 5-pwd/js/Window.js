@@ -3,9 +3,12 @@
 
 PWD.Window = function (app, id) {
 
+  this.getId = function () {
+    console.log(PWD.desktop.openWindows.indexOf(this.node)); return PWD.desktop.openWindows.indexOf(this.node); };
 
   this.width = 500;
   this.height = 400;
+
   this.position = {x: 50, y: 100};
 
   this.node = PWD.Window.prototype.createWindowNode();
@@ -16,13 +19,23 @@ PWD.Window = function (app, id) {
 
 
 
-PWD.Window.prototype.buildList = function () {
-  var div = document.createElement("div");
+PWD.Window.prototype.createWindowList = function () {
+  var div = document.createElement("div"),
+    closeButton = document.createElement("img"),
+    closeLink = document.createElement("a");
+
+  closeButton.setAttribute("src", "pics/icons/clear.svg");
+  closeButton.classList.add("close-button");
+
+  closeLink.setAttribute("href", "#");
+  closeLink.appendChild(closeButton);
+
+  div.appendChild(closeLink);
+
   div.classList.add("window-list");
 
   return div;
 };
-
 
 
 
@@ -51,8 +64,16 @@ PWD.Window.prototype.createWindowNode = function () {
   var windowDiv = document.createElement("div");
 
   windowDiv.classList.add("window");
-  windowDiv.appendChild(this.buildList());
+  windowDiv.appendChild(this.createWindowList());
 
   return windowDiv;
+
+};
+
+
+PWD.Window.prototype.closeWindow = function (node) {
+
+  PWD.desktop.node.removeChild(node);
+  PWD.desktop.openWindows.splice(node, 1);
 
 };
