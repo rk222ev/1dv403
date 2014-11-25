@@ -39,4 +39,13 @@ body {
 }
 
 
+.resize-div {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+}
 

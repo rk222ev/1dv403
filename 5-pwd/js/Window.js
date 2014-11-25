@@ -61,10 +61,15 @@ PWD.Window.prototype.setPosition = function () {
 
 
 PWD.Window.prototype.createWindowNode = function () {
-  var windowDiv = document.createElement("div");
+  var windowDiv = document.createElement("div"),
+    resizeDiv = document.createElement("div");
 
   windowDiv.classList.add("window");
   windowDiv.appendChild(this.createWindowList());
+
+  resizeDiv.classList.add("resize-div");
+
+  windowDiv.appendChild(resizeDiv);
 
   return windowDiv;
 
