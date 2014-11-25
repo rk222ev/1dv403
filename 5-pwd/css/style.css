@@ -1,5 +1,9 @@
+body {
+}
+
 
 .pwd {
+  background-color: #ECEFF1;
   width: 1024px;
   height: 640px;
   margin: auto;
@@ -20,9 +24,9 @@
 }
 
 .window-list {
-  background-color: #2196F3;
+  background-color: #607D8B;
   border-bottom: solid 1px;
-  height: 30px;
+  height: 20px;
   text-align: center;
 }
 
@@ -31,7 +35,7 @@
 }
 
 .window-list img {
-  width: 20px;
+  width: 15px;
 }
 
 
