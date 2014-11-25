@@ -54,8 +54,8 @@ PWD.Window.prototype.setSize = function () {
 
 
 PWD.Window.prototype.setPosition = function () {
-  this.node.style.top = this.position.x + "px";
-  this.node.style.left = this.position.y + "px";
+  this.node.style.top = this.position.y + "px";
+  this.node.style.left = this.position.x + "px";
 
 };
 

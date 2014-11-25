@@ -10,7 +10,7 @@ var PWD = {
 // Initializes the desktop
 PWD.desktop.init = function () {
 
-  PWD.desktop.node.addEventListener("click", PWD.desktop.clickEvent);
+  PWD.desktop.node.addEventListener("mousedown", PWD.desktop.clickEvent);
   PWD.desktop.node.appendChild(this.createLauncher("images"));
 
 };
@@ -33,8 +33,7 @@ PWD.desktop.createLauncher = function (app) {
 
 
 PWD.desktop.clickEvent = function (e) {
-
-  console.log(e.target);
+  var theEvent = e;
 
   e.preventDefault();
 
@@ -45,7 +44,43 @@ PWD.desktop.clickEvent = function (e) {
   } else if (e.target.className === "close-button") {
     // TODO: Find a better way to do this...
       PWD.Window.prototype.closeWindow(e.target.parentNode.parentNode.parentNode);
+
+  } else if (e.target.className === "window-list") {
+    // PWD.desktop.node.addEventListener("mouseup", PWD.desktop.stopMouseMove);
+    PWD.desktop.dragWindow(e);
+
   }
+};
+
+PWD.desktop.dragWindow = function (e) {
+  var windowNode = e.target.parentNode;
+
+      PWD.desktop.node.addEventListener("mousemove", PWD.desktop.mouseMove);
+      PWD.desktop.node.addEventListener("mouseup", PWD.desktop.stopMouseMove);
+
+};
+
+PWD.desktop.mouseMove = function (e) {
+  var movedWindow;
+
+  PWD.desktop.openWindows.forEach(function (win) {
+    if (win.node === e.target.parentNode) {
+      movedWindow = win;
+    }
+
+    win = PWD.desktop.openWindows[0];
+
+    win.position.x += e.movementX;
+    win.position.y += e.movementY;
+    win.setPosition();
+  });
+
+
+};
+
+PWD.desktop.stopMouseMove = function (e) {
+  PWD.desktop.node.removeEventListener("mousemove", PWD.desktop.mouseMove);
+  PWD.desktop.node.removeEventListener("mouseup", PWD.desktop.stopMouseMove);
 };
 
 
