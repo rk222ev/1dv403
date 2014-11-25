@@ -53,7 +53,23 @@ PWD.Window.prototype.setSize = function () {
 
 PWD.Window.prototype.updatePosition = function (x, y) {
   var newY = this.position.y += (y || 0),
-    newX = this.position.x += (x || 0);
+    newX = this.position.x += (x || 0),
+    maxY = 640 - this.height,
+    maxX = 1024 - this.width - 40;
+
+
+  if (newX < 0) {
+    newX = 0;
+  } else if (newX > maxX) {
+    newX = maxX;
+
+  }
+
+  if (newY < 0) {
+    newY = 0;
+  } else if (newY > maxY) {
+    newY = maxY;
+  }
 
   this.node.style.top =  newY + "px";
   this.node.style.left = newX + "px";
