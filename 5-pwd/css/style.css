@@ -3,12 +3,25 @@
   width: 1024px;
   height: 640px;
   margin: auto;
-  border: solid;
+  border: solid 1px;
 
 }
 
 .icon {
   width: 34px;
+}
+
+.window {
+  background-color: #E3F2FD;
+  border: solid 1px;
+  position: relative;
+
+}
+
+.window-list {
+  background-color: #2196F3;
+  height: 30px;
+  border-bottom: solid 1px;
 }
 
 

@@ -2,7 +2,8 @@
 
 
 var PWD = {
-  desktop: {}
+  desktop: {},
+  openWindows: []
 };
 
 
@@ -32,5 +33,6 @@ PWD.desktop.createLauncher = function (app) {
 
 window.onload = function () {
   PWD.desktop.init();
+  PWD.openWindows.push(new PWD.Window());
 
 };
