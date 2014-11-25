@@ -23,6 +23,7 @@ PWD.desktop.createLauncher = function (app) {
 
   appIcon.setAttribute("src", "pics/icons/" + app + ".svg");
   appIcon.classList.add("launcher");
+  appIcon.classList.add(app);
 
   link.setAttribute("href", "#");
   link.appendChild(appIcon);
@@ -33,60 +34,44 @@ PWD.desktop.createLauncher = function (app) {
 
 
 PWD.desktop.clickEvent = function (e) {
-  var theEvent = e;
 
   e.preventDefault();
 
-  if (e.target.className === "launcher") {
+  if (e.target.classList.contains("launcher") ) {
+    var time = new Date().getTime();
 
-    PWD.desktop.openWindows.push(new PWD.Window());
+   PWD.desktop.openWindows[time] = new PWD.Window(time);
 
   } else if (e.target.className === "close-button") {
     // TODO: Find a better way to do this...
       PWD.Window.prototype.closeWindow(e.target.parentNode.parentNode.parentNode);
 
   } else if (e.target.className === "window-list") {
-    // PWD.desktop.node.addEventListener("mouseup", PWD.desktop.stopMouseMove);
-    PWD.desktop.dragWindow(e);
+    PWD.desktop.dragWindow(e.target.parentNode.id);
 
   }
 };
 
-PWD.desktop.dragWindow = function (e) {
-  var windowNode = e.target.parentNode;
+PWD.desktop.dragWindow = function (target) {
+  var mouseMove = function (e) {
+    PWD.desktop.openWindows[target].updatePosition(e.movementX, e.movementY);
+  };
 
-      PWD.desktop.node.addEventListener("mousemove", PWD.desktop.mouseMove);
-      PWD.desktop.node.addEventListener("mouseup", PWD.desktop.stopMouseMove);
+ var mouseUp = function () {
+    PWD.desktop.node.removeEventListener("mousemove", mouseMove);
+    PWD.desktop.node.removeEventListener("mouseup", mouseUp);
 
-};
+  };
 
-PWD.desktop.mouseMove = function (e) {
-  var movedWindow;
-
-  PWD.desktop.openWindows.forEach(function (win) {
-    if (win.node === e.target.parentNode) {
-      movedWindow = win;
-    }
-
-    win = PWD.desktop.openWindows[0];
-
-    win.position.x += e.movementX;
-    win.position.y += e.movementY;
-    win.setPosition();
-  });
-
+  PWD.desktop.node.addEventListener("mousemove", mouseMove);
+  PWD.desktop.node.addEventListener("mouseup", mouseUp);
 
 };
-
-PWD.desktop.stopMouseMove = function (e) {
-  PWD.desktop.node.removeEventListener("mousemove", PWD.desktop.mouseMove);
-  PWD.desktop.node.removeEventListener("mouseup", PWD.desktop.stopMouseMove);
-};
-
 
 
 PWD.desktop.node = document.querySelector(".pwd");
-PWD.desktop.openWindows = [];
+
+PWD.desktop.openWindows = {};
 
 
 window.onload = function () {

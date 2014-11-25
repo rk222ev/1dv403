@@ -1,17 +1,15 @@
 /*global PWD, document */
 "use strict";
 
-PWD.Window = function (app, id) {
+PWD.Window = function (id) {
 
-  this.getId = function () {
-    console.log(PWD.desktop.openWindows.indexOf(this.node)); return PWD.desktop.openWindows.indexOf(this.node); };
-
+  this.getId = function () { return id; };
   this.width = 500;
   this.height = 400;
 
   this.position = {x: 50, y: 100};
 
-  this.node = PWD.Window.prototype.createWindowNode();
+  this.node = this.createWindowNode();
 
 
   this.init();
@@ -43,7 +41,7 @@ PWD.Window.prototype.init = function () {
   PWD.desktop.node.appendChild(this.node);
   this.setSize();
 
-  this.setPosition();
+  this.updatePosition();
 };
 
 
@@ -53,9 +51,12 @@ PWD.Window.prototype.setSize = function () {
 };
 
 
-PWD.Window.prototype.setPosition = function () {
-  this.node.style.top = this.position.y + "px";
-  this.node.style.left = this.position.x + "px";
+PWD.Window.prototype.updatePosition = function (x, y) {
+  var newY = this.position.y += (y || 0),
+    newX = this.position.x += (x || 0);
+
+  this.node.style.top =  newY + "px";
+  this.node.style.left = newX + "px";
 
 };
 
@@ -64,6 +65,7 @@ PWD.Window.prototype.createWindowNode = function () {
   var windowDiv = document.createElement("div"),
     resizeDiv = document.createElement("div");
 
+  windowDiv.setAttribute("id", this.getId());
   windowDiv.classList.add("window");
   windowDiv.appendChild(this.createWindowList());
 
@@ -79,6 +81,5 @@ PWD.Window.prototype.createWindowNode = function () {
 PWD.Window.prototype.closeWindow = function (node) {
 
   PWD.desktop.node.removeChild(node);
-  PWD.desktop.openWindows.splice(node, 1);
-
+  delete PWD.desktop.openWindows[node.id];
 };
