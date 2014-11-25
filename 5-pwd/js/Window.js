@@ -55,7 +55,7 @@ PWD.Window.prototype.updatePosition = function (x, y) {
   var newY = this.position.y += (y || 0),
     newX = this.position.x += (x || 0),
     maxY = 640 - this.height,
-    maxX = 1024 - this.width - 40;
+    maxX = 1024 - this.width;
 
 
   if (newX < 0) {
