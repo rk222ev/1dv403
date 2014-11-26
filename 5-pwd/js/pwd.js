@@ -29,6 +29,7 @@ PWD.desktop.createLauncher = function (app) {
   appIcon.classList.add(app);
 
   link.setAttribute("href", "#");
+  link.setAttribute("title", app);
   link.appendChild(appIcon);
 
 
