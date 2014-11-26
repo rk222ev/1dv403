@@ -1,5 +1,6 @@
 body {
   background-color: #263238;
+  font-family: 'Roboto', sans-serif;
 }
 .pwd {
   position: relative;
@@ -26,18 +27,22 @@ body {
 .window-list {
   background-color: #607D8B;
   border-bottom: solid 1px;
-  height: 20px;
+  height: 25px;
   text-align: center;
+  color: #ECEFF1;
 }
 
 .window-list a {
   float: right;
 }
 
-.window-list img {
+.close-button {
   width: 15px;
 }
 
+.app-icon, .window-list span {
+  float: left;
+}
 
 .resize-div {
   width: 10px;

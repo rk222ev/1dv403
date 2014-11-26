@@ -4,6 +4,8 @@
 
 var PWD = {
   desktop: {
+    openWindows: {},
+    node: document.querySelector(".pwd")
   },
 };
 
@@ -45,8 +47,11 @@ PWD.desktop.clickEvent = function (e) {
 
   if (e.target.classList.contains("launcher") ) {
     var time = new Date().getTime();
+    var app = e.target.classList[1];
 
-   PWD.desktop.openWindows[time] = new PWD.Window(time);
+    console.log(app);
+
+   PWD.desktop.openWindows[time] = new PWD.Window(time, app);
 
   } else if (e.target.className === "close-button") {
     // TODO: Find a better way to do this...
@@ -75,10 +80,6 @@ PWD.desktop.dragWindow = function (target) {
 
 };
 
-
-PWD.desktop.node = document.querySelector(".pwd");
-
-PWD.desktop.openWindows = {};
 
 PWD.desktop.setFocus = function (nodeID) {
   PWD.desktop.node.removeChild(PWD.desktop.openWindows[nodeID].node);

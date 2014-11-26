@@ -1,11 +1,13 @@
 /*global PWD, document */
 "use strict";
 
-PWD.Window = function (id) {
+PWD.Window = function (id, app) {
 
   this.getId = function () { return id; };
   this.width = 500;
   this.height = 400;
+
+  this.getAppName = function () { return app; };
 
   this.position = {x: 50, y: 100};
 
@@ -19,12 +21,20 @@ PWD.Window = function (id) {
 
 PWD.Window.prototype.createWindowList = function () {
   var div = document.createElement("div"),
+    icon = document.createElement("img"),
+    windowName = document.createElement("span"),
     closeButton = document.createElement("img"),
     closeLink = document.createElement("a");
 
+  icon.setAttribute("src", "pics/icons/" + this.getAppName() + ".svg");
+  icon.classList.add("app-icon");
+  div.appendChild(icon);
+
+  windowName.innerHTML = this.getAppName();
+  div.appendChild(windowName),
+
   closeButton.setAttribute("src", "pics/icons/clear.svg");
   closeButton.classList.add("close-button");
-
   closeLink.setAttribute("href", "#");
   closeLink.appendChild(closeButton);
 
