@@ -39,6 +39,7 @@ PWD.desktop.createLauncher = function (app) {
 PWD.desktop.clickEvent = function (e) {
 
   e.preventDefault();
+  console.log(e.target);
 
   if (e.target.classList.contains("window")) {
     PWD.desktop.setFocus(e.target.id);

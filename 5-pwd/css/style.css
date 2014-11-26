@@ -56,10 +56,11 @@ body {
   width: 10px;
   height: 10px;
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: -4px;
+  right: -4px;
   border-right: solid 1px;
   border-bottom: solid 1px;
+  cursor: nw-resize;
 }
 
 .focus {
