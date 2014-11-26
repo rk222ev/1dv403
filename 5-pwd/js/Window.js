@@ -9,7 +9,9 @@ PWD.Window = function (id, app) {
 
   this.getAppName = function () { return app; };
 
-  this.position = {x: 50, y: 100};
+  this.position = {
+    x: 50,
+    y: 10};
 
   this.node = this.createWindowNode();
 
@@ -50,6 +52,11 @@ PWD.Window.prototype.createWindowList = function () {
 
 PWD.Window.prototype.init = function () {
   PWD.desktop.node.appendChild(this.node);
+
+  this.position.x += Object.keys(PWD.desktop.openWindows).length % 23 * 20;
+
+  this.position.y += Object.keys(PWD.desktop.openWindows).length % 13 * 20;
+
   this.setSize();
 
   this.updatePosition();
