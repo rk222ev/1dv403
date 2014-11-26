@@ -45,14 +45,17 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
   PWD.desktop.openWindows[this.getWindowId()].appLoaded();
 
   var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app");
+  var newDiv = document.createElement("div");
+
+
 
   this.readData.forEach( function (pic) {
     var img = document.createElement("img");
 
     img.setAttribute("src", pic.thumbURL);
 
-    appNode.appendChild(img);
-    console.log(pic);
+    newDiv.appendChild(img);
   });
 
+  appNode.appendChild(newDiv);
 };
