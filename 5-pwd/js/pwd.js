@@ -39,16 +39,8 @@ PWD.desktop.clickEvent = function (e) {
   e.preventDefault();
 
   if (e.target.classList.contains("window")) {
+    PWD.desktop.setFocus(e.target.id);
 
-    Object.keys(PWD.desktop.openWindows).forEach(function (windowID) {
-      if (PWD.desktop.openWindows[windowID].node.classList.contains("focus")) {
-        PWD.desktop.openWindows[windowID].node.classList.toggle("focus");
-      }
-
-    });
-
-
-    e.target.classList.toggle("focus");
   }
 
   if (e.target.classList.contains("launcher") ) {
@@ -61,6 +53,7 @@ PWD.desktop.clickEvent = function (e) {
       PWD.Window.prototype.closeWindow(e.target.parentNode.parentNode.parentNode);
 
   } else if (e.target.className === "window-list") {
+    PWD.desktop.setFocus(e.target.parentNode.id);
     PWD.desktop.dragWindow(e.target.parentNode.id);
 
   }
@@ -87,6 +80,10 @@ PWD.desktop.node = document.querySelector(".pwd");
 
 PWD.desktop.openWindows = {};
 
+PWD.desktop.setFocus = function (nodeID) {
+  PWD.desktop.node.removeChild(PWD.desktop.openWindows[nodeID].node);
+  PWD.desktop.node.appendChild(PWD.desktop.openWindows[nodeID].node);
+};
 
 window.onload = function () {
   PWD.desktop.init();
