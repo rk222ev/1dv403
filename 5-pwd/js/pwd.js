@@ -49,8 +49,6 @@ PWD.desktop.clickEvent = function (e) {
     var time = new Date().getTime();
     var app = e.target.classList[1];
 
-    console.log(app);
-
    PWD.desktop.openWindows[time] = new PWD.Window(time, app);
 
   } else if (e.target.className === "close-button") {
