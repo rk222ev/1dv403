@@ -9,6 +9,8 @@ PWD.Window = function (id, app) {
 
   this.getAppName = function () { return app; };
 
+  this.app = (function () { return new PWD.apps[app](); })();
+
   this.position = {
     x: 50,
     y: 10};

@@ -5,8 +5,9 @@
 var PWD = {
   desktop: {
     openWindows: {},
-    node: document.querySelector(".pwd")
+    node: document.querySelector(".pwd"),
   },
+  apps: {}
 };
 
 
@@ -14,7 +15,12 @@ var PWD = {
 PWD.desktop.init = function () {
 
   PWD.desktop.node.addEventListener("mousedown", PWD.desktop.clickEvent);
-  PWD.desktop.node.appendChild(this.createLauncher("images"));
+  // PWD.desktop.node.appendChild(this.createLauncher("images"));
+
+
+  Object.keys(PWD.apps).forEach( function (key) {
+    PWD.desktop.node.appendChild(PWD.desktop.createLauncher(key));
+  });
 
 };
 
@@ -99,5 +105,6 @@ PWD.desktop.setFocus = function (nodeID) {
 window.onload = function () {
   PWD.desktop.init();
   // PWD.openWindows.push(new PWD.Window());
+  // var imageViewer = new PWD.apps.ImageViewer();
 
 };
