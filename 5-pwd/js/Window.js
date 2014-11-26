@@ -40,6 +40,7 @@ PWD.Window.prototype.createWindowList = function () {
 
   div.appendChild(closeLink);
 
+
   div.classList.add("window-list");
 
   return div;
@@ -89,14 +90,17 @@ PWD.Window.prototype.updatePosition = function (x, y) {
 
 PWD.Window.prototype.createWindowNode = function () {
   var windowDiv = document.createElement("div"),
+    statusBar = document.createElement("div"),
     resizeDiv = document.createElement("div");
 
   windowDiv.setAttribute("id", this.getId());
   windowDiv.classList.add("window");
   windowDiv.appendChild(this.createWindowList());
 
-  resizeDiv.classList.add("resize-div");
+  statusBar.classList.add("statusbar");
+  windowDiv.appendChild(statusBar);
 
+  resizeDiv.classList.add("resize-div");
   windowDiv.appendChild(resizeDiv);
 
   return windowDiv;
