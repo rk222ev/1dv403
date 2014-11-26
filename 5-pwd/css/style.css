@@ -46,3 +46,6 @@
   border-bottom: solid 1px;
 }
 
+.focus {
+  z-index: 2;
+}

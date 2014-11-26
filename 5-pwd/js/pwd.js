@@ -3,7 +3,8 @@
 
 
 var PWD = {
-  desktop: {},
+  desktop: {
+  },
 };
 
 
@@ -36,6 +37,19 @@ PWD.desktop.createLauncher = function (app) {
 PWD.desktop.clickEvent = function (e) {
 
   e.preventDefault();
+
+  if (e.target.classList.contains("window")) {
+
+    Object.keys(PWD.desktop.openWindows).forEach(function (windowID) {
+      if (PWD.desktop.openWindows[windowID].node.classList.contains("focus")) {
+        PWD.desktop.openWindows[windowID].node.classList.toggle("focus");
+      }
+
+    });
+
+
+    e.target.classList.toggle("focus");
+  }
 
   if (e.target.classList.contains("launcher") ) {
     var time = new Date().getTime();
