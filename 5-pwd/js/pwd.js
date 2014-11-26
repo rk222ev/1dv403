@@ -39,7 +39,6 @@ PWD.desktop.createLauncher = function (app) {
 PWD.desktop.clickEvent = function (e) {
 
   e.preventDefault();
-  console.log(e.target);
 
   if (e.target.classList.contains("window")) {
     PWD.desktop.setFocus(e.target.id);
@@ -60,18 +59,29 @@ PWD.desktop.clickEvent = function (e) {
     PWD.desktop.setFocus(e.target.parentNode.id);
     PWD.desktop.dragWindow(e.target.parentNode.id);
 
+  } else if (e.target.className === "resize-div") {
+    PWD.desktop.dragWindow(e.target.parentNode.id, "move");
+
   }
 };
 
-PWD.desktop.dragWindow = function (target) {
-  var mouseMove = function (e) {
-    PWD.desktop.openWindows[target].updatePosition(e.movementX, e.movementY);
-  };
+
+
+PWD.desktop.dragWindow = function (target, property) {
+  var mouseMove;
 
  var mouseUp = function () {
     PWD.desktop.node.removeEventListener("mousemove", mouseMove);
     PWD.desktop.node.removeEventListener("mouseup", mouseUp);
 
+  };
+
+  mouseMove = function (e) {
+    if (property === "move") {
+      PWD.desktop.openWindows[target].resizeWindow(e.movementX, e.movementY);
+    } else {
+      PWD.desktop.openWindows[target].updatePosition(e.movementX, e.movementY);
+    }
   };
 
   PWD.desktop.node.addEventListener("mousemove", mouseMove);

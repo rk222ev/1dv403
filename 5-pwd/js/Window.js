@@ -94,6 +94,28 @@ PWD.Window.prototype.updatePosition = function (x, y) {
 
 };
 
+PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
+  var newValue = value + secondValue;
+
+  if (newValue > max) {
+    newValue = max;
+  } else if (newValue < min) {
+    newValue = min;
+  }
+
+  return newValue;
+
+};
+
+PWD.Window.prototype.resizeWindow = function (x, y) {
+  this.height = PWD.Window.prototype.filterSize(this.height, y, 50, (640 - this.position.y));
+  this.width = PWD.Window.prototype.filterSize(this.width, x, 100, 1024 - this.position.x);
+
+  this.node.style.height = this.height + "px";
+  this.node.style.width = this.width + "px";
+
+};
+
 
 PWD.Window.prototype.createWindowNode = function () {
   var windowDiv = document.createElement("div"),
