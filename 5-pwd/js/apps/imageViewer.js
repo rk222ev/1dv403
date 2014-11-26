@@ -1,11 +1,19 @@
-PWD.apps.ImageViewer = function () {
- this.icon = "pics/icons/image.svg";
+PWD.apps.ImageViewer = function (windowId) {
+  var that = this;
 
- this.ajaxRequest = new XMLHttpRequest();
+  this.icon = "pics/icons/image.svg";
 
- this.readData = [];
+  this.getWindowId = function () { return windowId; };
 
- this.init();
+  // this.appNode = (function () { PWD.desktop.openWindows[that.getWindowId()].node.querySelector(".app"); })();
+
+  this.ajaxRequest = new XMLHttpRequest();
+
+  this.readData = [];
+
+
+  this.init();
+
 };
 
 
@@ -34,5 +42,17 @@ PWD.apps.ImageViewer.prototype.parseJson = function (data) {
 };
 
 PWD.apps.ImageViewer.prototype.drawPics = function () {
-  console.log(this.readData);
+  PWD.desktop.openWindows[this.getWindowId()].appLoaded();
+
+  var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app");
+
+  this.readData.forEach( function (pic) {
+    var img = document.createElement("img");
+
+    img.setAttribute("src", pic.thumbURL);
+
+    appNode.appendChild(img);
+    console.log(pic);
+  });
+
 };

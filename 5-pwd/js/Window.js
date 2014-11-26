@@ -9,7 +9,7 @@ PWD.Window = function (id, app) {
 
   this.getAppName = function () { return app; };
 
-  this.app = (function () { return new PWD.apps[app](); })();
+  this.app = (function () { return new PWD.apps[app](id); })();
 
   this.position = {
     x: 50,
@@ -17,6 +17,10 @@ PWD.Window = function (id, app) {
 
   this.node = this.createWindowNode();
 
+  this.appLoaded = function () {
+    var node = this.node.querySelector(".statusbar img");
+    node.parentNode.removeChild(node);
+  };
 
   this.init();
 };
@@ -111,8 +115,8 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
 };
 
 PWD.Window.prototype.resizeWindow = function (x, y) {
-  this.height = PWD.Window.prototype.filterSize(this.height, y, 50, (640 - this.position.y));
-  this.width = PWD.Window.prototype.filterSize(this.width, x, 100, 1024 - this.position.x);
+  this.height = PWD.Window.prototype.filterSize(this.height, y, 200, (640 - this.position.y));
+  this.width = PWD.Window.prototype.filterSize(this.width, x, 300, 1024 - this.position.x);
 
   this.node.style.height = this.height + "px";
   this.node.style.width = this.width + "px";
@@ -122,13 +126,21 @@ PWD.Window.prototype.resizeWindow = function (x, y) {
 
 PWD.Window.prototype.createWindowNode = function () {
   var windowDiv = document.createElement("div"),
+    contentDiv = document.createElement("div"),
     statusBar = document.createElement("div"),
-    resizeDiv = document.createElement("div");
+    resizeDiv = document.createElement("div"),
+    loadingImage = document.createElement("img");
 
   windowDiv.setAttribute("id", this.getId());
   windowDiv.classList.add("window");
   windowDiv.appendChild(this.createWindowList());
 
+  contentDiv.classList.add("app");
+  windowDiv.appendChild(contentDiv);
+
+  loadingImage.setAttribute("src", "pics/ajax-loader.gif");
+
+  statusBar.appendChild(loadingImage);
   statusBar.classList.add("statusbar");
   windowDiv.appendChild(statusBar);
 
