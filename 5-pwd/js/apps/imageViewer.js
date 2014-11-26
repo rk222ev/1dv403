@@ -46,15 +46,27 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
 
   var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app");
   var newDiv = document.createElement("div");
+  var maxImageWidth = "75px";
+  var maxImageHeight = "50px";
 
 
 
   this.readData.forEach( function (pic) {
-    var img = document.createElement("img");
+    var div = document.createElement("div"),
+      a = document.createElement("a"),
+      img = document.createElement("img");
 
     img.setAttribute("src", pic.thumbURL);
+    a.appendChild(img);
 
-    newDiv.appendChild(img);
+    a.setAttribute("href", "#");
+    div.appendChild(a);
+
+    div.classList.add("gallery-pic");
+    div.style.width = maxImageWidth;
+    div.style.height = maxImageHeight;
+
+    newDiv.appendChild(div);
   });
 
   appNode.appendChild(newDiv);
