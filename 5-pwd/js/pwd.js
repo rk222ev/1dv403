@@ -86,7 +86,7 @@ PWD.desktop.findParentNode = function (startingNode, className) {
 
 
 
-PWD.desktop.dragWindow = function (target, property) {
+PWD.desktop.dragWindow = function (targetNode, property) {
   var mouseMove;
 
  var mouseUp = function () {
@@ -97,9 +97,9 @@ PWD.desktop.dragWindow = function (target, property) {
 
   mouseMove = function (e) {
     if (property === "move") {
-      PWD.desktop.openWindows[target].resizeWindow(e.movementX, e.movementY);
+      PWD.desktop.openWindows[targetNode.id].resizeWindow(e.movementX, e.movementY);
     } else {
-      PWD.desktop.openWindows[target].updatePosition(e.movementX, e.movementY);
+      PWD.desktop.openWindows[targetNode.id].updatePosition(e.movementX, e.movementY);
     }
   };
 
