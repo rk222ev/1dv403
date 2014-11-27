@@ -42,19 +42,24 @@ PWD.apps.ImageViewer.prototype.parseJson = function (data) {
 };
 
 PWD.apps.ImageViewer.prototype.drawPics = function () {
+
+  var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app"),
+    newDiv = document.createElement("div"),
+    widths = this.readData.map(function (pic) { return pic.thumbWidth; }),
+    heights = this.readData.map(function (pic) { return pic.thumbHeight; }),
+    maxImageWidth =  Math.max.apply(null, widths),
+    maxImageHeight = Math.max.apply(null, heights);
+
+
   PWD.desktop.openWindows[this.getWindowId()].appLoaded();
 
-  var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app");
-  var newDiv = document.createElement("div");
-  var maxImageWidth = "75px";
-  var maxImageHeight = "50px";
 
-
-
+  console.log(widths);
   this.readData.forEach( function (pic) {
     var div = document.createElement("div"),
       a = document.createElement("a"),
       img = document.createElement("img");
+
 
     img.setAttribute("src", pic.thumbURL);
     a.appendChild(img);
@@ -63,8 +68,8 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
     div.appendChild(a);
 
     div.classList.add("gallery-pic");
-    div.style.width = maxImageWidth;
-    div.style.height = maxImageHeight;
+    div.style.width = maxImageWidth + "px";
+    div.style.height = maxImageHeight + "px";
 
     newDiv.appendChild(div);
   });
