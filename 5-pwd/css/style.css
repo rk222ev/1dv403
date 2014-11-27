@@ -24,6 +24,11 @@ body {
  border: solid 1px #263238;
 }
 
+.gallery-pic a {
+
+  display: block;
+}
+
 .launcher {
   float: left;
   width: 34px;

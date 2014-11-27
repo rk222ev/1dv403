@@ -76,3 +76,4 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
 
   appNode.appendChild(newDiv);
 };
+
