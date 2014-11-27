@@ -101,7 +101,7 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
 
 PWD.Window.prototype.resizeWindow = function (x, y) {
   this.height = PWD.Window.prototype.filterSize(this.height, y, 200, (640 - this.position.y));
-  this.width = PWD.Window.prototype.filterSize(this.width, x, 300, 1024 - this.position.x);
+  this.width = PWD.Window.prototype.filterSize(this.width, x, 200, 1024 - this.position.x);
 
   this.node.style.height = this.height + "px";
   this.node.style.width = this.width + "px";

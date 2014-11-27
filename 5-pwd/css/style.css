@@ -18,7 +18,7 @@ body {
 
 .gallery-pic {
  float: left;
- background-color: #CFD8DC;
+ background-color: #B0BEC5;
  margin: 15px;
  text-align: center;
  border: solid 1px #263238;
@@ -65,7 +65,7 @@ body {
 }
 
 .window  {
-  border: solid 1px;
+  border: solid 1px #B0BEC5;
   position: absolute;
   background-color: #ECEFF1;
   display: block;
