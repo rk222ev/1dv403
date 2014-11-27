@@ -40,7 +40,7 @@ PWD.Window.prototype.createWindowList = function () {
 
   windowName.innerHTML = this.getAppName();
   windowName.innerHTML = windowName.innerHTML[0].toUpperCase() + windowName.innerHTML.substr(1);
-  div.appendChild(windowName),
+  div.appendChild(windowName);
 
   closeButton.setAttribute("src", "pics/icons/clear.svg");
   closeButton.classList.add("close-button");
