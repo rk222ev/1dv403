@@ -1,7 +1,10 @@
 /*global PWD, document */
 "use strict";
 
-
+PWD.desktop = {
+  openWindows: {},
+  node: document.querySelector(".pwd"),
+};
 
 // Initializes the desktop
 PWD.desktop.init = function () {

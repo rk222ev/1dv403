@@ -3,10 +3,6 @@
 
 
 var PWD = {
-  desktop: {
-    openWindows: {},
-    node: document.querySelector(".pwd"),
-  },
   apps: {}
 };
 
