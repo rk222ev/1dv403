@@ -43,14 +43,12 @@ PWD.desktop.createLauncher = function (app) {
 };
 
 
+// Handles all clickevents on the desktop.
+// including inside windows.
 PWD.desktop.clickEvent = function (e) {
+  var windowNode;
 
   e.preventDefault();
-
-  if (e.target.classList.contains("window")) {
-    PWD.desktop.setFocus(e.target.id);
-
-  }
 
   if (e.target.classList.contains("launcher") ) {
     var time = new Date().getTime();
@@ -58,18 +56,32 @@ PWD.desktop.clickEvent = function (e) {
 
    PWD.desktop.openWindows[time] = new PWD.Window(time, app);
 
-  } else if (e.target.className === "close-button") {
-    // TODO: Find a better way to do this...
-      PWD.Window.prototype.closeWindow(e.target.parentNode.parentNode.parentNode);
+  } else if (e.target.classList.contains("close-button")) {
+    PWD.Window.prototype.closeWindow(PWD.desktop.findParentNode(e.target, "window"));
 
-  } else if (e.target.className === "window-list") {
-    PWD.desktop.setFocus(e.target.parentNode.id);
-    PWD.desktop.dragWindow(e.target.parentNode.id);
+  } else if (e.target.classList.contains("resize-div")) {
+    PWD.desktop.dragWindow(PWD.desktop.findParentNode(e.target, "window"), "move");
 
-  } else if (e.target.className === "resize-div") {
-    PWD.desktop.dragWindow(e.target.parentNode.id, "move");
+  } else if (e.target.classList.contains("pwd") === false) {
+    windowNode = PWD.desktop.findParentNode(e.target, "window");
+    PWD.desktop.setFocus(windowNode);
+
+    if (PWD.desktop.findParentNode(e.target, "window-list")) {
+      PWD.desktop.dragWindow(windowNode.id);
+    }
 
   }
+
+};
+
+// Walks to DOM toward the HTML-element looking for a node
+// with a certain class.
+PWD.desktop.findParentNode = function (startingNode, className) {
+  if (startingNode.classList.contains(className)) {
+    return startingNode;
+  }
+
+  return PWD.desktop.findParentNode(startingNode.parentNode, className);
 };
 
 
@@ -97,9 +109,9 @@ PWD.desktop.dragWindow = function (target, property) {
 };
 
 
-PWD.desktop.setFocus = function (nodeID) {
-  PWD.desktop.node.removeChild(PWD.desktop.openWindows[nodeID].node);
-  PWD.desktop.node.appendChild(PWD.desktop.openWindows[nodeID].node);
+PWD.desktop.setFocus = function (selectedNode) {
+  PWD.desktop.node.removeChild(PWD.desktop.openWindows[selectedNode.id].node);
+  PWD.desktop.node.appendChild(PWD.desktop.openWindows[selectedNode.id].node);
 };
 
 window.onload = function () {
