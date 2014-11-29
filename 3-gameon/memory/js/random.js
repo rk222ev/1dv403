@@ -1,3 +1,4 @@
+"use strict";
 var RandomGenerator = {
 
 	/*
@@ -13,51 +14,36 @@ var RandomGenerator = {
 		[3,4,4,1,2,1,2,3]
 	*/
 
-	getPictureArray: function(params)
-	{
-		var rows = params.rows;
-		var cols = params.cols;
-		var numberOfImages = rows*cols;
-		var maxImageNumber = numberOfImages/2;
+	getPictureArray: function(params)	{
+		var rows 					= params.rows,
+				cols 					= params.cols,
+				highestValue 	= rows * cols / 2,
+				values 				= [],
+				images 				= [],
+				i;
 
-			var imgPlace = [];
 
-		 //Utplacering av bilder i Array
-		 for(var i=0; i<numberOfImages; i++)
-			imgPlace[i] = 0;
-
-		for(var currentImageNumber=1; currentImageNumber<=maxImageNumber; currentImageNumber++)
-		{
-			var imageOneOK = false;
-			var imageTwoOK = false;
-
-			do
-			{
-				if(imageOneOK == false)
-				{
-					var randomOne = Math.floor( (Math.random() * (rows*cols-0) + 0) );
-
-					if( imgPlace[randomOne] == 0 )
-					{
-						imgPlace[randomOne] = currentImageNumber;
-						imageOneOK = true;
-					}
-				}
-
-				if(imageTwoOK == false)
-				{
-					var randomTwo = Math.floor( (Math.random() * (rows*cols-0) + 0) );
-
-					if( imgPlace[randomTwo] == 0 )
-					{
-						imgPlace[randomTwo] = currentImageNumber;
-						imageTwoOK = true;
-					}
-				}
+			// Give the images array values ranging from 1 to x.
+			// assigning the number twice.
+			for (i = 1; i <= highestValue; i += 1) {
+				values[i] = i;
+				values[i + highestValue] = i;
 			}
-			while(imageOneOK == false || imageTwoOK == false);
-		}
 
-		return imgPlace;
-	}
-}
+			// Loops through our values and assigns it to an unused arrayindex.
+			values.forEach(function(imageValue) {
+				var arrayIndex;
+
+				do {
+					arrayIndex = Math.floor( (Math.random() * (rows * cols - 0) + 0) );
+
+				} while (images[arrayIndex] !== undefined);
+
+				images[arrayIndex] = imageValue;
+			});
+
+			return images;
+	},
+};
+
+
