@@ -1,5 +1,6 @@
-/*global PWD, document */
 "use strict";
+
+/*global PWD, document */
 
 PWD.desktop = {
   openWindows: {},
@@ -9,11 +10,15 @@ PWD.desktop = {
   // Walks to DOM toward the HTML-element looking for a node
   // with a certain class.
   findParentNode: function (startingNode, className) {
-    if (startingNode.classList && startingNode.classList.contains(className)) {
-      return startingNode;
-    }
 
-    return PWD.desktop.findParentNode(startingNode.parentNode, className);
+    if(startingNode !== null  && typeof startingNode.classList === "object")  {
+
+        if (startingNode.classList.contains(className)) {
+          return startingNode;
+
+        }
+      return PWD.desktop.findParentNode(startingNode.parentNode, className);
+    }
   },
 
 
@@ -54,7 +59,8 @@ PWD.desktop = {
 
 
 PWD.desktop.events.click = function (e) {
-  var windowNode;
+  var windowNode,
+      appNode;
 
   e.preventDefault();
 
@@ -71,6 +77,10 @@ PWD.desktop.events.click = function (e) {
 
   } else if (e.target.classList.contains("resize-div")) {
     PWD.desktop.events.drag(PWD.desktop.findParentNode(e.target, "window"), "move");
+
+  } else if (e.target.classList.contains("app")) {
+    windowNode = PWD.desktop.findParentNode(e.target, "window");
+    PWD.desktop.setFocus(windowNode);
 
   } else if (e.target.classList.contains("pwd") === false) {
     windowNode = PWD.desktop.findParentNode(e.target, "window");
