@@ -125,16 +125,9 @@ PWD.apps.Memory.prototype.generateTable = function (picArray, cols) {
 
   });
 
-  table.addEventListener("click", function (e) {
+  table.addEventListener("mousedown", function (e) {
    that.clickEvent(e);
-  });
-
-  table.addEventListener("keydown", function (e) {
-    if (e.keyCode === 13) {
-      that.clickEvent(e);
-    }
-
-  });
+  }, true);
 
   return table;
 };
