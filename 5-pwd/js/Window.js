@@ -1,15 +1,19 @@
-/*global PWD, document */
 "use strict";
 
-PWD.Window = function (id, app) {
+/*global PWD, document */
+
+PWD.Window = function (params) {
+  var id = params.id;
 
   this.getId = function () { return id; };
   this.width = 500;
   this.height = 400;
+  this.getTitleBarText = function () { return params.titleBarText || "app"; };
+  this.getIcon = function () { return params.icon; };
 
-  this.getAppName = function () { return app; };
+  //this.getAppName = function () { return app; };
 
-  this.app = (function () { return new PWD.apps[app](id); })();
+  //this.app = (function () { return new PWD.apps[app](id); })();
 
   this.position = {
     x: 50,
@@ -34,11 +38,11 @@ PWD.Window.prototype.createWindowList = function () {
     closeButton = document.createElement("img"),
     closeLink = document.createElement("a");
 
-  icon.setAttribute("src", "pics/icons/" + this.getAppName() + ".svg");
+  icon.setAttribute("src", this.getIcon());
   icon.classList.add("app-icon");
   div.appendChild(icon);
 
-  windowName.innerHTML = this.getAppName();
+  windowName.innerHTML = this.getTitleBarText();
   windowName.innerHTML = windowName.innerHTML[0].toUpperCase() + windowName.innerHTML.substr(1);
   div.appendChild(windowName);
 

@@ -1,61 +1,62 @@
-PWD.apps.ImageViewer = function (windowId) {
-  var that = this;
+PWD.apps.ImageViewer = function (params) {
 
-  this.icon = "pics/icons/image.svg";
+  var id              = params.id,
+      appSettings     = {},
+      windowSettings  = {},
+      picData;
 
-  this.getWindowId = function () { return windowId; };
+  appSettings.Url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
 
-  // this.appNode = (function () { PWD.desktop.openWindows[that.getWindowId()].node.querySelector(".app"); })();
+  windowSettings.id           = id;
+  windowSettings.icon         = "pics/icons/ImageViewer.svg";
+  windowSettings.titleBarText = "ImageViewer 0.1";
 
-  this.ajaxRequest = new XMLHttpRequest();
+  this.setPicData = function (data) { this.picData = data; };
+  this.getPicData = function () { return this.picData; };
 
-  this.readData = [];
+
+  this.window = new PWD.Window(windowSettings);
+  this.XHR    = new XMLHttpRequest();
+  this.node   = this.window.node.querySelector(".app");
 
 
-  this.init();
+  this.init({
+    jsonUrl: appSettings.Url
+  });
 
 };
 
 
-PWD.apps.ImageViewer.prototype.init = function () {
+PWD.apps.ImageViewer.prototype.getGalleryJson = function (url) {
   var that = this;
 
-  this.ajaxRequest.onreadystatechange = function () { that.pics = that.parseJson(that.ajaxRequest); };
+    this.XHR.onreadystatechange = function () {
+      that.parseJson(that.XHR);
+    };
 
-  this.ajaxRequest.open("GET", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/");
-  this.ajaxRequest.send();
+    this.XHR.open("GET", url);
+    this.XHR.send();
 
 };
 
-PWD.apps.ImageViewer.prototype.parseJson = function (data) {
-  var that = this;
+PWD.apps.ImageViewer.prototype.setAppLoaded = function () {
+  this.window.appLoaded();
+  this.drawPics();
 
-  if (data.readyState === 4) {
-    if (data.status === 200) {
-      JSON.parse(data.responseText).forEach(function (obj) { that.readData.push(obj); });
-      this.drawPics();
-
-    } else {
-      alert('There was a problem with the request.');
-    }
-  }
 };
+
 
 PWD.apps.ImageViewer.prototype.drawPics = function () {
-
-  var appNode = PWD.desktop.openWindows[this.getWindowId()].node.querySelector(".app"),
-    newDiv = document.createElement("div"),
-    widths = this.readData.map(function (pic) { return pic.thumbWidth; }),
-    heights = this.readData.map(function (pic) { return pic.thumbHeight; }),
-    maxImageWidth =  Math.max.apply(null, widths),
-    maxImageHeight = Math.max.apply(null, heights);
-
-
-  PWD.desktop.openWindows[this.getWindowId()].appLoaded();
+  var appNode = this.node,
+      picData = this.getPicData(),
+      newDiv = document.createElement("div"),
+      widths = picData.map(function (pic) { return pic.thumbWidth; }),
+      heights = picData.map(function (pic) { return pic.thumbHeight; }),
+      maxImageWidth =  Math.max.apply(null, widths),
+      maxImageHeight = Math.max.apply(null, heights);
 
 
-  console.log(widths);
-  this.readData.forEach( function (pic) {
+  picData.forEach( function (pic) {
     var div = document.createElement("div"),
       a = document.createElement("a"),
       img = document.createElement("img");
@@ -76,4 +77,34 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
 
   appNode.appendChild(newDiv);
 };
+
+
+
+PWD.apps.ImageViewer.prototype.parseJson = function (data) {
+
+  var pics;
+
+  if (data.readyState === 4) {
+
+    if (data.status === 200) {
+
+      //JSON.parse(data.responseText).forEach(function (obj) { pics.push(obj); });
+      pics = JSON.parse(data.responseText).map(function (pic) { return pic; });
+
+      this.setPicData(pics);
+      this.setAppLoaded();
+
+    } else {
+      alert('There was a problem with the request.');
+    }
+  }
+};
+
+
+PWD.apps.ImageViewer.prototype.init = function (params) {
+
+  this.getGalleryJson(params.jsonUrl);
+};
+
+
 
