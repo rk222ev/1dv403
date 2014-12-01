@@ -6,7 +6,9 @@ body {
 .app {
   height: calc( 100% - 45px );
   overflow: auto;
+  text-align: center;
 }
+
 
 .app-icon, .window-list span {
   float: left;
