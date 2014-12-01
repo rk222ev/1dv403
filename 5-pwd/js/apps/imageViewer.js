@@ -10,6 +10,8 @@ PWD.apps.ImageViewer = function (params) {
   windowSettings.id           = id;
   windowSettings.icon         = "pics/icons/ImageViewer.svg";
   windowSettings.titleBarText = "ImageViewer 0.1";
+  windowSettings.width        = 600;
+  windowSettings.height       = 460;
 
   this.setPicData = function (data) { this.picData = data; };
   this.getPicData = function () { return this.picData; };
@@ -21,7 +23,8 @@ PWD.apps.ImageViewer = function (params) {
 
 
   this.init({
-    jsonUrl: appSettings.Url
+    jsonUrl: appSettings.Url,
+    picUrl: params.picUrl
   });
 
 };
@@ -46,9 +49,16 @@ PWD.apps.ImageViewer.prototype.setAppLoaded = function () {
 };
 
 
-PWD.apps.ImageViewer.prototype.click = function () {
-  var time = new Date().getTime();
-  PWD.desktop.openWindws[time] = new PWD.apps.ImageViewer();
+PWD.apps.ImageViewer.prototype.click = function (pic) {
+  var settings = {};
+
+ settings.id = new Date().getTime();
+ settings.picUrl = pic.URL;
+ settings.height = pic.height;
+ settings.width = pic.width;
+
+  PWD.desktop.openWindows[settings.id] = new PWD.apps.ImageViewer(settings);
+  return true;
 };
 
 
@@ -58,14 +68,15 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
       newDiv = document.createElement("div"),
       widths = picData.map(function (pic) { return pic.thumbWidth; }),
       heights = picData.map(function (pic) { return pic.thumbHeight; }),
-      maxImageWidth =  Math.max.apply(null, widths),
-      maxImageHeight = Math.max.apply(null, heights);
+      maxWidth =  Math.max.apply(null, widths),
+      maxHeight = Math.max.apply(null, heights);
 
 
   picData.forEach( function (pic) {
-    var div = document.createElement("div"),
-      a = document.createElement("a"),
-      img = document.createElement("img");
+    var that = this,
+        div = document.createElement("div"),
+        a = document.createElement("a"),
+        img = document.createElement("img");
 
 
     img.setAttribute("src", pic.thumbURL);
@@ -75,9 +86,11 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
     div.appendChild(a);
 
     div.classList.add("gallery-pic");
-    div.style.width = maxImageWidth + "px";
-    div.style.height = maxImageHeight + "px";
-    div.addEventListener("mousedown", PWD.apps.ImageViewer.prototype.click);
+    div.style.width = maxWidth + "px";
+    div.style.height = maxHeight + "px";
+    div.addEventListener("mousedown", function () {
+      PWD.apps.ImageViewer.prototype.click(pic);
+    });
 
     newDiv.appendChild(div);
   });
@@ -107,10 +120,23 @@ PWD.apps.ImageViewer.prototype.parseJson = function (data) {
   }
 };
 
+PWD.apps.ImageViewer.prototype.drawPic = function (url) {
+  var img = document.createElement("img") ;
+
+  img.setAttribute("src", url);
+  this.node.appendChild(img);
+};
+
 
 PWD.apps.ImageViewer.prototype.init = function (params) {
 
-  this.getGalleryJson(params.jsonUrl);
+  if (params.picUrl) {
+    this.drawPic(params.picUrl);
+
+  } else {
+    this.getGalleryJson(params.jsonUrl);
+
+  }
 };
 
 
