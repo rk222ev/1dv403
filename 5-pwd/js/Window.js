@@ -76,6 +76,7 @@ PWD.Window.prototype.init = function () {
 
 PWD.Window.prototype.setSize = function () {
   this.node.style.width = this.width + "px";
+  if (this.height > 620) { this.height = 620; }
   this.node.style.height = this.height + "px";
 };
 
