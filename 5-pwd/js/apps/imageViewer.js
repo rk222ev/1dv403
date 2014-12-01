@@ -49,8 +49,10 @@ PWD.apps.ImageViewer.prototype.setAppLoaded = function () {
 };
 
 
-PWD.apps.ImageViewer.prototype.click = function (pic) {
+PWD.apps.ImageViewer.prototype.click = function (e, pic) {
   var settings = {};
+
+ e.cancelBubble = true;
 
  settings.id = new Date().getTime();
  settings.picUrl = pic.URL;
@@ -88,8 +90,8 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
     div.classList.add("gallery-pic");
     div.style.width = maxWidth + "px";
     div.style.height = maxHeight + "px";
-    div.addEventListener("mousedown", function () {
-      PWD.apps.ImageViewer.prototype.click(pic);
+    div.addEventListener("mousedown", function (e) {
+      PWD.apps.ImageViewer.prototype.click(e, pic);
     });
 
     newDiv.appendChild(div);
@@ -108,7 +110,6 @@ PWD.apps.ImageViewer.prototype.parseJson = function (data) {
 
     if (data.status === 200) {
 
-      //JSON.parse(data.responseText).forEach(function (obj) { pics.push(obj); });
       pics = JSON.parse(data.responseText).map(function (pic) { return pic; });
 
       this.setPicData(pics);
@@ -132,6 +133,7 @@ PWD.apps.ImageViewer.prototype.init = function (params) {
 
   if (params.picUrl) {
     this.drawPic(params.picUrl);
+    this.window.appLoaded();
 
   } else {
     this.getGalleryJson(params.jsonUrl);
