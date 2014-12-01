@@ -1,3 +1,7 @@
+"use strict";
+
+/*global PWD */
+
 PWD.apps.RssReader = function (params) {
 
   var id              = params.id,
