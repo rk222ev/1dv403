@@ -74,6 +74,8 @@ body {
   position: absolute;
   background-color: #ECEFF1;
   display: block;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .window-list {
@@ -82,6 +84,8 @@ body {
   width: 100%;
   text-align: center;
   color: #ECEFF1;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .window-list a {
