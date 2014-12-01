@@ -1,0 +1,22 @@
+body {
+  background-color: #263238;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.app {
+  background-color: #ECEFF1;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1024px;
+  height: 600px;
+}
+
+.no-javascript {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: 50%;
+
+}
