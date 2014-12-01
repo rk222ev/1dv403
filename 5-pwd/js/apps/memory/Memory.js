@@ -26,6 +26,8 @@ PWD.apps.Memory = function (params) {
   windowSettings.id           = id;
   windowSettings.icon         = "pics/icons/Memory.svg";
   windowSettings.titleBarText = "Memory 0.2";
+  windowSettings.width        = 200;
+  windowSettings.height       = 200;
 
   this.window = new PWD.Window(windowSettings);
   node = this.window.node.querySelector(".app");

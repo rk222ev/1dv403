@@ -46,6 +46,12 @@ PWD.apps.ImageViewer.prototype.setAppLoaded = function () {
 };
 
 
+PWD.apps.ImageViewer.prototype.click = function () {
+  var time = new Date().getTime();
+  PWD.desktop.openWindws[time] = new PWD.apps.ImageViewer();
+};
+
+
 PWD.apps.ImageViewer.prototype.drawPics = function () {
   var appNode = this.node,
       picData = this.getPicData(),
@@ -71,6 +77,7 @@ PWD.apps.ImageViewer.prototype.drawPics = function () {
     div.classList.add("gallery-pic");
     div.style.width = maxImageWidth + "px";
     div.style.height = maxImageHeight + "px";
+    div.addEventListener("mousedown", PWD.apps.ImageViewer.prototype.click);
 
     newDiv.appendChild(div);
   });
