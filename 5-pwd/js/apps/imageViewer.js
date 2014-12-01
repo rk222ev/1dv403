@@ -1,3 +1,7 @@
+"use strict";
+
+/*global document, PWD, XMLHttpRequest */
+
 PWD.apps.ImageViewer = function (params) {
 
   var id              = params.id,
