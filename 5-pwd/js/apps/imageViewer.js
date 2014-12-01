@@ -10,8 +10,8 @@ PWD.apps.ImageViewer = function (params) {
   windowSettings.id           = id;
   windowSettings.icon         = "pics/icons/ImageViewer.svg";
   windowSettings.titleBarText = "ImageViewer 0.1";
-  windowSettings.width        = 600;
-  windowSettings.height       = 460;
+  windowSettings.width        = params.width || 600;
+  windowSettings.height       = params.height || 460;
 
   this.setPicData = function (data) { this.picData = data; };
   this.getPicData = function () { return this.picData; };
@@ -56,8 +56,8 @@ PWD.apps.ImageViewer.prototype.click = function (e, pic) {
 
  settings.id = new Date().getTime();
  settings.picUrl = pic.URL;
- settings.height = pic.height;
- settings.width = pic.width;
+ settings.height = pic.height + 50;
+ settings.width = pic.width + 20;
 
   PWD.desktop.openWindows[settings.id] = new PWD.apps.ImageViewer(settings);
   return true;
