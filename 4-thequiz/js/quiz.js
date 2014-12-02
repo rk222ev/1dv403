@@ -1,3 +1,7 @@
+"use strict";
+
+/*global document, window, XMLHttpRequest */
+
 var QUIZ = {
 
   url: "http://vhost3.lnu.se:20080",
