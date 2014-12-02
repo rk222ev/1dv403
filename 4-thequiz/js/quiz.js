@@ -16,7 +16,6 @@ var QUIZ = {
     // Loops through all keys in the QUIZ.elements object.
     Array.prototype.forEach.call(Object.keys(QUIZ.elements), function (creator) {
       var element = QUIZ.elements[creator]();
-
       QUIZ.node.appendChild(element);
     });
 
@@ -26,10 +25,23 @@ var QUIZ = {
 
   correctAnswer: function () {
     var div = document.querySelector(".status-area");
+    var a = document.createElement("a") ;
+
+    a.setAttribute("href", "#");
+    a.innerHTML = "Nästa fråga.";
+
+    a.addEventListener("mousedown", function (e) {
+      e.preventDefault();
+      QUIZ.ajax.makeRequest({
+        URL: QUIZ.URL,
+        handler: QUIZ.ajax.handleQuestion
+      });
+    });
 
     QUIZ.correctAnswers += 1;
 
-    div.innerHTML = "<p>Rätt Svar! Klicka här för att gå till <a href=''>nästa fråga.</a></p>";
+    div.innerHTML = "<p>Ditt svar var rätt!";
+    div.appendChild(a);
 
     QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
     QUIZ.URL = JSON.parse(QUIZ.XHR.response).nextURL;
@@ -39,7 +51,7 @@ var QUIZ = {
 
   wrongAnswer: function () {
     var div = document.querySelector(".status-area");
-
+    document.querySelector(".input-text").select();
     QUIZ.wrongAnswers += 1;
 
     div.innerHTML = "<p>Fel svar! Försök igen.</p>";
@@ -66,6 +78,7 @@ var QUIZ = {
     span.classList.add("question-number");
     p.innerHTML = QUIZ.question.question;
 
+    replacement.classList.add("question-area");
     replacement.appendChild(span);
     replacement.appendChild(p);
 
@@ -150,7 +163,8 @@ QUIZ.elements = {
     var div = document.createElement("div");
     div.classList.add("status-area");
     return div;
-  }
+  },
+
 
 };
 
