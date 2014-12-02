@@ -3,14 +3,24 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+button {
+  width: 80px;
+  height: 30px;
+  margin-left: 10px;
+}
+ input {
+  width: 300px;
+  height: 25px;
+ }
+
 
 .app {
-  background-color: #ECEFF1;
+  margin: auto;
+  margin-top: 50px;
+  height: 400px;
+  width: 90%;
+  padding: 50px 10px;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 1024px;
-  height: 600px;
 }
 
 .no-javascript {
@@ -18,5 +28,15 @@ body {
   text-align: center;
   position: relative;
   top: 50%;
+
+}
+
+.wrapper {
+  background-color: #ECEFF1;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1024px;
+  height: 600px;
 
 }
