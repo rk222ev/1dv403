@@ -4,12 +4,12 @@
 
 var QUIZ = {
 
-  URL: "http://vhost3.lnu.se:20080/question/1",
+  URL: "http://vhost3.lnu.se:20080/question/1", // The URL that starts the quiz.
   correctAnswers: 0,
   wrongAnswers: 0,
 
-
-  isLoaded: function () {
+  // Creates an initializes the game.
+  init: function () {
 
     QUIZ.node = document.querySelector(".app");
     QUIZ.node.removeChild(document.querySelector(".no-javascript"));
@@ -62,7 +62,7 @@ var QUIZ = {
 
 
   sendAnswer: function (e)  {
-    if (e.type !== "keypress" || e.keyCode === 13) {
+    if (e.type !== "keypress" || e.keyCode === 13) { // Filters out all keypress events except on the enterkey.
       QUIZ.ajax.makeRequest({
 
         type:         "POST",
@@ -114,7 +114,6 @@ var QUIZ = {
 
 
 QUIZ.ajax = {
-
 
   handleAnswer: function (e) {
     if (QUIZ.XHR.readyState === 4) {
@@ -210,6 +209,6 @@ QUIZ.elements = {
 
 
 window.onload = function () {
-  QUIZ.isLoaded();
+  QUIZ.init();
 };
 
