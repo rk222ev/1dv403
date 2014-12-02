@@ -1,6 +1,6 @@
 "use strict";
 
-/*global PWD */
+/*global PWD, XMLHttpRequest, escape */
 
 PWD.apps.RssReader = function (params) {
 
@@ -20,5 +20,23 @@ PWD.apps.RssReader = function (params) {
   this.window = new PWD.Window(windowSettings);
   this.node   = this.window.node.querySelector(".app");
 
+  this.init();
+};
+
+
+
+PWD.apps.RssReader.prototype.init = function () {
+  var that = this;
+  var url = "http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape("http://www.dn.se/m/rss/senaste-nytt");
+
+
+  var XHR = new XMLHttpRequest();
+
+  XHR.addEventListener("load", function () {
+    that.node.innerHTML = XHR.response;
+    that.window.appLoaded();
+  });
+  XHR.open("GET", url);
+  XHR.send();
 
 };
