@@ -37,6 +37,16 @@ body {
   margin-bottom: 30px;
 }
 
+.question-area p {
+  font-size: 1.2em;
+}
+
+
+.question-number {
+  font-size: 2em;
+}
+
+
 .wrapper {
   background-color: #ECEFF1;
   text-align: center;

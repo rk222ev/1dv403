@@ -26,7 +26,7 @@ var QUIZ = {
     var span = document.createElement("span");
 
     span.innerHTML = "Fråga 1: ";
-    span.classList.add("question");
+    span.classList.add("question-number");
     p.innerHTML = QUIZ.question.question;
 
     div.appendChild(span);
