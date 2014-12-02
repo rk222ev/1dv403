@@ -5,6 +5,8 @@
 var QUIZ = {
 
   URL: "http://vhost3.lnu.se:20080/question/1",
+  correctAnswers: 0,
+  wrongAnswers: 0,
 
   isLoaded: function () {
 
@@ -25,6 +27,8 @@ var QUIZ = {
   correctAnswer: function () {
     var div = document.querySelector(".status-area");
 
+    QUIZ.correctAnswers += 1;
+
     div.innerHTML = "<p>Rätt Svar! Klicka här för att gå till <a href=''>nästa fråga.</a></p>";
 
     QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
@@ -35,6 +39,8 @@ var QUIZ = {
 
   wrongAnswer: function () {
     var div = document.querySelector(".status-area");
+
+    QUIZ.wrongAnswers += 1;
 
     div.innerHTML = "<p>Fel svar! Försök igen.</p>";
   },
