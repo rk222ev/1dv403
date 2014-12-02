@@ -46,12 +46,10 @@ var QUIZ = {
 QUIZ.ajax = {
 
   handleResponse: function (q) {
-    QUIZ.question = QUIZ.ajax.parseJson(QUIZ.XHR.response);
+    QUIZ.question = JSON.parse(QUIZ.XHR.response);
     QUIZ.updateQuestion();
 
   },
-
-  parseJson: function (jsonData) { return JSON.parse(jsonData); },
 
   makeRequest: function (question) {
    QUIZ.XHR.addEventListener("load", QUIZ.ajax.handleResponse);
