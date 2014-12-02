@@ -36,7 +36,7 @@ var QUIZ = {
     a.innerHTML = "Nästa fråga.";
 
     a.addEventListener("mousedown", QUIZ.ajax.handleGetNewQuestion);
-    a.addEventListener("keypress", QUIZ.ajax.handleGetNewQuestion);
+    a.addEventListener("keydown", QUIZ.ajax.handleGetNewQuestion);
 
     QUIZ.correctAnswers += 1;
 
@@ -103,7 +103,7 @@ var QUIZ = {
 
     div.innerHTML = "<p>Grattis du klarade spelet!</p>";
 
-    tries.innerHTML = "Antal felaktiga försök: " + (QUIZ.wrongAnswers + QUIZ.correctAnswers);
+    tries.innerHTML = "Antal felaktiga försök: " + (QUIZ.wrongAnswers);
     questions.innerHTML = "Antal frågor: " + QUIZ.correctAnswers;
 
     div.appendChild(tries);
@@ -138,11 +138,13 @@ QUIZ.ajax = {
 
 
   handleGetNewQuestion: function (e) {
+    if (e.type !== "keydown" || e.keyCode === 13) {
       e.preventDefault();
       QUIZ.ajax.makeRequest({
         URL: QUIZ.URL,
         handler: QUIZ.ajax.handleQuestion
       });
+    }
     },
 
 
