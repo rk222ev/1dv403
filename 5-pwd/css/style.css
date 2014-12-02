@@ -78,6 +78,7 @@ body {
   display: block;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  box-shadow: 10px 10px 5px #888888;
 }
 
 .window-list {
