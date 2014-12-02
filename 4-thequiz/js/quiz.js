@@ -40,7 +40,7 @@ var QUIZ = {
     var p = document.createElement("p");
     var span = document.createElement("span");
 
-    span.innerHTML = "Fråga 1: ";
+    span.innerHTML = "Fråga " + QUIZ.question.id + ": ";
     span.classList.add("question-number");
     p.innerHTML = QUIZ.question.question;
 
