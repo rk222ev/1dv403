@@ -31,6 +31,13 @@ body {
 
 }
 
+
+.question-area {
+  height: 200px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
 .wrapper {
   background-color: #ECEFF1;
   text-align: center;

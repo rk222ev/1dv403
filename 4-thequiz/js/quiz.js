@@ -1,5 +1,9 @@
 var QUIZ = {
 
+  url: "http://vhost3.lnu.se:20080",
+  XHR: new XMLHttpRequest(),
+
+
   isLoaded: function () {
 
     QUIZ.node = document.querySelector(".app");
@@ -12,16 +16,57 @@ var QUIZ = {
       QUIZ.node.appendChild(element);
     });
 
+    QUIZ.ajax.makeRequest(1);
+
   },
+
+  updateQuestion: function () {
+    var div = document.querySelector(".question-area");
+    var p = document.createElement("p");
+    var span = document.createElement("span");
+
+    span.innerHTML = "Fråga 1: ";
+    span.classList.add("question");
+    p.innerHTML = QUIZ.question.question;
+
+    div.appendChild(span);
+    div.appendChild(p);
+
+  }
 
 
 
 };
 
 
+QUIZ.ajax = {
+
+  handleResponse: function (q) {
+    QUIZ.question = QUIZ.ajax.parseJson(QUIZ.XHR.response);
+    QUIZ.updateQuestion();
+
+  },
+
+  parseJson: function (jsonData) { return JSON.parse(jsonData); },
+
+  makeRequest: function (question) {
+   QUIZ.XHR.addEventListener("load", QUIZ.ajax.handleResponse);
+   QUIZ.XHR.open("GET", QUIZ.url + "/question/" + question);
+   QUIZ.XHR.send();
+
+  }
+
+};
+
 
 
 QUIZ.elements = {
+
+  createQuestionDiv: function () {
+    var div = document.createElement("div");
+    div.classList.add("question-area");
+    return div;
+  },
 
   createInput: function () {
     var input = document.createElement("input");
@@ -37,6 +82,12 @@ QUIZ.elements = {
     input.setAttribute("value", "Svara");
     input.classList.add("input-submit");
     return input;
+  },
+
+  createStatusArea: function () {
+    var div = document.createElement("div");
+    div.classList.add("status-area");
+    return div;
   }
 
 };
