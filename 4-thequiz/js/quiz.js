@@ -52,6 +52,7 @@ var QUIZ = {
 
   updateQuestion: function () {
     var div = document.querySelector(".question-area");
+    var replacement = document.createElement("div");
     var p = document.createElement("p");
     var span = document.createElement("span");
 
@@ -59,12 +60,14 @@ var QUIZ = {
     span.classList.add("question-number");
     p.innerHTML = QUIZ.question.question;
 
-    div.appendChild(span);
-    div.appendChild(p);
+    replacement.appendChild(span);
+    replacement.appendChild(p);
+
+    div.parentNode.replaceChild(replacement, div);
+
+    document.querySelector(".input-text").focus();
 
   }
-
-
 
 };
 
