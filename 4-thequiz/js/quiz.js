@@ -5,8 +5,6 @@
 var QUIZ = {
 
   URL: "http://vhost3.lnu.se:20080/question/1",
-  XHR: new XMLHttpRequest(),
-
 
   isLoaded: function () {
 
@@ -24,12 +22,29 @@ var QUIZ = {
 
   },
 
+  correctAnswer: function () {
+    var div = document.querySelector(".status-area");
+
+    div.innerHTML = "<p>Rätt Svar! Klicka här för att gå till <a href=''>nästa fråga.</a></p>";
+
+    QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
+    QUIZ.URL = JSON.parse(QUIZ.XHR.response).nextURL;
+
+
+  },
+
+  wrongAnswer: function () {
+    var div = document.querySelector(".status-area");
+
+    div.innerHTML = "<p>Fel svar! Försök igen.</p>";
+  },
+
   sendAnswer: function (e)  {
     QUIZ.ajax.makeRequest({
       type: "POST",
       URL: QUIZ.question.nextURL,
       contentType: "application/json;charset=UTF-8",
-      json: JSON.stringify({answer: "2"}),
+      json: JSON.stringify({answer: document.querySelector(".input-text").value}),
       handler: QUIZ.ajax.handleAnswer
     });
 
@@ -56,6 +71,17 @@ var QUIZ = {
 
 QUIZ.ajax = {
 
+  handleAnswer: function (e) {
+    if (QUIZ.XHR.readyState === 4) {
+
+      if (QUIZ.XHR.status === 200) {
+       QUIZ.correctAnswer();
+      } else {
+        QUIZ.wrongAnswer();
+      }
+    }
+  },
+
   handleQuestion: function (q) {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
     QUIZ.updateQuestion();
@@ -66,18 +92,19 @@ QUIZ.ajax = {
   makeRequest: function (params) {
     var URL   = params.URL,
         data = params.json || null,
-        type  = params.type,
+        type  = params.type || "GET",
         handler = params.handler,
-        contentType = params.contentType;
+        contentType = params.contentType || null;
 
-   QUIZ.XHR.addEventListener("load", handler);
-   QUIZ.XHR.open(type ,URL);
+    QUIZ.XHR = new XMLHttpRequest();
+    QUIZ.XHR.addEventListener("load", handler);
+    QUIZ.XHR.open(type ,URL);
 
-   if (contentType) {
-    QUIZ.XHR.setRequestHeader("Content-Type", contentType);
-   }
+    if (contentType) {
+      QUIZ.XHR.setRequestHeader("Content-Type", contentType);
+    }
 
-   QUIZ.XHR.send(data || null);
+    QUIZ.XHR.send(data || null);
 
   }
 
