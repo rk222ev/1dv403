@@ -30,13 +30,8 @@ var QUIZ = {
     a.setAttribute("href", "#");
     a.innerHTML = "Nästa fråga.";
 
-    a.addEventListener("mousedown", function (e) {
-      e.preventDefault();
-      QUIZ.ajax.makeRequest({
-        URL: QUIZ.URL,
-        handler: QUIZ.ajax.handleQuestion
-      });
-    });
+    a.addEventListener("mousedown", QUIZ.ajax.handleGetNewQuestion);
+    a.addEventListener("keypress", QUIZ.ajax.handleGetNewQuestion);
 
     QUIZ.correctAnswers += 1;
 
@@ -46,6 +41,9 @@ var QUIZ = {
     QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
     QUIZ.URL = JSON.parse(QUIZ.XHR.response).nextURL;
 
+    if (QUIZ.URL === undefined) {
+      QUIZ.noMoreQuestions();
+    }
 
   },
 
@@ -58,15 +56,17 @@ var QUIZ = {
   },
 
   sendAnswer: function (e)  {
-    QUIZ.ajax.makeRequest({
-      type: "POST",
-      URL: QUIZ.question.nextURL,
-      contentType: "application/json;charset=UTF-8",
-      json: JSON.stringify({answer: document.querySelector(".input-text").value}),
-      handler: QUIZ.ajax.handleAnswer
-    });
-
+    if (e.type !== "keypress" || e.keyCode === 13) {
+      QUIZ.ajax.makeRequest({
+        type: "POST",
+        URL: QUIZ.question.nextURL,
+        contentType: "application/json;charset=UTF-8",
+        json: JSON.stringify({answer: document.querySelector(".input-text").value}),
+        handler: QUIZ.ajax.handleAnswer
+      });
+    }
   },
+
 
   updateQuestion: function () {
     var div = document.querySelector(".question-area");
@@ -84,8 +84,25 @@ var QUIZ = {
 
     div.parentNode.replaceChild(replacement, div);
 
+    document.querySelector(".status-area").innerHTML = "";
+    document.querySelector(".input-text").value = "";
+
     document.querySelector(".input-text").focus();
 
+  },
+
+  noMoreQuestions: function () {
+    var div       = document.querySelector(".app"),
+        tries     = document.createElement("p"),
+        questions = document.createElement("p");
+
+    div.innerHTML = "<p>Grattis du klarade spelet!</p>";
+
+    tries.innerHTML = "Antal felaktiga försök: " + (QUIZ.wrongAnswers + QUIZ.correctAnswers);
+    questions.innerHTML = "Antal frågor: " + QUIZ.correctAnswers;
+
+    div.appendChild(tries);
+    div.appendChild(questions);
   }
 
 };
@@ -106,10 +123,20 @@ QUIZ.ajax = {
 
   handleQuestion: function (q) {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
-    QUIZ.updateQuestion();
     QUIZ.XHR.removeEventListener("load", QUIZ.ajax.handleQuestion);
+    QUIZ.updateQuestion();
+
 
   },
+
+
+  handleGetNewQuestion: function (e) {
+      e.preventDefault();
+      QUIZ.ajax.makeRequest({
+        URL: QUIZ.URL,
+        handler: QUIZ.ajax.handleQuestion
+      });
+    },
 
   makeRequest: function (params) {
     var URL   = params.URL,
@@ -146,6 +173,7 @@ QUIZ.elements = {
     var input = document.createElement("input");
     input.setAttribute("type", "text");
     input.classList.add("input-text");
+    input.addEventListener("keypress", QUIZ.sendAnswer);
     return input;
 
   },
