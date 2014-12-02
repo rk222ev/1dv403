@@ -20,7 +20,18 @@ var QUIZ = {
       QUIZ.node.appendChild(element);
     });
 
-    QUIZ.ajax.makeRequest(QUIZ.URL);
+    QUIZ.ajax.makeRequest({type: "GET", URL: QUIZ.URL, handler: QUIZ.ajax.handleQuestion});
+
+  },
+
+  sendAnswer: function (e)  {
+    QUIZ.ajax.makeRequest({
+      type: "POST",
+      URL: QUIZ.question.nextURL,
+      contentType: "application/json;charset=UTF-8",
+      json: JSON.stringify({answer: "2"}),
+      handler: QUIZ.ajax.handleAnswer
+    });
 
   },
 
@@ -45,16 +56,28 @@ var QUIZ = {
 
 QUIZ.ajax = {
 
-  handleResponse: function (q) {
+  handleQuestion: function (q) {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
     QUIZ.updateQuestion();
+    QUIZ.XHR.removeEventListener("load", QUIZ.ajax.handleQuestion);
 
   },
 
-  makeRequest: function (URL) {
-   QUIZ.XHR.addEventListener("load", QUIZ.ajax.handleResponse);
-   QUIZ.XHR.open("GET",URL);
-   QUIZ.XHR.send();
+  makeRequest: function (params) {
+    var URL   = params.URL,
+        data = params.json || null,
+        type  = params.type,
+        handler = params.handler,
+        contentType = params.contentType;
+
+   QUIZ.XHR.addEventListener("load", handler);
+   QUIZ.XHR.open(type ,URL);
+
+   if (contentType) {
+    QUIZ.XHR.setRequestHeader("Content-Type", contentType);
+   }
+
+   QUIZ.XHR.send(data || null);
 
   }
 
@@ -83,6 +106,7 @@ QUIZ.elements = {
     input.setAttribute("type", "submit");
     input.setAttribute("value", "Svara");
     input.classList.add("input-submit");
+    input.addEventListener("mousedown", QUIZ.sendAnswer);
     return input;
   },
 
@@ -98,6 +122,14 @@ QUIZ.elements = {
 
 window.onload = function () {
   QUIZ.isLoaded();
+
+
+ /* var x = new XMLHttpRequest();
+  var json = JSON.stringify({answer: "2"});
+    x.open("POST", "http://vhost3.lnu.se:20080/answer/1");
+    x.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    console.log(json);
+    x.send(json);*/
 
 };
 
