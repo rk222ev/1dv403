@@ -23,9 +23,21 @@ var QUIZ = {
 
 QUIZ.elements = {
 
-  createInput: function () { return document.createElement("input"); },
+  createInput: function () {
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.classList.add("input-text");
+    return input;
 
-  createButton: function () { return document.createElement("button"); }
+  },
+
+  createButton: function () {
+    var input = document.createElement("input");
+    input.setAttribute("type", "submit");
+    input.setAttribute("value", "Svara");
+    input.classList.add("input-submit");
+    return input;
+  }
 
 };
 
