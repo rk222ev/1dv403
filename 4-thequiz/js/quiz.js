@@ -4,7 +4,7 @@
 
 var QUIZ = {
 
-  url: "http://vhost3.lnu.se:20080",
+  URL: "http://vhost3.lnu.se:20080/question/1",
   XHR: new XMLHttpRequest(),
 
 
@@ -20,7 +20,7 @@ var QUIZ = {
       QUIZ.node.appendChild(element);
     });
 
-    QUIZ.ajax.makeRequest(1);
+    QUIZ.ajax.makeRequest(QUIZ.URL);
 
   },
 
@@ -51,9 +51,9 @@ QUIZ.ajax = {
 
   },
 
-  makeRequest: function (question) {
+  makeRequest: function (URL) {
    QUIZ.XHR.addEventListener("load", QUIZ.ajax.handleResponse);
-   QUIZ.XHR.open("GET", QUIZ.url + "/question/" + question);
+   QUIZ.XHR.open("GET",URL);
    QUIZ.XHR.send();
 
   }
