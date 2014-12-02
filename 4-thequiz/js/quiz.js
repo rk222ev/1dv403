@@ -8,6 +8,7 @@ var QUIZ = {
   correctAnswers: 0,
   wrongAnswers: 0,
 
+
   isLoaded: function () {
 
     QUIZ.node = document.querySelector(".app");
@@ -16,12 +17,16 @@ var QUIZ = {
     // Loops through all keys in the QUIZ.elements object.
     Array.prototype.forEach.call(Object.keys(QUIZ.elements), function (creator) {
       var element = QUIZ.elements[creator]();
+
       QUIZ.node.appendChild(element);
     });
 
-    QUIZ.ajax.makeRequest({type: "GET", URL: QUIZ.URL, handler: QUIZ.ajax.handleQuestion});
-
+    QUIZ.ajax.makeRequest({
+      type:     "GET",
+      URL:      QUIZ.URL,
+      handler:  QUIZ.ajax.handleQuestion});
   },
+
 
   correctAnswer: function () {
     var div = document.querySelector(".status-area");
@@ -35,7 +40,7 @@ var QUIZ = {
 
     QUIZ.correctAnswers += 1;
 
-    div.innerHTML = "<p>Ditt svar var rätt!";
+    div.innerHTML = "<p>Ditt svar var rätt!</p>";
     div.appendChild(a);
 
     QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
@@ -44,8 +49,8 @@ var QUIZ = {
     if (QUIZ.URL === undefined) {
       QUIZ.noMoreQuestions();
     }
-
   },
+
 
   wrongAnswer: function () {
     var div = document.querySelector(".status-area");
@@ -55,24 +60,26 @@ var QUIZ = {
     div.innerHTML = "<p>Fel svar! Försök igen.</p>";
   },
 
+
   sendAnswer: function (e)  {
     if (e.type !== "keypress" || e.keyCode === 13) {
       QUIZ.ajax.makeRequest({
-        type: "POST",
-        URL: QUIZ.question.nextURL,
-        contentType: "application/json;charset=UTF-8",
-        json: JSON.stringify({answer: document.querySelector(".input-text").value}),
-        handler: QUIZ.ajax.handleAnswer
+
+        type:         "POST",
+        URL:          QUIZ.question.nextURL,
+        contentType:  "application/json;charset=UTF-8",
+        json:         JSON.stringify({answer: document.querySelector(".input-text").value}),
+        handler:      QUIZ.ajax.handleAnswer
       });
     }
   },
 
 
   updateQuestion: function () {
-    var div = document.querySelector(".question-area");
-    var replacement = document.createElement("div");
-    var p = document.createElement("p");
-    var span = document.createElement("span");
+    var div         = document.querySelector(".question-area"),
+        replacement = document.createElement("div"),
+        p           = document.createElement("p"),
+        span        = document.createElement("span");
 
     span.innerHTML = "Fråga " + QUIZ.question.id + ": ";
     span.classList.add("question-number");
@@ -86,9 +93,7 @@ var QUIZ = {
 
     document.querySelector(".status-area").innerHTML = "";
     document.querySelector(".input-text").value = "";
-
     document.querySelector(".input-text").focus();
-
   },
 
   noMoreQuestions: function () {
@@ -110,6 +115,7 @@ var QUIZ = {
 
 QUIZ.ajax = {
 
+
   handleAnswer: function (e) {
     if (QUIZ.XHR.readyState === 4) {
 
@@ -120,6 +126,7 @@ QUIZ.ajax = {
       }
     }
   },
+
 
   handleQuestion: function (q) {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
@@ -138,11 +145,12 @@ QUIZ.ajax = {
       });
     },
 
+
   makeRequest: function (params) {
-    var URL   = params.URL,
-        data = params.json || null,
-        type  = params.type || "GET",
-        handler = params.handler,
+    var URL         = params.URL,
+        data        = params.json || null,
+        type        = params.type || "GET",
+        handler     = params.handler,
         contentType = params.contentType || null;
 
     QUIZ.XHR = new XMLHttpRequest();
@@ -154,7 +162,6 @@ QUIZ.ajax = {
     }
 
     QUIZ.XHR.send(data || null);
-
   }
 
 };
@@ -165,12 +172,14 @@ QUIZ.elements = {
 
   createQuestionDiv: function () {
     var div = document.createElement("div");
+
     div.classList.add("question-area");
     return div;
   },
 
   createInput: function () {
     var input = document.createElement("input");
+
     input.setAttribute("type", "text");
     input.classList.add("input-text");
     input.addEventListener("keypress", QUIZ.sendAnswer);
@@ -180,6 +189,7 @@ QUIZ.elements = {
 
   createButton: function () {
     var input = document.createElement("input");
+
     input.setAttribute("type", "submit");
     input.setAttribute("value", "Svara");
     input.classList.add("input-submit");
@@ -189,25 +199,15 @@ QUIZ.elements = {
 
   createStatusArea: function () {
     var div = document.createElement("div");
+
     div.classList.add("status-area");
     return div;
   },
-
-
 };
 
 
 
 window.onload = function () {
   QUIZ.isLoaded();
-
-
- /* var x = new XMLHttpRequest();
-  var json = JSON.stringify({answer: "2"});
-    x.open("POST", "http://vhost3.lnu.se:20080/answer/1");
-    x.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    console.log(json);
-    x.send(json);*/
-
 };
 
