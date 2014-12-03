@@ -156,7 +156,7 @@ QUIZ.ajax = {
 
     QUIZ.XHR = new XMLHttpRequest();
     QUIZ.XHR.addEventListener("load", handler);
-    QUIZ.XHR.open(type ,URL);
+    QUIZ.XHR.open(type ,URL, true);
 
     if (contentType) {
       QUIZ.XHR.setRequestHeader("Content-Type", contentType);
