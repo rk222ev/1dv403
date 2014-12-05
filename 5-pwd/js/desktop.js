@@ -33,9 +33,13 @@ PWD.desktop = {
   },
 
 
-  setFocus: function (selectedNode) {
-    PWD.desktop.node.removeChild(selectedNode);
-    PWD.desktop.node.appendChild(selectedNode);
+  setFocus: function (node) {
+    PWD.desktop.node.removeChild(node);
+    PWD.desktop.node.appendChild(node);
+  },
+
+  closeWindow: function (node) {
+
   },
 
 
@@ -74,6 +78,10 @@ PWD.desktop.events.click = function (e) {
 
   } else if (e.target.classList.contains("close-button")) {
     PWD.Window.prototype.closeWindow(PWD.desktop.findParentNode(e.target, "window"));
+
+  } else if (e.target.classList.contains("maximize-button")) {
+    PWD.desktop.openWindows[PWD.desktop.findParentNode(e.target, "window").id].window.resizeWindow();
+
 
   } else if (e.target.classList.contains("resize-div")) {
     PWD.desktop.events.drag(PWD.desktop.findParentNode(e.target, "window"), "move");

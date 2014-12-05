@@ -9,6 +9,7 @@ PWD.Window = function (params) {
     id:           params.id,
     icon:         params.icon,
     title:        params.titleBarText || "app",
+    maximized:    false,
 
     closeIcon:    "pics/icons/clear.svg",
     maximizeIcon: "pics/icons/chevron-up.svg",
@@ -21,6 +22,10 @@ PWD.Window = function (params) {
   this.position = {
     x: 50,
     y: 10
+  };
+
+  this.setMaximize = function (status) {
+    windowSettings.maximized = !windowSettings.maximized;
   };
 
   this.node = this.createWindowNode(windowSettings);
@@ -78,11 +83,21 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
 };
 
 PWD.Window.prototype.resizeWindow = function (x, y) {
-  this.height = PWD.Window.prototype.filterSize(this.height, y, 200, (640 - this.position.y));
-  this.width = PWD.Window.prototype.filterSize(this.width, x, 200, 1024 - this.position.x);
 
-  this.node.style.height = this.height + "px";
-  this.node.style.width = this.width + "px";
+  if (x === undefined || y === undefined) {
+
+    this.node.style.top = 0;
+    this.node.style.left = 0;
+    this.node.style.height = "100%";
+    this.node.style.width = "100%";
+
+  } else {
+    this.height = PWD.Window.prototype.filterSize(this.height, y, 200, (640 - this.position.y));
+    this.width = PWD.Window.prototype.filterSize(this.width, x, 200, 1024 - this.position.x);
+
+    this.node.style.height = this.height + "px";
+    this.node.style.width = this.width + "px";
+  }
 
 };
 

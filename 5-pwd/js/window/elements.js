@@ -46,7 +46,7 @@ PWD.Window.prototype.elements = {
     img.setAttribute("src", URL);
     img.classList.add(className);
 
-    a.setAttribute("href", "");
+    a.setAttribute("href", "#");
     a.appendChild(img);
 
     return a;
