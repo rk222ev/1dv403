@@ -14,10 +14,6 @@ PWD.Window = function (params) {
   this.width = params.width || 500;
   this.height = params.height || 400;
 
-  this.getIcon = function () { return params.icon; };
-  // this.getId = function () { return id; };
-  this.getTitleBarText = function () { return params.titleBarText || "app"; };
-
   this.position = {
     x: 50,
     y: 10};
