@@ -64,7 +64,8 @@ PWD.desktop = {
 PWD.desktop.events = {
 
   click: function (e) {
-    var windowNode,
+    var win = PWD.Window.prototype,
+        windowNode,
         appNode;
 
     e.preventDefault();
@@ -78,10 +79,10 @@ PWD.desktop.events = {
      });
 
     } else if (e.target.classList.contains("close-button")) {
-      PWD.Window.prototype.closeWindow(PWD.desktop.findParentNode(e.target, "window"));
+      win.events.close(PWD.desktop.findParentNode(e.target, "window"));
 
     } else if (e.target.classList.contains("maximize-button")) {
-      PWD.Window.prototype.events.resize(PWD.desktop.findParentNode(e.target, "window"));
+      win.events.resize(PWD.desktop.findParentNode(e.target, "window"));
 
     } else if (e.target.classList.contains("resize-div")) {
       PWD.desktop.events.drag(PWD.desktop.findParentNode(e.target, "window"), "move");

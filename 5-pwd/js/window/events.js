@@ -11,6 +11,12 @@ PWD.Window.prototype.events = {
     icon.setAttribute("src", "");
   },
 
+  close: function (node) {
+
+    PWD.desktop.node.removeChild(node);
+    delete PWD.desktop.openWindows[node.id];
+  },
+
   resize: function (node, x, y) {
     var win = PWD.desktop.openWindows[node.id].window;
 

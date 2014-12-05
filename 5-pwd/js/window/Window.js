@@ -30,12 +30,6 @@ PWD.Window = function (params) {
 };
 
 
- PWD.Window.prototype.appLoaded = function () {
-    var node = this.node.querySelector(".statusbar img");
-    node.parentNode.removeChild(node);
-  };
-
-
 PWD.Window.prototype.init = function () {
   PWD.desktop.node.appendChild(this.node);
 
@@ -118,8 +112,3 @@ PWD.Window.prototype.createWindowNode = function (params) {
 };
 
 
-PWD.Window.prototype.closeWindow = function (node) {
-
-  PWD.desktop.node.removeChild(node);
-  delete PWD.desktop.openWindows[node.id];
-};
