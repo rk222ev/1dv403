@@ -5,18 +5,24 @@
 PWD.Window = function (params) {
   var id = params.id;
 
+  var windowSettings = {
+    id: params.id,
+    icon: params.icon,
+    title: params.titleBarText || "app"
+  };
+
   this.width = params.width || 500;
   this.height = params.height || 400;
 
   this.getIcon = function () { return params.icon; };
-  this.getId = function () { return id; };
+  // this.getId = function () { return id; };
   this.getTitleBarText = function () { return params.titleBarText || "app"; };
 
   this.position = {
     x: 50,
     y: 10};
 
-  this.node = this.createWindowNode();
+  this.node = this.createWindowNode(windowSettings);
 
   this.init();
 };
@@ -80,16 +86,21 @@ PWD.Window.prototype.resizeWindow = function (x, y) {
 };
 
 
-PWD.Window.prototype.createWindowNode = function () {
-  var closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg"),
+PWD.Window.prototype.createWindowNode = function (params) {
+  var windowId      = params.id,
+      windowIcon    = params.icon,
+      windowTitle   = params.title,
+
+      closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg"),
       contentDiv    = PWD.Window.prototype.elements.div("app"),
       listDiv       = PWD.Window.prototype.elements.div("window-list"),
-      listIcon      = PWD.Window.prototype.elements.windowListIcon(this.getIcon()),
-      loadingImage  = document.createElement("img"),
+      listIcon      = PWD.Window.prototype.elements.windowListIcon(windowIcon),
       resizeDiv     = PWD.Window.prototype.elements.div("resize-div"),
       statusBar     = PWD.Window.prototype.elements.div("statusbar"),
-      windowDiv     = PWD.Window.prototype.elements.window(this.getId()),
-      windowName    = PWD.Window.prototype.elements.windowListText(this.getTitleBarText());
+      windowDiv     = PWD.Window.prototype.elements.window(windowId),
+      windowName    = PWD.Window.prototype.elements.windowListText(windowTitle),
+
+      loadingImage  = document.createElement("img");
 
   loadingImage.setAttribute("src", "pics/ajax-loader.gif");
 
