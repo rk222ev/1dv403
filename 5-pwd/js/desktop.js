@@ -61,65 +61,66 @@ PWD.desktop = {
 };
 
 
+PWD.desktop.events = {
 
-PWD.desktop.events.click = function (e) {
-  var windowNode,
-      appNode;
+  click: function (e) {
+    var windowNode,
+        appNode;
 
-  e.preventDefault();
+    e.preventDefault();
 
-  if (e.target.classList.contains("launcher") ) {
-    var time = Date.now();
-    var appName = e.target.classList[1];
+    if (e.target.classList.contains("launcher") ) {
+      var time = Date.now();
+      var appName = e.target.classList[1];
 
-   PWD.desktop.openWindows[time] = new PWD.apps[appName]({
-    id: time
-   });
+     PWD.desktop.openWindows[time] = new PWD.apps[appName]({
+      id: time
+     });
 
-  } else if (e.target.classList.contains("close-button")) {
-    PWD.Window.prototype.closeWindow(PWD.desktop.findParentNode(e.target, "window"));
+    } else if (e.target.classList.contains("close-button")) {
+      PWD.Window.prototype.closeWindow(PWD.desktop.findParentNode(e.target, "window"));
 
-  } else if (e.target.classList.contains("maximize-button")) {
-    PWD.desktop.openWindows[PWD.desktop.findParentNode(e.target, "window").id].window.resizeWindow();
+    } else if (e.target.classList.contains("maximize-button")) {
+      PWD.Window.prototype.events.resize(PWD.desktop.findParentNode(e.target, "window"));
 
+    } else if (e.target.classList.contains("resize-div")) {
+      PWD.desktop.events.drag(PWD.desktop.findParentNode(e.target, "window"), "move");
 
-  } else if (e.target.classList.contains("resize-div")) {
-    PWD.desktop.events.drag(PWD.desktop.findParentNode(e.target, "window"), "move");
+    } else if (e.target.classList.contains("app")) {
+      windowNode = PWD.desktop.findParentNode(e.target, "window");
+      PWD.desktop.setFocus(windowNode);
 
-  } else if (e.target.classList.contains("app")) {
-    windowNode = PWD.desktop.findParentNode(e.target, "window");
-    PWD.desktop.setFocus(windowNode);
+    } else if (e.target.classList.contains("pwd") === false) {
+      windowNode = PWD.desktop.findParentNode(e.target, "window");
+      PWD.desktop.setFocus(windowNode);
 
-  } else if (e.target.classList.contains("pwd") === false) {
-    windowNode = PWD.desktop.findParentNode(e.target, "window");
-    PWD.desktop.setFocus(windowNode);
+      if (PWD.desktop.findParentNode(e.target, "window-list")) {
+        PWD.desktop.events.drag(windowNode);
+      }
 
-    if (PWD.desktop.findParentNode(e.target, "window-list")) {
-      PWD.desktop.events.drag(windowNode);
     }
+
+  },
+
+  drag: function (targetWindowNode, property) {
+    var mouseMove;
+
+   var mouseUp = function () {
+      PWD.desktop.node.removeEventListener("mousemove", mouseMove);
+      PWD.desktop.node.removeEventListener("mouseup", mouseUp);
+
+    };
+    mouseMove = function (e) {
+      if (property === "move") {
+        PWD.Window.prototype.events.resize(targetWindowNode, e.movementX, e.movementY);
+
+      } else {
+        PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
+      }
+    };
+
+    PWD.desktop.node.addEventListener("mousemove", mouseMove);
+    PWD.desktop.node.addEventListener("mouseup", mouseUp);
 
   }
-
 };
-
-PWD.desktop.events.drag = function (targetWindowNode, property) {
-  var mouseMove;
-
- var mouseUp = function () {
-    PWD.desktop.node.removeEventListener("mousemove", mouseMove);
-    PWD.desktop.node.removeEventListener("mouseup", mouseUp);
-
-  };
-  mouseMove = function (e) {
-    if (property === "move") {
-      PWD.desktop.openWindows[targetWindowNode.id].window.resizeWindow(e.movementX, e.movementY);
-    } else {
-      PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
-    }
-  };
-
-  PWD.desktop.node.addEventListener("mousemove", mouseMove);
-  PWD.desktop.node.addEventListener("mouseup", mouseUp);
-
-};
-

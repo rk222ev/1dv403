@@ -78,25 +78,6 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
 
 };
 
-PWD.Window.prototype.resizeWindow = function (x, y) {
-
-  if (x === undefined || y === undefined) {
-
-    this.node.style.top = 0;
-    this.node.style.left = 0;
-    this.node.style.height = "100%";
-    this.node.style.width = "100%";
-
-  } else {
-    this.height = PWD.Window.prototype.filterSize(this.height, y, 200, (640 - this.position.y));
-    this.width = PWD.Window.prototype.filterSize(this.width, x, 200, 1024 - this.position.x);
-
-    this.node.style.height = this.height + "px";
-    this.node.style.width = this.width + "px";
-  }
-
-};
-
 
 PWD.Window.prototype.createWindowNode = function (params) {
   var windowId      = params.id,

@@ -47,7 +47,8 @@ PWD.apps.ImageViewer.prototype.getGalleryJson = function (url) {
 };
 
 PWD.apps.ImageViewer.prototype.setAppLoaded = function () {
-  this.window.appLoaded();
+  PWD.Window.prototype.events.appLoaded(this.window.node);
+  // this.window.appLoaded();
   this.drawPics();
 
 };
