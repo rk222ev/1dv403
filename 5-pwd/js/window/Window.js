@@ -5,15 +5,12 @@
 PWD.Window = function (params) {
   var id = params.id;
 
-  this.getId = function () { return id; };
   this.width = params.width || 500;
   this.height = params.height || 400;
-  this.getTitleBarText = function () { return params.titleBarText || "app"; };
+
   this.getIcon = function () { return params.icon; };
-
-  //this.getAppName = function () { return app; };
-
-  //this.app = (function () { return new PWD.apps[app](id); })();
+  this.getId = function () { return id; };
+  this.getTitleBarText = function () { return params.titleBarText || "app"; };
 
   this.position = {
     x: 50,
@@ -21,40 +18,25 @@ PWD.Window = function (params) {
 
   this.node = this.createWindowNode();
 
-  this.appLoaded = function () {
-    var node = this.node.querySelector(".statusbar img");
-    node.parentNode.removeChild(node);
-  };
-
   this.init();
 };
 
 
+ PWD.Window.prototype.appLoaded = function () {
+    var node = this.node.querySelector(".statusbar img");
+    node.parentNode.removeChild(node);
+  };
+
 
 PWD.Window.prototype.createWindowList = function () {
-  var div = document.createElement("div"),
-    icon = document.createElement("img"),
-    windowName = document.createElement("span"),
-    closeButton = document.createElement("img"),
-    closeLink = document.createElement("a");
+  var div           = PWD.Window.prototype.elements.div("window-list"),
+      icon          = PWD.Window.prototype.elements.windowListIcon(this.getIcon()),
+      windowName    = PWD.Window.prototype.elements.windowListText(this.getTitleBarText()),
+      closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg");
 
-  icon.setAttribute("src", this.getIcon());
-  icon.classList.add("app-icon");
   div.appendChild(icon);
-
-  windowName.innerHTML = this.getTitleBarText();
-  windowName.innerHTML = windowName.innerHTML[0].toUpperCase() + windowName.innerHTML.substr(1);
   div.appendChild(windowName);
-
-  closeButton.setAttribute("src", "pics/icons/clear.svg");
-  closeButton.classList.add("close-button");
-  closeLink.setAttribute("href", "#");
-  closeLink.appendChild(closeButton);
-
-  div.appendChild(closeLink);
-
-
-  div.classList.add("window-list");
+  div.appendChild(closeButton);
 
   return div;
 };
@@ -65,7 +47,6 @@ PWD.Window.prototype.init = function () {
   PWD.desktop.node.appendChild(this.node);
 
   this.position.x += Object.keys(PWD.desktop.openWindows).length % 23 * 20;
-
   this.position.y += Object.keys(PWD.desktop.openWindows).length % 13 * 20;
 
   this.setSize();
@@ -115,26 +96,26 @@ PWD.Window.prototype.resizeWindow = function (x, y) {
 
 
 PWD.Window.prototype.createWindowNode = function () {
-  var windowDiv = document.createElement("div"),
-    contentDiv = document.createElement("div"),
-    statusBar = document.createElement("div"),
-    resizeDiv = document.createElement("div"),
+  var windowDiv = PWD.Window.prototype.elements.window(this.getId()),
+    contentDiv = PWD.Window.prototype.elements.div("app"),
+    statusBar = PWD.Window.prototype.elements.div("statusbar"),
+    resizeDiv = PWD.Window.prototype.elements.div("resize-div"),
     loadingImage = document.createElement("img");
 
-  windowDiv.setAttribute("id", this.getId());
-  windowDiv.classList.add("window");
+  // windowDiv.setAttribute("id", this.getId());
+  // windowDiv.classList.add("window");
   windowDiv.appendChild(this.createWindowList());
 
-  contentDiv.classList.add("app");
+  //contentDiv.classList.add("app");
   windowDiv.appendChild(contentDiv);
 
   loadingImage.setAttribute("src", "pics/ajax-loader.gif");
 
   statusBar.appendChild(loadingImage);
-  statusBar.classList.add("statusbar");
+  //statusBar.classList.add("statusbar");
   windowDiv.appendChild(statusBar);
 
-  resizeDiv.classList.add("resize-div");
+  //resizeDiv.classList.add("resize-div");
   windowDiv.appendChild(resizeDiv);
 
   return windowDiv;
