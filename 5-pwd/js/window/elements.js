@@ -22,7 +22,7 @@ PWD.Window.prototype.elements = {
     return div;
   },
 
-  windowListIcon: function (URL) {
+  listIcon: function (URL) {
     var img = document.createElement("img");
 
     img.setAttribute("src", URL);
@@ -32,7 +32,7 @@ PWD.Window.prototype.elements = {
 
   },
 
-  windowListText: function (text) {
+  listText: function (text) {
     var span = document.createElement("span");
 
     span.innerHTML = text[0].toUpperCase() + text.substr(1);

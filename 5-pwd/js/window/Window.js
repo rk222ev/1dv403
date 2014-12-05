@@ -96,12 +96,12 @@ PWD.Window.prototype.createWindowNode = function (params) {
       closeButton   = PWD.Window.prototype.elements.button(closeIcon, "close-button"),
       contentDiv    = PWD.Window.prototype.elements.div("app"),
       listDiv       = PWD.Window.prototype.elements.div("window-list"),
-      listIcon      = PWD.Window.prototype.elements.windowListIcon(windowIcon),
+      listIcon      = PWD.Window.prototype.elements.listIcon(windowIcon),
       maximize      = PWD.Window.prototype.elements.button(maxIcon, "maximize-button"),
       resizeDiv     = PWD.Window.prototype.elements.div("resize-div"),
       statusBar     = PWD.Window.prototype.elements.div("statusbar"),
       windowDiv     = PWD.Window.prototype.elements.window(windowId),
-      windowName    = PWD.Window.prototype.elements.windowListText(windowTitle),
+      windowName    = PWD.Window.prototype.elements.listText(windowTitle),
 
       loadingImage  = document.createElement("img");
 
