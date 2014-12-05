@@ -39,18 +39,17 @@ PWD.Window.prototype.elements = {
     return span;
   },
 
-  windowCloseButton: function (URL) {
+  button: function (URL, className) {
     var a   = document.createElement("a"),
         img = document.createElement("img");
 
     img.setAttribute("src", URL);
-    img.classList.add("close-button");
+    img.classList.add(className);
 
     a.setAttribute("href", "");
     a.appendChild(img);
 
     return a;
-  }
-
+  },
 
 };

@@ -14,7 +14,7 @@ body {
   float: left;
 }
 
-.close-button {
+.close-button, .maximize-button, .minimize-button {
   width: 15px;
 }
 

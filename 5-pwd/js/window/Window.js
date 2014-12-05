@@ -6,9 +6,13 @@ PWD.Window = function (params) {
   var id = params.id;
 
   var windowSettings = {
-    id: params.id,
-    icon: params.icon,
-    title: params.titleBarText || "app"
+    id:           params.id,
+    icon:         params.icon,
+    title:        params.titleBarText || "app",
+
+    closeIcon:    "pics/icons/clear.svg",
+    maximizeIcon: "pics/icons/chevron-up.svg",
+    minimizeIcon: "pics/icons/chevron-down.svg"
   };
 
   this.width = params.width || 500;
@@ -86,11 +90,14 @@ PWD.Window.prototype.createWindowNode = function (params) {
   var windowId      = params.id,
       windowIcon    = params.icon,
       windowTitle   = params.title,
+      closeIcon     = params.closeIcon,
+      maxIcon       = params.maximizeIcon,
 
-      closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg"),
+      closeButton   = PWD.Window.prototype.elements.button(closeIcon, "close-button"),
       contentDiv    = PWD.Window.prototype.elements.div("app"),
       listDiv       = PWD.Window.prototype.elements.div("window-list"),
       listIcon      = PWD.Window.prototype.elements.windowListIcon(windowIcon),
+      maximize      = PWD.Window.prototype.elements.button(maxIcon, "maximize-button"),
       resizeDiv     = PWD.Window.prototype.elements.div("resize-div"),
       statusBar     = PWD.Window.prototype.elements.div("statusbar"),
       windowDiv     = PWD.Window.prototype.elements.window(windowId),
@@ -104,6 +111,7 @@ PWD.Window.prototype.createWindowNode = function (params) {
   listDiv.appendChild(listIcon);
   listDiv.appendChild(windowName);
   listDiv.appendChild(closeButton);
+  listDiv.appendChild(maximize);
 
   // Builds the window.
   windowDiv.appendChild(listDiv);
