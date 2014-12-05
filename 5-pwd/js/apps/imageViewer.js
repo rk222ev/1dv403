@@ -58,7 +58,7 @@ PWD.apps.ImageViewer.prototype.click = function (e, pic) {
 
  e.cancelBubble = true;
 
- settings.id = new Date().getTime();
+ settings.id = Date.now();
  settings.picUrl = pic.URL;
  settings.height = pic.height + 50;
  settings.width = pic.width + 20;

@@ -69,7 +69,7 @@ PWD.desktop.events.click = function (e) {
   e.preventDefault();
 
   if (e.target.classList.contains("launcher") ) {
-    var time = new Date().getTime();
+    var time = Date.now();
     var appName = e.target.classList[1];
 
    PWD.desktop.openWindows[time] = new PWD.apps[appName]({
