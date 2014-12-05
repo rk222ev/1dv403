@@ -24,10 +24,6 @@ PWD.Window = function (params) {
     y: 10
   };
 
-  this.setMaximize = function (status) {
-    windowSettings.maximized = !windowSettings.maximized;
-  };
-
   this.node = this.createWindowNode(windowSettings);
 
   this.init();
