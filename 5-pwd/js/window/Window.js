@@ -28,21 +28,6 @@ PWD.Window = function (params) {
   };
 
 
-PWD.Window.prototype.createWindowList = function () {
-  var div           = PWD.Window.prototype.elements.div("window-list"),
-      icon          = PWD.Window.prototype.elements.windowListIcon(this.getIcon()),
-      windowName    = PWD.Window.prototype.elements.windowListText(this.getTitleBarText()),
-      closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg");
-
-  div.appendChild(icon);
-  div.appendChild(windowName);
-  div.appendChild(closeButton);
-
-  return div;
-};
-
-
-
 PWD.Window.prototype.init = function () {
   PWD.desktop.node.appendChild(this.node);
 
@@ -96,26 +81,28 @@ PWD.Window.prototype.resizeWindow = function (x, y) {
 
 
 PWD.Window.prototype.createWindowNode = function () {
-  var windowDiv = PWD.Window.prototype.elements.window(this.getId()),
-    contentDiv = PWD.Window.prototype.elements.div("app"),
-    statusBar = PWD.Window.prototype.elements.div("statusbar"),
-    resizeDiv = PWD.Window.prototype.elements.div("resize-div"),
-    loadingImage = document.createElement("img");
-
-  // windowDiv.setAttribute("id", this.getId());
-  // windowDiv.classList.add("window");
-  windowDiv.appendChild(this.createWindowList());
-
-  //contentDiv.classList.add("app");
-  windowDiv.appendChild(contentDiv);
+  var closeButton   = PWD.Window.prototype.elements.windowCloseButton("pics/icons/clear.svg"),
+      contentDiv    = PWD.Window.prototype.elements.div("app"),
+      listDiv       = PWD.Window.prototype.elements.div("window-list"),
+      listIcon      = PWD.Window.prototype.elements.windowListIcon(this.getIcon()),
+      loadingImage  = document.createElement("img"),
+      resizeDiv     = PWD.Window.prototype.elements.div("resize-div"),
+      statusBar     = PWD.Window.prototype.elements.div("statusbar"),
+      windowDiv     = PWD.Window.prototype.elements.window(this.getId()),
+      windowName    = PWD.Window.prototype.elements.windowListText(this.getTitleBarText());
 
   loadingImage.setAttribute("src", "pics/ajax-loader.gif");
 
-  statusBar.appendChild(loadingImage);
-  //statusBar.classList.add("statusbar");
-  windowDiv.appendChild(statusBar);
+  // Builds the window list.
+  listDiv.appendChild(listIcon);
+  listDiv.appendChild(windowName);
+  listDiv.appendChild(closeButton);
 
-  //resizeDiv.classList.add("resize-div");
+  // Builds the window.
+  windowDiv.appendChild(listDiv);
+  windowDiv.appendChild(contentDiv);
+  statusBar.appendChild(loadingImage);
+  windowDiv.appendChild(statusBar);
   windowDiv.appendChild(resizeDiv);
 
   return windowDiv;
