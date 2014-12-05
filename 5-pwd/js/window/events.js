@@ -34,6 +34,14 @@ PWD.Window.prototype.events = {
       win.node.style.height = win.height + "px";
       win.node.style.width = win.width + "px";
     }
+  },
+
+  position: function (app, pos) {
+    app.window.position.x += pos.x;
+    app.window.position.y += pos.y;
+
+    app.window.node.style.left  = app.window.position.x + "px";
+    app.window.node.style.top   = app.window.position.y + "px";
   }
 
 };

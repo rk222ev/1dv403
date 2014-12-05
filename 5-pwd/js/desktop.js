@@ -116,7 +116,10 @@ PWD.desktop.events = {
         PWD.Window.prototype.events.resize(targetWindowNode, e.movementX, e.movementY);
 
       } else {
-        PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
+        PWD.Window.prototype.events.position(PWD.desktop.openWindows[targetWindowNode.id],
+          {x: e.movementX, y: e.movementY}
+        );
+       // PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
       }
     };
 
