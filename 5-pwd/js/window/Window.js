@@ -20,7 +20,8 @@ PWD.Window = function (params) {
 
   this.position = {
     x: 50,
-    y: 10};
+    y: 10
+  };
 
   this.node = this.createWindowNode(windowSettings);
 
