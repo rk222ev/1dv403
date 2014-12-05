@@ -34,7 +34,7 @@ PWD.apps.RssReader.prototype.init = function () {
 
   XHR.addEventListener("load", function () {
     that.node.innerHTML = XHR.response;
-    that.window.appLoaded();
+    PWD.Window.prototype.events.appLoaded(that.window.node);
   });
   XHR.open("GET", url);
   XHR.send();

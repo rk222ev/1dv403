@@ -66,7 +66,7 @@ PWD.apps.Memory = function (params) {
   this.start = (function () {
     pictures = RandomGenerator.getPictureArray({rows: rows, cols: cols});
     that.buildBoard(pictures);
-    that.window.appLoaded();
+    PWD.Window.prototype.events.appLoaded(that.window.node);
 
   })();
 };
