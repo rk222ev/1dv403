@@ -45,20 +45,6 @@ PWD.Window.prototype.init = function () {
 };
 
 
-PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
-  var newValue = value  + secondValue || secondValue;
-
-  if (newValue > max) {
-    newValue = max;
-  } else if (newValue < min) {
-    newValue = min;
-  }
-
-  return newValue;
-
-};
-
-
 PWD.Window.prototype.createWindowNode = function (params) {
   var windowId      = params.id,
       windowIcon    = params.icon,
