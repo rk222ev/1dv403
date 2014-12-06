@@ -39,10 +39,6 @@ PWD.desktop = {
     PWD.desktop.node.appendChild(node);
   },
 
-  closeWindow: function (node) {
-
-  },
-
 
   createLauncher: function (app) {
     var appIcon = document.createElement("img"),
