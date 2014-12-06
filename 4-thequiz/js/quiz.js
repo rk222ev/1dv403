@@ -14,7 +14,7 @@ var QUIZ = {
     QUIZ.node.removeChild(document.querySelector(".no-javascript"));
 
     // Loops through all keys in the QUIZ.elements object.
-    Array.prototype.forEach.call(Object.keys(QUIZ.elements), function (creator) {
+    Object.keys(QUIZ.elements).forEach( function (creator) {
       var element = QUIZ.elements[creator]();
 
       QUIZ.node.appendChild(element);
