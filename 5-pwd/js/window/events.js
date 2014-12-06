@@ -22,9 +22,13 @@ PWD.Window.prototype.events = {
 
 
     if ((x === undefined || y === undefined) && win.maximized === false) {
-      PWD.Window.prototype.events.maximized(win);
+      PWD.Window.prototype.events.maximize(win);
 
     } else {
+      if (win.maximized === true) {
+        PWD.Window.prototype.events.restoreSize(win);
+      }
+
       win.height = PWD.Window.prototype.filterSize(win.height, y, 200, (640 - win.position.y));
       win.width = PWD.Window.prototype.filterSize(win.width, x, 200, 1024 - win.position.x);
 
@@ -58,7 +62,7 @@ PWD.Window.prototype.events = {
   },
 
 
-  maximized: function (win) {
+  maximize: function (win) {
     var button = win.node.querySelector(".maximize-button");
 
     win.node.style.top = 0;
@@ -68,4 +72,10 @@ PWD.Window.prototype.events = {
     button.setAttribute("src", "pics/icons/chevron-down.svg");
     win.maximized = true;
   },
+
+
+  restoreSize: function (win) {
+    win.node.querySelector(".maximize-button").setAttribute("src", "pics/icons/chevron-up.svg");
+    win.maximized = false;
+  }
 };

@@ -54,7 +54,7 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
     newValue = min;
   }
 
-  return newValue;
+  return newValue || value;
 
 };
 
