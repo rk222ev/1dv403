@@ -34,15 +34,6 @@ PWD.desktop = {
   },
 
 
-  setFocus: function (node) {
-    if (typeof node === "object") {
-      PWD.desktop.node.removeChild(node);
-      PWD.desktop.node.appendChild(node);
-
-    }
-  },
-
-
   createLauncher: function (app) {
     var appIcon = document.createElement("img"),
       link = document.createElement("a");
@@ -89,11 +80,11 @@ PWD.desktop.events = {
 
     } else if (e.target.classList.contains("app")) {
       windowNode = PWD.desktop.findParentNode(e.target, "window");
-      PWD.desktop.setFocus(windowNode);
+      PWD.desktop.events.setFocus(windowNode);
 
     } else if (e.target.classList.contains("pwd") === false) {
       windowNode = PWD.desktop.findParentNode(e.target, "window");
-      PWD.desktop.setFocus(windowNode);
+      PWD.desktop.events.setFocus(windowNode);
 
       if (PWD.desktop.findParentNode(e.target, "window-list")) {
         PWD.desktop.events.drag(windowNode);
@@ -126,5 +117,14 @@ PWD.desktop.events = {
     PWD.desktop.node.addEventListener("mousemove", mouseMove);
     PWD.desktop.node.addEventListener("mouseup", mouseUp);
 
-  }
+  },
+
+
+  setFocus: function (node) {
+    if (typeof node === "object") {
+      PWD.desktop.node.removeChild(node);
+      PWD.desktop.node.appendChild(node);
+
+    }
+  },
 };
