@@ -7,6 +7,7 @@ var QUIZ = {
   URL: "http://vhost3.lnu.se:20080/question/1", // The URL that starts the quiz.
   correctAnswers: 0,
   wrongAnswers: 0,
+  log: {},
 
   // Creates an initializes the game.
   init: function () {
@@ -96,18 +97,33 @@ var QUIZ = {
     document.querySelector(".input-text").focus();
   },
 
+
   noMoreQuestions: function () {
     var div       = document.querySelector(".app"),
         tries     = document.createElement("p"),
-        questions = document.createElement("p");
+        table     = document.createElement("table"),
+        questions = document.createElement("p"),
+        tr, tdId, tdTries;
 
+    QUIZ.log[QUIZ.question.id] += 1;
     div.innerHTML = "<p>Grattis du klarade spelet!</p>";
 
-    tries.innerHTML = "Antal felaktiga försök: " + (QUIZ.wrongAnswers);
-    questions.innerHTML = "Antal frågor: " + QUIZ.correctAnswers;
+    Object.keys(QUIZ.log).forEach(function (q) {
+      tr      = document.createElement("tr");
+      tdId    = document.createElement("td");
+      tdTries = document.createElement("td");
 
-    div.appendChild(tries);
-    div.appendChild(questions);
+      tdId.innerHTML = q;
+      tr.appendChild(tdId);
+
+      tdTries. innerHTML = QUIZ.log[q];
+      tr.appendChild(tdTries);
+
+      table.appendChild(tr);
+
+    });
+
+    div.appendChild(table);
   }
 
 };
@@ -124,6 +140,8 @@ QUIZ.ajax = {
         QUIZ.wrongAnswer();
       }
     }
+
+    QUIZ.log[QUIZ.question.id] += 1;
   },
 
 
@@ -131,8 +149,7 @@ QUIZ.ajax = {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
     QUIZ.XHR.removeEventListener("load", QUIZ.ajax.handleQuestion);
     QUIZ.updateQuestion();
-
-
+    QUIZ.log[QUIZ.question.id] = 0;
   },
 
 
@@ -144,7 +161,7 @@ QUIZ.ajax = {
         handler: QUIZ.ajax.handleQuestion
       });
     }
-    },
+  },
 
 
   makeRequest: function (params) {
