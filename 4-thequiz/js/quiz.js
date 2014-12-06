@@ -5,8 +5,6 @@
 var QUIZ = {
 
   URL: "http://vhost3.lnu.se:20080/question/1", // The URL that starts the quiz.
-  correctAnswers: 0,
-  wrongAnswers: 0,
   log: {},
 
   // Creates an initializes the game.
