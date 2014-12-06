@@ -87,7 +87,7 @@ PWD.desktop.events = {
       PWD.desktop.events.setFocus(windowNode);
 
       if (PWD.desktop.findParentNode(e.target, "window-list")) {
-        PWD.desktop.events.drag(windowNode, "drag");
+        PWD.desktop.events.drag(windowNode);
       }
 
     }
@@ -104,9 +104,8 @@ PWD.desktop.events = {
 
     };
     mouseMove = function (e) {
-      var x = e.movementX || e.mozMovementX,
-          y = e.movementY || e.mozMovementY;
-
+      var x = e.movementX || e.mozMovementX || 0,
+          y = e.movementY || e.mozMovementY || 0;
 
       if (property === "move") {
         PWD.Window.prototype.events.resize(targetWindowNode, x, y);
