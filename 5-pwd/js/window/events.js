@@ -57,6 +57,7 @@ PWD.Window.prototype.events = {
       app.window.position.y = PWD.desktop.settings.height - app.window.height;
     }
 
+
     app.window.node.style.left  = app.window.position.x + "px";
     app.window.node.style.top   = app.window.position.y + "px";
   },

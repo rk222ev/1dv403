@@ -87,7 +87,7 @@ PWD.desktop.events = {
       PWD.desktop.events.setFocus(windowNode);
 
       if (PWD.desktop.findParentNode(e.target, "window-list")) {
-        PWD.desktop.events.drag(windowNode);
+        PWD.desktop.events.drag(windowNode, "drag");
       }
 
     }
@@ -97,18 +97,23 @@ PWD.desktop.events = {
   drag: function (targetWindowNode, property) {
     var mouseMove;
 
+
    var mouseUp = function () {
       PWD.desktop.node.removeEventListener("mousemove", mouseMove);
       PWD.desktop.node.removeEventListener("mouseup", mouseUp);
 
     };
     mouseMove = function (e) {
+      var x = e.movementX || e.mozMovementX,
+          y = e.movementY || e.mozMovementY;
+
+
       if (property === "move") {
-        PWD.Window.prototype.events.resize(targetWindowNode, e.movementX, e.movementY);
+        PWD.Window.prototype.events.resize(targetWindowNode, x, y);
 
       } else {
         PWD.Window.prototype.events.position(PWD.desktop.openWindows[targetWindowNode.id],
-          {x: e.movementX, y: e.movementY}
+          {x: x, y: y}
         );
        // PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
       }
