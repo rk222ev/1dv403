@@ -9,7 +9,6 @@ PWD.Window = function (params) {
     id:           params.id,
     icon:         params.icon,
     title:        params.titleBarText || "app",
-    maximized:    false,
 
     closeIcon:    "pics/icons/clear.svg",
     maximizeIcon: "pics/icons/chevron-up.svg",
@@ -18,6 +17,7 @@ PWD.Window = function (params) {
 
   this.width = params.width || 500;
   this.height = params.height || 400;
+  this.maximized = false;
 
   this.position = {
     x: 50,

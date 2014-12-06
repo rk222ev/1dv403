@@ -20,11 +20,9 @@ PWD.Window.prototype.events = {
   resize: function (node, x, y) {
     var win = PWD.desktop.openWindows[node.id].window;
 
-    if (x === undefined || y === undefined) {
-      win.node.style.top = 0;
-      win.node.style.left = 0;
-      win.node.style.height = "100%";
-      win.node.style.width = "100%";
+
+    if ((x === undefined || y === undefined) && win.maximized === false) {
+      PWD.Window.prototype.events.maximized(win);
 
     } else {
       win.height = PWD.Window.prototype.filterSize(win.height, y, 200, (640 - win.position.y));
@@ -57,6 +55,17 @@ PWD.Window.prototype.events = {
 
     app.window.node.style.left  = app.window.position.x + "px";
     app.window.node.style.top   = app.window.position.y + "px";
-  }
+  },
 
+
+  maximized: function (win) {
+    var button = win.node.querySelector(".maximize-button");
+
+    win.node.style.top = 0;
+    win.node.style.left = 0;
+    win.node.style.height = "100%";
+    win.node.style.width = "100%";
+    button.setAttribute("src", "pics/icons/chevron-down.svg");
+    win.maximized = true;
+  },
 };
