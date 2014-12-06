@@ -52,7 +52,7 @@ PWD.Window.prototype.events = {
       app.window.position.y = 0;
 
     } else if ((app.window.position.y + app.window.height) > PWD.desktop.settings.height) {
-      app.window.position.y = PWD.desktop.settings.height - app.window.width;
+      app.window.position.y = PWD.desktop.settings.height - app.window.height;
     }
 
     app.window.node.style.left  = app.window.position.x + "px";
