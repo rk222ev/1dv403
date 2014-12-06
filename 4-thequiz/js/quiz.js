@@ -103,10 +103,20 @@ var QUIZ = {
         tries     = document.createElement("p"),
         table     = document.createElement("table"),
         questions = document.createElement("p"),
+        trHeader  = document.createElement("tr"),
+        thQ       = document.createElement("th"),
+        thN       = document.createElement("th"),
+
         tr, tdId, tdTries;
 
     QUIZ.log[QUIZ.question.id] += 1;
     div.innerHTML = "<p>Grattis du klarade spelet!</p>";
+
+    thQ.innerHTML = "Fråga";
+    thN.innerHTML = "Försök";
+    trHeader.appendChild(thQ);
+    trHeader.appendChild(thN);
+    table.appendChild(trHeader);
 
     Object.keys(QUIZ.log).forEach(function (q) {
       tr      = document.createElement("tr");

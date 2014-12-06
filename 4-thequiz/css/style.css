@@ -3,6 +3,12 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+}
+
 .input-submit {
   width: 80px;
   height: 25px;
@@ -29,7 +35,6 @@ body {
   top: 50%;
 
 }
-
 
 .question-area {
   height: 100px;
