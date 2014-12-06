@@ -20,10 +20,10 @@ var QUIZ = {
       QUIZ.node.appendChild(element);
     });
 
-    QUIZ.ajax.makeRequest({
+    QUIZ.handlers.makeRequest({
       type:     "GET",
       URL:      QUIZ.URL,
-      handler:  QUIZ.ajax.handleQuestion});
+      handler:  QUIZ.handlers.updateQuestion});
   },
 
 
@@ -34,15 +34,15 @@ var QUIZ = {
     a.setAttribute("href", "#");
     a.innerHTML = "Nästa fråga.";
 
-    a.addEventListener("mousedown", QUIZ.ajax.handleGetNewQuestion);
-    a.addEventListener("keydown", QUIZ.ajax.handleGetNewQuestion);
+    a.addEventListener("mousedown", QUIZ.handlers.getNewQuestion);
+    a.addEventListener("keydown", QUIZ.handlers.getNewQuestion);
 
     QUIZ.correctAnswers += 1;
 
     div.innerHTML = "<p>Ditt svar var rätt!</p>";
     div.appendChild(a);
 
-    QUIZ.XHR.removeEventListener("load", QUIZ.handleAnswer);
+    QUIZ.XHR.removeEventListener("load", QUIZ.checkAnswer);
     QUIZ.URL = JSON.parse(QUIZ.XHR.response).nextURL;
 
     if (QUIZ.URL === undefined) {
@@ -60,21 +60,7 @@ var QUIZ = {
   },
 
 
-  sendAnswer: function (e)  {
-    if (e.type !== "keypress" || e.keyCode === 13) { // Filters out all keypress events except on the enterkey.
-      QUIZ.ajax.makeRequest({
-
-        type:         "POST",
-        URL:          QUIZ.question.nextURL,
-        contentType:  "application/json;charset=UTF-8",
-        json:         JSON.stringify({answer: document.querySelector(".input-text").value}),
-        handler:      QUIZ.ajax.handleAnswer
-      });
-    }
-  },
-
-
-  updateQuestion: function () {
+  drawQuestion: function () {
     var div         = document.querySelector(".question-area"),
         replacement = document.createElement("div"),
         p           = document.createElement("p"),
@@ -133,13 +119,12 @@ var QUIZ = {
 
     div.appendChild(table);
   }
-
 };
 
 
-QUIZ.ajax = {
+QUIZ.handlers = {
 
-  handleAnswer: function (e) {
+  checkAnswer: function (e) {
     if (QUIZ.XHR.readyState === 4) {
 
       if (QUIZ.XHR.status === 200) {
@@ -153,20 +138,20 @@ QUIZ.ajax = {
   },
 
 
-  handleQuestion: function (q) {
+  updateQuestion: function (q) {
     QUIZ.question = JSON.parse(QUIZ.XHR.response);
-    QUIZ.XHR.removeEventListener("load", QUIZ.ajax.handleQuestion);
-    QUIZ.updateQuestion();
+    QUIZ.XHR.removeEventListener("load", QUIZ.handlers.updateQuestion);
+    QUIZ.drawQuestion();
     QUIZ.log[QUIZ.question.id] = 0;
   },
 
 
-  handleGetNewQuestion: function (e) {
+  getNewQuestion: function (e) {
     if (e.type !== "keydown" || e.keyCode === 13) {
       e.preventDefault();
-      QUIZ.ajax.makeRequest({
+      QUIZ.handlers.makeRequest({
         URL: QUIZ.URL,
-        handler: QUIZ.ajax.handleQuestion
+        handler: QUIZ.handlers.updateQuestion
       });
     }
   },
@@ -188,8 +173,21 @@ QUIZ.ajax = {
     }
 
     QUIZ.XHR.send(data || null);
-  }
+  },
 
+
+ sendAnswer: function (e)  {
+    if (e.type !== "keypress" || e.keyCode === 13) { // Filters out all keypress events except on the enterkey.
+      QUIZ.handlers.makeRequest({
+
+        type:         "POST",
+        URL:          QUIZ.question.nextURL,
+        contentType:  "application/json;charset=UTF-8",
+        json:         JSON.stringify({answer: document.querySelector(".input-text").value}),
+        handler:      QUIZ.handlers.checkAnswer
+      });
+    }
+  },
 };
 
 
@@ -208,7 +206,7 @@ QUIZ.elements = {
 
     input.setAttribute("type", "text");
     input.classList.add("input-text");
-    input.addEventListener("keypress", QUIZ.sendAnswer);
+    input.addEventListener("keypress", QUIZ.handlers.sendAnswer);
     return input;
 
   },
@@ -219,7 +217,7 @@ QUIZ.elements = {
     input.setAttribute("type", "submit");
     input.setAttribute("value", "Svara");
     input.classList.add("input-submit");
-    input.addEventListener("mousedown", QUIZ.sendAnswer);
+    input.addEventListener("mousedown", QUIZ.handlers.sendAnswer);
     return input;
   },
 
