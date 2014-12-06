@@ -3,6 +3,7 @@
 /*global PWD, document */
 
 PWD.desktop = {
+  settings: { height: 640, width: 1024 },
   openWindows: {},
   events: {},
   node: document.querySelector(".pwd"),
