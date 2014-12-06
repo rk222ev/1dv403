@@ -119,9 +119,6 @@ PWD.apps.ImageViewer.prototype.parseJson = function (data) {
 
       this.setPicData(pics);
       this.setAppLoaded();
-
-    } else {
-      alert('There was a problem with the request.');
     }
   }
 };
@@ -138,7 +135,7 @@ PWD.apps.ImageViewer.prototype.init = function (params) {
 
   if (params.picUrl) {
     this.drawPic(params.picUrl);
-    this.window.appLoaded();
+    PWD.Window.prototype.events.appLoaded(this.window.node);
 
   } else {
     this.getGalleryJson(params.jsonUrl);

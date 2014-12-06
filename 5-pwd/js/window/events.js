@@ -6,7 +6,6 @@
 PWD.Window.prototype.events = {
 
   appLoaded: function (node) {
-    // console.log(node.querySelector("img"));
     var icon = node.querySelector(".statusbar img");
 
     icon.setAttribute("src", "");
