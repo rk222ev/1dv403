@@ -35,8 +35,11 @@ PWD.desktop = {
 
 
   setFocus: function (node) {
-    PWD.desktop.node.removeChild(node);
-    PWD.desktop.node.appendChild(node);
+    if (typeof node === "object") {
+      PWD.desktop.node.removeChild(node);
+      PWD.desktop.node.appendChild(node);
+
+    }
   },
 
 

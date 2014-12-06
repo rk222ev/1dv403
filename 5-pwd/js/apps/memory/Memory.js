@@ -10,8 +10,8 @@ PWD.apps.Memory = function (params) {
 
   var that            = this,
       id              = params.id,
-      cols            = params.cols || 4,
-      rows            = params.rows || 4,
+      cols            = params.cols || 2,
+      rows            = params.rows || 2,
       pictures        = [],
       turnedPics      = [],
       appSettings     = {},
@@ -186,8 +186,16 @@ PWD.apps.Memory.prototype.resetGuess = function (pics) {
 
 
 PWD.apps.Memory.prototype.victory = function () {
-  var p = document.createElement("p");
+  var div = this.window.node.querySelector(".board"),
+      replacement = document.createElement("div"),
+      p = document.createElement("p");
 
   p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
-  this.getNode().appendChild(p);
+
+ // this.getNode().appendChild(p);
+ replacement.appendChild(p);
+ replacement.classList.add("board");
+
+div.parentNode.replaceChild(replacement, div);
+
 };
