@@ -5,7 +5,7 @@
 PWD.Window = function (params) {
   var id = params.id;
 
-  var windowSettings = {
+  this.settings = {
     id:           params.id,
     icon:         params.icon,
     title:        params.titleBarText || "app",
@@ -24,24 +24,26 @@ PWD.Window = function (params) {
     y: 10
   };
 
-  this.node = this.createWindowNode(windowSettings);
+  this.node = this.createWindowNode(this.settings);
 
   this.init();
 };
 
 
 PWD.Window.prototype.init = function () {
+  var numberOfOpenWindows = Object.keys(PWD.desktop.openWindows).length,
+      yOffset = 23 * 20,
+      xOffset  = 13 * 20;
 
-  PWD.desktop.node.appendChild(this.node);
-
-  this.position.x += Object.keys(PWD.desktop.openWindows).length % 23 * 20;
-  this.position.y += Object.keys(PWD.desktop.openWindows).length % 13 * 20;
+  this.position.x += numberOfOpenWindows % xOffset;
+  this.position.y += numberOfOpenWindows % yOffset;
 
   this.node.style.top     = this.position.y + "px";
   this.node.style.left    = this.position.x + "px";
   this.node.style.width   = this.width      + "px";
   this.node.style.height  = this.height     + "px";
 
+  PWD.desktop.node.appendChild(this.node);
 };
 
 
