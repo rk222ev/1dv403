@@ -50,10 +50,10 @@ body {
   width: 10px;
   height: 10px;
   position: absolute;
-  bottom: -4px;
-  right: -4px;
-  border-right: solid 1px;
-  border-bottom: solid 1px;
+  bottom: -6px;
+  right: -6px;
+  border-right: solid 2px #607D8B;
+  border-bottom: solid 2px #607D8B;
   cursor: se-resize;
 }
 
