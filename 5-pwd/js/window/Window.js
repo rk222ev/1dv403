@@ -3,8 +3,7 @@
 /*global PWD, document */
 
 PWD.Window = function (params) {
-  var id = params.id;
-
+  
   this.settings = {
     id:           params.id,
     icon:         params.icon,
