@@ -63,12 +63,14 @@ PWD.Window.prototype.filterSize = function (value, secondValue, min, max) {
 
 
 PWD.Window.prototype.createWindowNode = function (params) {
+  // Parameters.
   var windowId      = params.id,
       windowIcon    = params.icon,
       windowTitle   = params.title,
       closeIcon     = params.closeIcon,
       maxIcon       = params.maximizeIcon,
 
+      // Elements.
       closeButton   = PWD.Window.prototype.elements.button(closeIcon, "close-button"),
       contentDiv    = PWD.Window.prototype.elements.div("app"),
       listDiv       = PWD.Window.prototype.elements.div("window-list"),
