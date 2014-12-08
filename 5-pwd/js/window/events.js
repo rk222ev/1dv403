@@ -8,7 +8,7 @@ PWD.Window.prototype.events = {
   appLoaded: function (node) {
     var icon = node.querySelector(".statusbar img");
 
-    icon.setAttribute("src", "");
+    icon.setAttribute("src", "pics/ajax-placeholder.gif");
   },
 
   close: function (node) {
