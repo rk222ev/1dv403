@@ -109,13 +109,6 @@ Memory.prototype.generateTable = function (picArray, cols) {
    that.clickEvent(e);
   });
 
-  table.addEventListener("keydown", function (e) {
-    if (e.keyCode === 13) {
-      that.clickEvent(e);
-    }
-
-  });
-
   return table;
 };
 
