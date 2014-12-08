@@ -32,11 +32,11 @@ PWD.Window = function (params) {
 
 PWD.Window.prototype.init = function () {
   var numberOfOpenWindows = Object.keys(PWD.desktop.openWindows).length,
-      yOffset = 23 * 20,
-      xOffset  = 13 * 20;
+      yOffset = numberOfOpenWindows % 23 * 20,
+      xOffset  = numberOfOpenWindows % 13 * 20;
 
-  this.position.x += numberOfOpenWindows % xOffset;
-  this.position.y += numberOfOpenWindows % yOffset;
+  this.position.x += xOffset;
+  this.position.y += yOffset;
 
   this.node.style.top     = this.position.y + "px";
   this.node.style.left    = this.position.x + "px";
