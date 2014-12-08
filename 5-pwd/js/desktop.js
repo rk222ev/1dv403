@@ -96,7 +96,9 @@ PWD.desktop.events = {
 
   drag: function (targetWindowNode, property) {
     var mouseMove;
-
+    var startX, startY;
+    
+    
 
    var mouseUp = function () {
       PWD.desktop.node.removeEventListener("mousemove", mouseMove);
@@ -104,8 +106,8 @@ PWD.desktop.events = {
 
     };
     mouseMove = function (e) {
-      var x = e.movementX || e.mozMovementX || 0,
-          y = e.movementY || e.mozMovementY || 0;
+      var x = e.movementX || e.mozMovementX || e.clientX - startX || 0,
+          y = e.movementY || e.mozMovementY || e.clientY - startY || 0;
 
       if (property === "move") {
         PWD.Window.prototype.events.resize(targetWindowNode, x, y);
@@ -116,7 +118,14 @@ PWD.desktop.events = {
         );
        // PWD.desktop.openWindows[targetWindowNode.id].window.updatePosition(e.movementX, e.movementY);
       }
+      if (e.hasOwnProperty("movementX") === false && e.hasOwnProperty(e.mozMovementX) === false) {
+        startX = e.clientX;
+        startY = e.clientY;  
+      }
+      
     };
+    
+    
 
     PWD.desktop.node.addEventListener("mousemove", mouseMove);
     PWD.desktop.node.addEventListener("mouseup", mouseUp);
