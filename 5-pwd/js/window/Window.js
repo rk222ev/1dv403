@@ -30,11 +30,13 @@ PWD.Window = function (params) {
 
 
 PWD.Window.prototype.init = function () {
-  var numberOfOpenWindows = Object.keys(PWD.desktop.openWindows).length,
-      yOffset = numberOfOpenWindows * 5,
-      xOffset  = numberOfOpenWindows * 5;
+  var openedWindows = Object.keys(PWD.desktop.openWindows).length,
+      yOffset       = openedWindows * 5,
+      xOffset       = openedWindows * 5;
 
 
+  // Resets the window position preventing the window from
+  // being place outside of the desktop.
   this.position.x += xOffset % (900 - this.width);
   this.position.y += yOffset % (620 - this.height);
   
