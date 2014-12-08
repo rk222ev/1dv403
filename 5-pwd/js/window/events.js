@@ -70,13 +70,13 @@ PWD.Window.prototype.events = {
     win.node.style.left = 0;
     win.node.style.height = "100%";
     win.node.style.width = "100%";
-    button.setAttribute("src", "pics/icons/chevron-down.svg");
+    button.setAttribute("src", win.settings.minimizeIcon);
     win.maximized = true;
   },
 
 
   restoreSize: function (win) {
-    win.node.querySelector(".maximize-button").setAttribute("src", "pics/icons/chevron-up.svg");
+    win.node.querySelector(".maximize-button").setAttribute("src", win.settings.maximizeIcon);
     win.maximized = false;
   }
 };
