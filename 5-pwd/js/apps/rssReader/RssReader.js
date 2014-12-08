@@ -27,7 +27,7 @@ PWD.apps.RssReader = function (params) {
 
 PWD.apps.RssReader.prototype.init = function () {
   var that = this;
-  var url = "//homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape("http://www.dn.se/m/rss/senaste-nytt");
+  var url = "http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape("http://www.dn.se/m/rss/senaste-nytt");
 
 
   var XHR = new XMLHttpRequest();

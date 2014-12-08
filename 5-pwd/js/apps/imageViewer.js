@@ -9,7 +9,7 @@ PWD.apps.ImageViewer = function (params) {
       windowSettings  = {},
       picData;
 
-  appSettings.Url = "//homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
+  appSettings.Url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
 
   windowSettings.id           = id;
   windowSettings.icon         = "pics/icons/ImageViewer.svg";
