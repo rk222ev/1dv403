@@ -3,9 +3,6 @@
 
 /*global document, window, RandomGenerator, PWD*/
 
-//PWD.apps.Memory = function (cols, rows, nodeName, picsFolder) {
-
-
 PWD.apps.Memory = function (params) {
 
   var that            = this,
@@ -192,7 +189,6 @@ PWD.apps.Memory.prototype.victory = function () {
 
   p.innerHTML = "Grattis du vann! Det tog dig " + this.getTries() + " försök.";
 
- // this.getNode().appendChild(p);
  replacement.appendChild(p);
  replacement.classList.add("board");
 
