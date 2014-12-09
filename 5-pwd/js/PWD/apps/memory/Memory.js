@@ -30,7 +30,7 @@ PWD.apps.Memory = function (params) {
   windowSettings.height       = 200;
 
   this.window = new PWD.Window(windowSettings);
-  node = this.window.node.querySelector(".app");
+  this.node = this.window.node.querySelector(".app");
 
   this.getNode        = function () { return node; };
   this.getColumns     = function () { return cols; };
@@ -64,7 +64,7 @@ PWD.apps.Memory = function (params) {
   };
 
   this.start = (function () {
-    pictures = RandomGenerator.getPictureArray({rows: rows, cols: cols});
+    pictures = PWD.randomGenerator.getPictureArray({rows: rows, cols: cols});
     that.buildBoard(pictures);
     PWD.Window.prototype.events.appLoaded(that.window.node);
 

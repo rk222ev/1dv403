@@ -1,5 +1,8 @@
 "use strict";
-var RandomGenerator = {
+
+/*global PWD */
+
+PWD.randomGenerator = {
 
   /*
     Denna metod tar antalet rader och columner som inparameter.
