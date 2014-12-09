@@ -21,7 +21,7 @@ PWD.apps.Memory = function (params) {
       node;
 
 
-  appSettings.picFolder = "js/apps/memory/pics/";
+  appSettings.picFolder = "js/PWD/apps/memory/pics/";
 
   windowSettings.id           = id;
   windowSettings.icon         = "pics/icons/Memory.svg";
