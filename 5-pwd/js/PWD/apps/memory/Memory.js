@@ -27,7 +27,7 @@ PWD.apps.Memory = function (params) {
   windowSettings.height       = 200;
 
   this.window = new PWD.Window(windowSettings);
-  this.node = this.window.node.querySelector(".app");
+  node = this.window.node.querySelector(".app");
 
   this.getNode        = function () { return node; };
   this.getColumns     = function () { return cols; };
@@ -35,7 +35,7 @@ PWD.apps.Memory = function (params) {
   this.getTries       = function () { return numberOfTries / 2; };
   this.setPicAsTurned = function (pic) { turnedPics.push(pic); };
   this.clearTurned    = function () { turnedPics = []; };
-  this.picFolder      = (function () { return appSettings.picFolder; })();
+  this.getPicFolder      = (function () { return appSettings.picFolder; })();
 
   this.addMatch = function () {
     possibleMatches -= 1;
@@ -56,7 +56,7 @@ PWD.apps.Memory = function (params) {
   this.getPictureLink = function (img) {
     var index = Array.prototype.indexOf.call(node.querySelectorAll("img"), img);
 
-    return this.picFolder + pictures[index] + ".png";
+    return this.getPicFolder + pictures[index] + ".png";
 
   };
 
@@ -108,7 +108,7 @@ PWD.apps.Memory.prototype.generateTable = function (picArray, cols) {
         td  = document.createElement("td"),
         img = document.createElement("img");
 
-    img.src = that.picFolder + "0.png";
+    img.src = that.getPicFolder + "0.png";
 
     a.setAttribute("href", "#");
     a.appendChild(img);
@@ -173,7 +173,7 @@ PWD.apps.Memory.prototype.resetGuess = function (pics) {
   var that = this;
 
   pics.forEach( function (pic) {
-    pic.setAttribute("src", that.picFolder + "0.png");
+    pic.setAttribute("src", that.getPicFolder + "0.png");
 
   });
 
