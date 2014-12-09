@@ -1,4 +1,4 @@
-/*global document, window */
+/*global document, requirejs, window */
 "use strict";
 
 
@@ -10,22 +10,21 @@ var PWD = {
       baseUrl: 'js/',
 
       paths: {
-          app: '../js/apps',
-          memory: '../js/apps/memory',
-          rssReader: '../js/apps/rssReader',
-          win: '../js/window'
+          PWD:    '../js/PWD',
+          app:    '../js/PWD/apps',
+          window: '../js/PWD/window'
       }
   });
 
   requirejs([
-    'desktop',
+    'PWD/desktop',
     'app/imageViewer',
-    'memory/Memory',
-    'memory/random',
-    'rssReader/RssReader',
-    'win/Window',
-    'win/elements',
-    'win/events'
+    'app/memory/Memory',
+    'app/memory/random',
+    'app/rssReader/RssReader',
+    'window/Window',
+    'window/elements',
+    'window/events'
   ],
 
   window.onload = function   (desktop) {
