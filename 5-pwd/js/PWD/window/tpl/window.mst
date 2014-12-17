@@ -17,6 +17,7 @@
 
   <div class="statusbar">
     <img src="{{settings.icon.loading}}" class="app-status-icon">
+    <span class="statusbar-text"></span>
   </div>
   <div class="resize-div">
   </div>

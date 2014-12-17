@@ -90,11 +90,12 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
 
   ImageViewer.prototype.run = function (windowId) {
     var that = this;
+    var date = new Date();
 
     if (this.interval === undefined) {
       this.interval = window.setInterval(function () { that.run(windowId); }, this.updateFreq);
     }
-
+    this.win.setStatusbarText("Senast uppdaterat: " + date.toLocaleTimeString());
     $.get(this.win.url, function (data) {
 
       $('#' + windowId + ' .app').html(data);

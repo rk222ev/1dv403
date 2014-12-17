@@ -25,7 +25,7 @@ define(function () {
 
   // Sets the text displayed on the window statusbar.
   Window.prototype.setStatusbarText = function (text) {
-    console.log(this);
+    $('#' + this.getId()).find(".statusbar-text").text(text);
 
   };
 
