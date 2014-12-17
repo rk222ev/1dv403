@@ -1,0 +1,12 @@
+<div class="modal">
+  <div>
+    <input type="radio" name="source" value="http://feedpress.me/kodsnack" />Kodsnack<br />
+    <input type="radio" name="source" value="http://www.dn.se/m/rss/senaste-nytt" />DN<br />
+    <input type="radio" name="source" value="Bird" />Birds<br />
+  </div>
+
+  <div>
+    <input type="button" class="cancel-button" value="avbryt"></input>
+    <input type="button" class="ok-button" value="ok"></input>
+  </div>
+</div>

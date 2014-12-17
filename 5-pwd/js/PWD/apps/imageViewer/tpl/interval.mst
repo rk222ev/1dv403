@@ -2,11 +2,8 @@
   <div>
     <p>Uppdateringsintervall:</p>
     <select class="interval-value">
-      <option value="1000">1 minut</option>
-      <option value="2000">2 minuter</option>
-      <option value="3000">3 minuter</option>
-      <option value="4000">4 minuter</option>
-      <option value="5000">5 minuter</option>
+      <option value="60000">1 minut</option>
+      <option value="120000">2 minuter</option>
     </select>
   </div>
   <div>
