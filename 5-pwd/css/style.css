@@ -1,6 +1,7 @@
 body {
   background-color: #263238;
   font-family: 'Roboto', sans-serif;
+
 }
 
 .app {
@@ -12,9 +13,10 @@ body {
 
 .app-icon, .window-list span {
   float: left;
+  pointer-events: none;
 }
 
-.close-button, .maximize-button, .minimize-button {
+.close-button, .maximize-button, .minimize-button, .settings-button{
   width: 15px;
 }
 
@@ -78,7 +80,7 @@ body {
   display: block;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  box-shadow: 10px 10px 5px #888888;
+  box-shadow: 10px 10px 5px #B0BEC5;
 }
 
 .window-list {
@@ -97,4 +99,44 @@ body {
 
 .window-list span {
   cursor: default;
+  pointer-events: none;
 }
+
+.window-settings {
+  background-color: #546E7A;
+  display: block;
+  list-style: none;
+  float:left;
+  border: 1px solid;
+
+  position: absolute;
+  top: 7px;
+  right: 20px;
+}
+
+.window-settings li {
+  text-align: left;
+  margin-left: -30px;
+  margin-right: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+.modal {
+  max-width: 75%;
+  max-height: 75%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-color: #90A4AE;
+  border: 1px;
+}
+
+
+
+
