@@ -42,14 +42,22 @@ define(
         var object = process[id];
         var node = $("#" + id);
 
-        object.win.left += (e.clientX- object.win.caughtX);
-        object.win.top += (e.clientY- object.win.caughtY);
+        var x = (e.clientX - object.win.caughtX);
+        var y = (e.clientY - object.win.caughtY);
+
+        object.win.setPosition(x, y);
+
+/*
+        object.win.left += (e.clientX - object.win.caughtX);
+        object.win.top += (e.clientY - object.win.caughtY);
+
 
         node.css('left', object.win.left + 'px');
         node.css('top', object.win.top + 'px');
-
+*/
         object.win.caughtX = e.clientX;
         object.win.caughtY = e.clientY;
+
 
       };
 

@@ -8,7 +8,7 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
   var ImageViewer = function (id) {
 
      this.id = id;
-     this.win = new Window();
+     this.win = new Window(id);
      this.updateFreq = 60000;
 
     // Windowsettings.
@@ -16,13 +16,21 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
     this.win.titlebarText = "RssReader";
     this.win.width        =  400;
     this.win.height       =  600;
-    this.win.url = "http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape("http://www.dn.se/m/rss/senaste-nytt");
+
+    this.setUrl("http://www.dn.se/m/rss/senaste-nytt");
   };
 
+  // Sets the rss-feed URL
   ImageViewer.prototype.setUrl = function (url) {
     this.win.url = "http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape(url);
   };
 
+
+  /*
+  A list of settings for the app-settingsmenu.
+  The key is the setting name and the value is the function that is
+  to be run when the setting is clicked.
+  */
   ImageViewer.prototype.settings = {
 
     'Uppdateringsintervall': function (process) {
@@ -67,7 +75,10 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
       });
     },
 
-    'Uppdatera nu': function (winId) { console.log("Uppdatera nu"); },
+    'Uppdatera nu': function (process) {
+      process.run(process.id);
+    },
+
   };
 
   ImageViewer.prototype.setInterval = function (process) {
