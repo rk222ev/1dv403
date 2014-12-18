@@ -5,7 +5,7 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
 
   var Window = require("pwd/window/window");
 
-  var ImageViewer = function (id) {
+  var RssReader = function (id) {
 
      this.id = id;
      this.win = new Window(id);
@@ -21,7 +21,7 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
   };
 
   // Sets the rss-feed URL
-  ImageViewer.prototype.setUrl = function (url) {
+  RssReader.prototype.setUrl = function (url) {
     this.win.url = "http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url="+escape(url);
   };
 
@@ -31,12 +31,12 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
   The key is the setting name and the value is the function that is
   to be run when the setting is clicked.
   */
-  ImageViewer.prototype.settings = {
+  RssReader.prototype.settings = {
 
     'Uppdateringsintervall': function (process) {
       var that = this;
       var winId = process.id;
-      $.get(require.toUrl('apps/imageViewer/tpl/interval.mst'), function(template) {
+      $.get(require.toUrl('apps/rssReader/tpl/interval.mst'), function(template) {
 
         var rendered = Mustache.render(template, {});
         var winNode = $('#' + winId + ' .app');
@@ -57,7 +57,7 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
     'Välj källa': function (process) {
       var winId = process.id;
 
-      $.get(require.toUrl('apps/imageViewer/tpl/sources.mst'), function(template) {
+      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
 
         var rendered = Mustache.render(template, {});
         var winNode = $('#' + winId + ' .app');
@@ -81,14 +81,14 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
 
   };
 
-  ImageViewer.prototype.setInterval = function (process) {
+  RssReader.prototype.setInterval = function (process) {
 
     window.clearInterval(process.interval);
     // The anonymous function make this point to the correct this.
     process.interval = window.setInterval(function () { return process.run(process.id); }, process.updateFreq);
   };
 
-  ImageViewer.prototype.run = function (windowId) {
+  RssReader.prototype.run = function (windowId) {
     var that = this;
     var date = new Date();
 
@@ -104,5 +104,5 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
   };
 
 
-  return ImageViewer;
+  return RssReader;
 });
