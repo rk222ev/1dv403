@@ -6,6 +6,7 @@ define(
     "jquery", // v-2.1.1 ATM
     "require",
     "mustache",
+    "apps/imageViewer/ImageViewer",
     "apps/rssReader/RssReader",
     "apps/memory/Memory",
   ],
@@ -19,6 +20,7 @@ define(
 
 
       // Add all apps to be loaded to the desktop.
+      apps.ImageViewer = require("apps/imageViewer/ImageViewer");
       apps.Memory = require("apps/memory/Memory");
       apps.RssReader = require("apps/rssReader/RssReader");
 
