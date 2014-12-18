@@ -9,8 +9,8 @@ define(["jquery", "mustache", "./random", "pwd/window/window"], function ($, Mus
   var Memory = function (id) {
 
     var that            = this,
-        cols            = 2,
-        rows            = 2,
+        cols            = 4,
+        rows            = 4,
         pictures        = [],
         turnedPics      = [],
         appSettings     = {},
