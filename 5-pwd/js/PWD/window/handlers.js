@@ -75,7 +75,7 @@ define(
         node.find('.window-settings').toggleClass("hidden");
 
       } else if (e.target.classList.contains("window-setting")) {
-        obj.settings[$(e.target).text()](obj.win.getId());
+        obj.settings[$(e.target).text()](obj);
       }
     };
 
