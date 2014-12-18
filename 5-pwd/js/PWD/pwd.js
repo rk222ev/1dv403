@@ -7,6 +7,7 @@ define(
     "require",
     "mustache",
     "pwd/window/handlers",
+    "pwd/window/window",
     "apps/imageViewer/ImageViewer",
     "apps/rssReader/RssReader",
     "apps/memory/Memory",

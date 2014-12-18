@@ -6,12 +6,12 @@ define(["pwd/window/handlers"], function (handler) {
 
   var Window = require("pwd/window/window");
 
-  var ImageViewer = function (id, url) {
+  var ImageViewer = function (id) {
 
     var appSettings = {},
         picData;
 
-    this.url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
+    this.url =  "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
 
     this.win = new Window(id);
 
@@ -58,19 +58,18 @@ define(["pwd/window/handlers"], function (handler) {
 
 
   ImageViewer.prototype.click = function (e, pic) {
-    var settings = {};
+    var appParams = {};
 
      e.cancelBubble = true;
 
-    settings.id = Date.now();
-    settings.picUrl = pic.URL;
-    settings.height = pic.height + 50;
-    settings.width = pic.width + 20;
+    appParams.picUrl = pic.URL;
+    appParams.height = pic.height + 50;
+    appParams.width = pic.width + 20;
 
     var winSelector;
     var windowNode;
 
-    handler.openWindow(ImageViewer);
+    handler.openWindow(ImageViewer, appParams);
 
   };
 
@@ -130,18 +129,22 @@ define(["pwd/window/handlers"], function (handler) {
     }
   };
 
-  ImageViewer.prototype.drawPic = function (url) {
+  ImageViewer.prototype.getPic = function (url) {
     var img = document.createElement("img") ;
+    var node = document.getElementById(this.getId());
 
     img.setAttribute("src", url);
-    this.win.node.appendChild(img);
+    node.querySelector('.app').appendChild(img);
   };
 
 
   ImageViewer.prototype.run = function (params) {
-      //this.drawPic(this.url);
-      //PWD.Window.prototype.events.appLoaded(this.window.node);
+
+    if (params) {
+      this.getPic(params.picUrl);
+    } else {
       this.getGalleryJson(this.url);
+    }
 
   };
 

@@ -80,7 +80,7 @@ define(
     };
 
 
-    handlers.openWindow = function (App) {
+    handlers.openWindow = function (App, params) {
       var winSelector;
       var windowNode;
 
@@ -107,7 +107,7 @@ define(
 
         }
 
-        process.run(id);
+        process.run(params);
       });
 
     };

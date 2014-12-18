@@ -35,6 +35,7 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
 
     'Uppdateringsintervall': function (process) {
       var that = this;
+      console.log(process);
       var winId = process.id;
       $.get(require.toUrl('apps/rssReader/tpl/interval.mst'), function(template) {
 
@@ -88,9 +89,10 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
     process.interval = window.setInterval(function () { return process.run(process.id); }, process.updateFreq);
   };
 
-  RssReader.prototype.run = function (windowId) {
+  RssReader.prototype.run = function () {
     var that = this;
     var date = new Date();
+    var windowId = this.win.getId();
 
     if (this.interval === undefined) {
       this.interval = window.setInterval(function () { that.run(windowId); }, this.updateFreq);
