@@ -35,8 +35,8 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
 
     'Uppdateringsintervall': function (process) {
       var that = this;
-      console.log(process);
       var winId = process.id;
+
       $.get(require.toUrl('apps/rssReader/tpl/interval.mst'), function(template) {
 
         var rendered = Mustache.render(template, {});
