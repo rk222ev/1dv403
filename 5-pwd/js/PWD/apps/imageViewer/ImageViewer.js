@@ -59,13 +59,26 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
   ImageViewer.prototype.click = function (e, pic) {
     var settings = {};
 
-   e.cancelBubble = true;
+     e.cancelBubble = true;
 
-   settings.id = Date.now();
-   settings.picUrl = pic.URL;
-   settings.height = pic.height + 50;
-   settings.width = pic.width + 20;
+    settings.id = Date.now();
+    settings.picUrl = pic.URL;
+    settings.height = pic.height + 50;
+    settings.width = pic.width + 20;
 
+    var winSelector;
+    var windowNode;
+
+    $.get(require.toUrl('pwd/window/tpl/window.mst'), function(template) {
+      var id = Date.now();
+      var imageWindow = new ImageViewer(id);
+      winSelector = '#' + id + ' ';
+
+      var rendered = Mustache.render(template, {ID: id, settings: imageWindow.win});
+      $('.pwd').append(rendered);
+
+      imageWindow[id].run(id);
+    });
   };
 
 
