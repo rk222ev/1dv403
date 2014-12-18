@@ -1,13 +1,14 @@
 "use strict";
 
 /*global document, PWD, XMLHttpRequest */
-define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
+
+define(["pwd/window/handlers"], function (handler) {
 
   var Window = require("pwd/window/window");
 
   var ImageViewer = function (id, url) {
 
-    var appSettings     = {},
+    var appSettings = {},
         picData;
 
     this.url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
@@ -69,16 +70,8 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
     var winSelector;
     var windowNode;
 
-    $.get(require.toUrl('pwd/window/tpl/window.mst'), function(template) {
-      var id = Date.now();
-      var imageWindow = new ImageViewer(id);
-      winSelector = '#' + id + ' ';
+    handler.openWindow(ImageViewer);
 
-      var rendered = Mustache.render(template, {ID: id, settings: imageWindow.win});
-      $('.pwd').append(rendered);
-
-      imageWindow[id].run(id);
-    });
   };
 
 

@@ -6,9 +6,6 @@ define(
     "jquery", // v-2.1.1 ATM
     "require",
     "mustache",
-    "apps/imageViewer/ImageViewer",
-    "apps/rssReader/RssReader",
-    "apps/memory/Memory",
   ],
 
   function ($, require, Mustache) {
