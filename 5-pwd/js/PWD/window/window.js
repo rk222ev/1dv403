@@ -41,23 +41,27 @@ define(function () {
         Checks window posistions to make sure it isnt placed
         outside of the "desktop".
     */
-    this.left += x;
-    if (this.left < 0) {
-        this.left = 0;
-    } else if (this.left > maxX) {
-        this.left = maxX;
-    }
+    if (node.style && node.style.height !== "100%") {
 
-    this.top += y;
-    if (this.top < 0) {
-        this.top = 0;
-    } else if (this.top > maxY) {
-        this.top = maxY;
+        this.left += x;
+        if (this.left < 0) {
+            this.left = 0;
+        } else if (this.left > maxX) {
+            this.left = maxX;
+        }
+
+        this.top += y;
+        if (this.top < 0) {
+            this.top = 0;
+        } else if (this.top > maxY) {
+            this.top = maxY;
+        }
     }
 
     node.css('left', this.left + 'px');
     node.css('top', this.top + 'px');
   };
+
 
   Window.prototype.setOpeningPosition = function () {
     var openedWindows = document.querySelectorAll(".pwd .app").length;
@@ -76,6 +80,32 @@ define(function () {
 
     Window.prototype.setAsLoading = function () {
         $('#' + this.getId() + ' .app-status-icon').attr('src', this.icons.loading);
+    };
+
+
+    Window.prototype.toggleFullscreen = function (obj) {
+        var windowNode = document.getElementById(obj.win.getId());
+
+        console.log(obj);
+
+        if (obj.win.maximized) {
+
+            windowNode.style.width = obj.win.width + 'px';
+            windowNode.style.height = obj.win.height + 'px';
+
+            obj.win.setPosition();
+            obj.win.maximized = false;
+
+        } else {
+            windowNode.style.top = "0";
+            windowNode.style.left = "0";
+            windowNode.style.width = "100%";
+            windowNode.style.height = "100%";
+
+            windowNode.querySelector(".maximize-button").src = obj.win.icons.minimize;
+
+            obj.win.maximized = true;
+        }
     };
 
   return Window;
