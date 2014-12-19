@@ -69,9 +69,7 @@ define(
         node.remove();
 
       } else if (e.target.classList.contains("maximize-button")) {
-        console.log("maximize");
         obj.win.toggleFullscreen(obj);
-
 
       } else if (e.target.classList.contains("settings-button")) {
         node.find('.window-settings').toggleClass("hidden");

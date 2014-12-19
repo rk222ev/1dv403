@@ -86,8 +86,6 @@ define(function () {
     Window.prototype.toggleFullscreen = function (obj) {
         var windowNode = document.getElementById(obj.win.getId());
 
-        console.log(obj);
-
         if (obj.win.maximized) {
 
             windowNode.style.width = obj.win.width + 'px';
