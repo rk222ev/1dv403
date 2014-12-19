@@ -41,7 +41,7 @@ define(function () {
         Checks window posistions to make sure it isnt placed
         outside of the "desktop".
     */
-    if (node.style && node.style.height !== "100%") {
+    if (x || y) {
 
         this.left += x;
         if (this.left < 0) {
