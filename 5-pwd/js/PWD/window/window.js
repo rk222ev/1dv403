@@ -4,8 +4,8 @@ define(function () {
 
     this.width = 500;
     this.height = 400;
-    this.top = 0;
-    this.left = 0;
+    this.top = 10;
+    this.left = 10;
     this.caughtX = 0;
     this.caughtY = 0;
     this.maximized = false;
@@ -20,6 +20,7 @@ define(function () {
     };
 
     this.getId = function () { return id; };
+
   };
 
 
@@ -55,8 +56,18 @@ define(function () {
     }
 
 
+    console.log(this.left);
     node.css('left', this.left + 'px');
     node.css('top', this.top + 'px');
+  };
+
+  Window.prototype.setOpeningPosition = function () {
+    var openedWindows = document.querySelectorAll(".pwd .app").length;
+    var offset = openedWindows * 10;
+    var x = this.left + offset % (900 - this.width);
+    var y = this.top + offset % (620 - this.height);
+
+    this.setPosition(x, y);
   };
 
 

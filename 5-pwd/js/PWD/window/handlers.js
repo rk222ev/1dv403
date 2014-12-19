@@ -107,6 +107,7 @@ define(
 
         }
 
+        process.win.setOpeningPosition();
         process.run(params);
       });
 
