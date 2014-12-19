@@ -94,14 +94,17 @@ define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
     var date = new Date();
     var windowId = this.win.getId();
 
+    this.win.setAsLoading();
+
     if (this.interval === undefined) {
       this.interval = window.setInterval(function () { that.run(windowId); }, this.updateFreq);
     }
+
     this.win.setStatusbarText("Senast uppdaterat: " + date.toLocaleTimeString());
     $.get(this.win.url, function (data) {
 
       $('#' + windowId + ' .app').html(data);
-      $('#' + windowId + ' .app-status-icon').attr('src', that.win.icons.placeholder);
+        that.win.setAsLoaded();
    });
   };
 

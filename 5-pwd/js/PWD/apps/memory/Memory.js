@@ -63,7 +63,8 @@ define(["jquery", "mustache", "./random", "pwd/window/window"], function ($, Mus
 
     this.run = function () {
       pictures = random({rows: rows, cols: cols});
-      that.buildBoard(pictures);
+      this.buildBoard(pictures);
+      this.win.setAsLoaded();
     };
   };
 

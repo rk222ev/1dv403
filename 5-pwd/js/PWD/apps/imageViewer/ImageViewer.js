@@ -51,8 +51,8 @@ define(["pwd/window/handlers"], function (handler) {
   };
 
   ImageViewer.prototype.setAppLoaded = function () {
-    //PWD.Window.prototype.events.appLoaded(this.window.node);
     this.drawPics();
+    this.win.setAsLoaded();
 
   };
 
@@ -133,6 +133,7 @@ define(["pwd/window/handlers"], function (handler) {
     var img = document.createElement("img") ;
     var node = document.getElementById(this.getId());
 
+    this.win.setAsLoaded();
     img.setAttribute("src", url);
     node.querySelector('.app').appendChild(img);
   };

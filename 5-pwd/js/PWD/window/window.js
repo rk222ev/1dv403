@@ -60,6 +60,15 @@ define(function () {
   };
 
 
+    Window.prototype.setAsLoaded = function () {
+        $('#' + this.getId() + ' .app-status-icon').attr('src', this.icons.placeholder);
+    };
+
+
+    Window.prototype.setAsLoading = function () {
+        $('#' + this.getId() + ' .app-status-icon').attr('src', this.icons.loading);
+    };
+
   return Window;
 
 });
