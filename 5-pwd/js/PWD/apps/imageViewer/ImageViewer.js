@@ -2,7 +2,7 @@
 
 /*global document, PWD, XMLHttpRequest */
 
-define(["pwd/window/handlers"], function (handler) {
+define(["require", "pwd/window/handlers"], function (require, handler) {
 
   var Window = require("pwd/window/window");
 

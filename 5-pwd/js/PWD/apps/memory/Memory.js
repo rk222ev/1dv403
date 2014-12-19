@@ -2,7 +2,7 @@
 
 
 /*global document, window, RandomGenerator */
-define(["jquery", "mustache", "./random", "pwd/window/window"], function ($, Mustache, random) {
+define(["jquery", "require", "mustache", "./random"], function ($, require, Mustache, random) {
 
   var Win = require("pwd/window/window");
 

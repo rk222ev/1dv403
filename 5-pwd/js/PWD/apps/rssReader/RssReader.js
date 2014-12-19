@@ -1,7 +1,7 @@
 "use strict";
 
 
-define(["jquery", "mustache", "pwd/window/window"], function ($, Mustache) {
+define(["jquery", "mustache", "require"], function ($, Mustache, require) {
 
   var Window = require("pwd/window/window");
 
