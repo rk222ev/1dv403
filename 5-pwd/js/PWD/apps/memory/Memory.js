@@ -69,6 +69,29 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
   };
 
 
+  Memory.prototype.settings = {
+    "Nytt spel": function (game) { game.run(); },
+
+    "Inställningar": function (app) {
+      $.get(require.toUrl('apps/memory/tpl/settings.mst'), function(template) {
+        var winId = app.win.getId();
+
+        var rendered = Mustache.render(template, {});
+        var winNode = $('#' + winId + ' .app');
+        winNode.append(rendered);
+
+        winNode.find(".cancel-button").bind("mousedown", function () {
+          winNode.find(".modal").remove();
+        });
+
+        winNode.find(".ok-button").bind("mousedown", function () {
+          //app.setUrl(winNode.find("input:checked").val());
+        });
+      });
+    },
+  };
+
+
   Memory.prototype.buildBoard = function (pics) {
 
     var gameNode  = $('#' + this.getId() + ' ' + '.app'),

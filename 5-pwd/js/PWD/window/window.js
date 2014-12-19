@@ -55,8 +55,6 @@ define(function () {
         this.top = maxY;
     }
 
-
-    console.log(this.left);
     node.css('left', this.left + 'px');
     node.css('top', this.top + 'px');
   };
