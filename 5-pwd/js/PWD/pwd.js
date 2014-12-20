@@ -11,6 +11,7 @@ define(
     "apps/imageViewer/ImageViewer",
     "apps/rssReader/RssReader",
     "apps/memory/Memory",
+    "apps/labbyMezzage/labbyMezzage",
   ],
 
   function ($, require, Mustache, handlers) {
@@ -25,6 +26,7 @@ define(
       apps.ImageViewer = require("apps/imageViewer/ImageViewer");
       apps.Memory = require("apps/memory/Memory");
       apps.RssReader = require("apps/rssReader/RssReader");
+      apps.LabbyMezzage = require("apps/labbyMezzage/labbyMezzage");
 
       // Loops through all our apps.
       // Assigns apropriatehandlers.
