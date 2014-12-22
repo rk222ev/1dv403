@@ -19,6 +19,8 @@ define(
       var x = (e.clientX - obj.win.caughtX);
       var y = (e.clientY - obj.win.caughtY);
 
+      document.querySelector(".pwd").classList.add("drag");
+
       obj.win.setPosition(x, y);
       obj.win.caughtX = e.clientX;
       obj.win.caughtY = e.clientY;
@@ -42,6 +44,7 @@ define(
     handlers.releaseWindow = function (e) {
       $('.pwd').unbind("mousemove");
       e.target.removeEventListener("mouseup", handlers.releaseWindow);
+      document.querySelector(".pwd").classList.remove("drag");
     };
 
     handlers.click = function (e, obj) {
