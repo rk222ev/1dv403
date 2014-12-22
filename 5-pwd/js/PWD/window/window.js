@@ -68,6 +68,14 @@ define(function () {
     var offset = openedWindows * 10;
     var x = this.left + offset % (900 - this.width);
     var y = this.top + offset % (620 - this.height);
+    var sizeDiff = 640 - this.height - this.top;
+
+    // Make sure too large windows are not extending outside the desktop.
+    if (sizeDiff < 0) {
+        x = 0;
+        this.height = sizeDiff + 650;
+        document.getElementById(this.getId()).style.height = this.height + "px";
+    }
 
     this.setPosition(x, y);
   };

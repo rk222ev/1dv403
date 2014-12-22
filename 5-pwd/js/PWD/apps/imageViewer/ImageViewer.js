@@ -6,7 +6,7 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
 
   var Window = require("pwd/window/window");
 
-  var ImageViewer = function (id) {
+  var ImageViewer = function (id, params) {
 
     var appSettings = {},
         picData;
@@ -17,8 +17,8 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
 
     this.win.icons.app   = "pics/icons/ImageViewer.svg";
     this.win.titlebarText = "ImageViewer";
-    this.win.width        =  600;
-    this.win.height       =  460;
+    this.win.width        =   params && params.width || 600;
+    this.win.height       =   params && params.height || 460;
     this.win.node         = document.getElementById('#', id);
 
     this.setPicData = function (data) { this.picData = data; };

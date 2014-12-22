@@ -89,7 +89,7 @@ define(
         var process = {};
         var Constructor = App;
 
-        process = new Constructor(id);
+        process = new Constructor(id, params);
 
         winSelector = '#' + id + ' ';
 
