@@ -15,7 +15,6 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
 
     this.win = new Window(id);
 
-    // windowSettings.id           = id;
     this.win.icons.app   = "pics/icons/ImageViewer.svg";
     this.win.titlebarText = "ImageViewer";
     this.win.width        =  600;
@@ -26,15 +25,8 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
     this.getId = function () { return id; };
     this.getPicData = function () { return this.picData; };
 
-
-    //this.window = new PWD.Window(windowSettings);
     this.XHR    = new XMLHttpRequest();
 
-    /*this.init({
-      jsonUrl: appSettings.Url,
-      picUrl: url
-    });
-*/
   };
 
 
