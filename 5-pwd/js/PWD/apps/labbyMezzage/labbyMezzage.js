@@ -5,7 +5,11 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
 
   function LabbyMezzage (id) {
     var history = 10;
+
     this.win = new Window(id);
+    this.user = "Anonymous";
+    this.updateInterval = 600000;
+    this.intervall = null;
 
     this.messages = [];
     this.url = {
@@ -32,16 +36,8 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
       windowNode = document.getElementById(this.win.getId()),
       mainNode = windowNode.querySelector('.app'),
       messagesDiv = document.createElement("div"),
-      p = document.createElement("p"),
       txtArea = document.createElement("textarea"),
       input = document.createElement("input");
-
-    messagesDiv.classList.add("messages-div");
-    mainNode.appendChild(messagesDiv);
-
-    p.classList.add("info-amount-of-messages");
-    p.innerHTML = "Antal meddelanden : " + this.messages.length;
-    mainNode.appendChild(p);
 
     txtArea.classList.add("message-input");
     mainNode.appendChild(txtArea);
@@ -50,6 +46,10 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
     input.setAttribute("type", "button");
     input.setAttribute("click", this.sendMessage);
     mainNode.appendChild(input);
+
+    messagesDiv.classList.add("messages-div");
+    mainNode.appendChild(messagesDiv);
+
 
     mainNode.querySelector(".message-input").addEventListener("keydown", function (e) {
       if (e.keyCode === 13 && e.shiftKey === false) {
@@ -123,6 +123,7 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
       messageArea = windowNode.querySelector(".messages-div"),
       wrapper = document.createElement("div"),
       footer = document.createElement("footer"),
+      author = document.createElement("p"),
       msgP = document.createElement("p"),
       timeP = document.createElement("p"),
       infoImg = document.createElement("img"),
@@ -136,23 +137,13 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
     }
 
 
+    author.innerHTML = "Skrivet av: " + message.getAuthor();
+    footer.appendChild(author);
+
+
     timeP.innerHTML = message.getTime();
     footer.appendChild(timeP);
 
-    infoImg.setAttribute("src", "pics/icons/clock.svg");
-    infoImg.addEventListener("click", function () {
-        window.alert("Inlägget skapades " + message.getDate());
-    });
-    footer.appendChild(infoImg);
-
-    delImg.setAttribute("src", "pics/icons/clear.svg");
-    delImg.addEventListener("click", function () {
-        if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
-          that.removeMessage(that.messages.indexOf(message));
-        }
-      }
-    );
-    footer.appendChild(delImg);
 
     msgP.classList.add("message-text");
     msgP.innerHTML = message.getHTMLText();
@@ -177,14 +168,6 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
      this.updateMessageCounter();
     }
   };
-
-
-
-  LabbyMezzage.prototype.updateMessageCounter = function () {
-    this.node.querySelector(".info-amount-of-messages")
-      .innerHTML = "Antal meddelanden : " + this.messages.length;
-  };
-
 
   return LabbyMezzage;
 
