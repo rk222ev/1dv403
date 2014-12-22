@@ -30,6 +30,8 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
     this.win.height       = 200;
 
     this.getColumns     = function () { return cols; };
+    this.setColumns     = function (c) { cols = c; }
+    this.setRows        = function (r) {rows = r; };
     this.getId          = function () { return id; };
     this.getTurnedPics  = function () { return turnedPics; };
     this.getTries       = function () { return numberOfTries / 2; };
@@ -80,12 +82,13 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
           //app.setUrl(winNode.find("input:checked").val());
+          var size = winNode.find(".interval-value").val().split(",");
+          app.setColumns(Number(size[0]));
+          app.setRows(Number(size[1]));
+          app.run();
+          winNode.find(".modal").remove();
         });
       });
     },
