@@ -4,18 +4,24 @@
 define(["require", "mustache", "pwd/window/window","./message" ], function (require, Mustache, Window, Message) {
 
   function LabbyMezzage (id) {
+    var that = this;
     var history = 10;
 
     this.win = new Window(id);
-    this.user = "Robin";
-    this.updateInterval = 600000;
-    this.intervall = null;
+    this.win.icons.app = "pics/icons/LabbyMezzage.svg";
+    this.win.titlebarText = "LabbyMezzage";
 
-    this.messages = [];
+
+    this.user = "Robin";
+    this.updateInterval = 10000;
+    this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
+
+    this.messages = "" ;
     this.url = {
       get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=" + history,
       post: "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php",
     };
+    this.messageTpl = null;
   }
 
   LabbyMezzage.prototype.run = function () {
@@ -52,6 +58,71 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
   };
 
 
+  LabbyMezzage.prototype.settings = {
+    "Uppdateringsintervall": function (app) {
+      var winId = app.win.getId();
+
+      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+
+        var rendered = Mustache.render(template, {});
+        var winNode = $('#' + winId + ' .app');
+        winNode.append(rendered);
+
+        winNode.find(".cancel-button").bind("mousedown", function () {
+          winNode.find(".modal").remove();
+        });
+
+        winNode.find(".ok-button").bind("mousedown", function () {
+          app.setUrl(winNode.find("input:checked").val());
+          app.run(app.id);
+        });
+
+      });
+    },
+    "Alias": function (app) {
+      var winId = app.win.getId();
+
+      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+
+        var rendered = Mustache.render(template, {});
+        var winNode = $('#' + winId + ' .app');
+        winNode.append(rendered);
+
+        winNode.find(".cancel-button").bind("mousedown", function () {
+          winNode.find(".modal").remove();
+        });
+
+        winNode.find(".ok-button").bind("mousedown", function () {
+          app.setUrl(winNode.find("input:checked").val());
+          app.run(app.id);
+        });
+
+      });
+    },
+    "Antal meddelanden": function (app) {
+      var winId = app.win.getId();
+
+      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+
+        var rendered = Mustache.render(template, {});
+        var winNode = $('#' + winId + ' .app');
+        winNode.append(rendered);
+
+        winNode.find(".cancel-button").bind("mousedown", function () {
+          winNode.find(".modal").remove();
+        });
+
+        winNode.find(".ok-button").bind("mousedown", function () {
+          app.setUrl(winNode.find("input:checked").val());
+          app.run(app.id);
+        });
+
+      });
+    },
+    "Uppdatera nu": function (app) { app.getMessages(); },
+  };
+
+
   LabbyMezzage.prototype.getMessages = function () {
     var xhr = new XMLHttpRequest();
     var that = this;
@@ -61,8 +132,12 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        msgs = that.drawMessages(xhr.responseText);
-        that.renderMessage(msgs);
+
+        if (xhr.responseText !== that.messages) {
+          msgs = that.drawMessages(xhr.responseText);
+          that.renderMessage(msgs);
+          that.messages = xhr.responseText;
+        }
       }
     };
 
@@ -132,7 +207,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     xhr.open('POST', this.url.post);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    //xhr.send("username=" + this.user + "&text=" + text);
+    xhr.send("username=" + this.user + "&text=" + text);
 
 
   };
