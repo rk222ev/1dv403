@@ -31,8 +31,18 @@ define(
       var id = obj.win.getId();
       var node = $("#" + id);
 
+      document.querySelector(".pwd").classList.add("drag");
+
       obj.win.width += (e.clientX- obj.win.caughtX);
       obj.win.height += (e.clientY- obj.win.caughtY);
+
+      if (obj.win.width < 320) {
+        obj.win.width = 320;
+      }
+
+      if (obj.win.height < 230) {
+        obj.win.height = 230
+      }
 
       node.css('width', obj.win.width+ 'px');
       node.css('height', obj.win.height + 'px');
