@@ -1,13 +1,17 @@
-/*global document, window, Message*/
+/*global document, window, define */
 "use strict";
 
 define(["require", "pwd/window/window","./message" ], function (require, Window, Message) {
 
   function LabbyMezzage (id) {
-
+    var history = 10;
     this.win = new Window(id);
 
     this.messages = [];
+    this.url = {
+      get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=" + history,
+      post: "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php",
+    };
   }
 
 
@@ -53,6 +57,49 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
         that.sendMessage();
       }
     });
+
+    this.getMessages();
+
+  };
+
+
+  LabbyMezzage.prototype.getMessages = function () {
+    var xhr = new XMLHttpRequest();
+    var that = this;
+    var msgs;
+
+    xhr.open('GET', this.url.get);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.status === 200) {
+        msgs = that.drawMessages(xhr.responseText);
+        that.renderMessage(msgs);
+      }
+    };
+
+    xhr.send(null);
+
+  };
+
+
+  LabbyMezzage.prototype.drawMessages = function (xml) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xml, "application/xml");
+    var domMsgs = doc.querySelectorAll("message");
+
+
+    var msgs = Array.prototype.map.call(domMsgs, function (msg) {
+     var m = new Message();
+
+     m.setText(msg.querySelector("text").innerHTML);
+     m.setDate(msg.querySelector("time").innerHTML);
+     m.setAuthor(msg.querySelector("author").innerHTML);
+
+     return m;
+
+    });
+
+    return msgs;
 
   };
 
