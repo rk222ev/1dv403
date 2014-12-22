@@ -34,7 +34,6 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
     var that = this;
 
       this.XHR.onload = function () {
-        console.log("ADASDSDAADSDSA");
         that.parseJson(that.XHR);
       };
 
