@@ -1,7 +1,7 @@
 /*global document, window, Message*/
 "use strict";
 
-define(["require", "pwd/window/window"], function (require, Window) {
+define(["require", "pwd/window/window","./message" ], function (require, Window, Message) {
 
   function LabbyMezzage (id) {
 
@@ -23,9 +23,10 @@ define(["require", "pwd/window/window"], function (require, Window) {
 
   // Creates the messageboard elements we will need
   // this includes delete buttons and info buttons etc.
-  LabbyMezzage.prototype.init = function () {
+  LabbyMezzage.prototype.run = function () {
     var that = this,
-      mainNode = this.node,
+      windowNode = document.getElementById(this.win.getId()),
+      mainNode = windowNode.querySelector('.app'),
       messagesDiv = document.createElement("div"),
       p = document.createElement("p"),
       txtArea = document.createElement("textarea"),
@@ -71,7 +72,8 @@ define(["require", "pwd/window/window"], function (require, Window) {
   LabbyMezzage.prototype.renderMessage = function (message) {
 
     var that = this,
-      messageArea = this.node.querySelector(".messages-div"),
+      windowNode = document.getElementById(this.win.getId()),
+      messageArea = windowNode.querySelector(".messages-div"),
       wrapper = document.createElement("div"),
       footer = document.createElement("footer"),
       msgP = document.createElement("p"),
@@ -90,13 +92,13 @@ define(["require", "pwd/window/window"], function (require, Window) {
     timeP.innerHTML = message.getTime();
     footer.appendChild(timeP);
 
-    infoImg.setAttribute("src", "pics/i.png");
+    infoImg.setAttribute("src", "pics/icons/clock.svg");
     infoImg.addEventListener("click", function () {
         window.alert("Inlägget skapades " + message.getDate());
     });
     footer.appendChild(infoImg);
 
-    delImg.setAttribute("src", "pics/x.png");
+    delImg.setAttribute("src", "pics/icons/clear.svg");
     delImg.addEventListener("click", function () {
         if (window.confirm("Är du säker på att du vill radera meddelandet?")) {
           that.removeMessage(that.messages.indexOf(message));
@@ -117,7 +119,8 @@ define(["require", "pwd/window/window"], function (require, Window) {
 
 
   LabbyMezzage.prototype.sendMessage = function() {
-    var textarea = this.node.querySelector(".message-input"),
+    var windowNode = document.getElementById(this.win.getId()),
+      textarea = windowNode.querySelector(".message-input"),
       newMessage = new Message(textarea.value, new Date());
 
     if (textarea.value !== "") {
