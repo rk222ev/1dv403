@@ -1,4 +1,3 @@
 <textarea class="message-input"></textarea>
-<input value="skriv">
 <div class="messages-div">
 </div>

@@ -17,7 +17,7 @@ define(function () {
         };
 
         this.getDate = function () {
-            return date;
+            return date.toLocaleString();
         };
 
         this.setDate = function (argDate) {

@@ -1,13 +1,13 @@
 /*global document, window, define */
 "use strict";
 
-define(["require", "pwd/window/window","./message" ], function (require, Window, Message) {
+define(["require", "mustache", "pwd/window/window","./message" ], function (require, Mustache, Window, Message) {
 
   function LabbyMezzage (id) {
     var history = 10;
 
     this.win = new Window(id);
-    this.user = "Anonymous";
+    this.user = "Robin";
     this.updateInterval = 600000;
     this.intervall = null;
 
@@ -18,48 +18,37 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
     };
   }
 
-
-  LabbyMezzage.prototype.clearMessages = function () {
-    var element = this.node.querySelector(".messages-div"),
-      newBoard = document.createElement("div");
-
-    newBoard.classList.add("messages-div");
-
-    this.node.replaceChild(newBoard, element);
-  };
-
-
-  // Creates the messageboard elements we will need
-  // this includes delete buttons and info buttons etc.
   LabbyMezzage.prototype.run = function () {
     var that = this,
       windowNode = document.getElementById(this.win.getId()),
-      mainNode = windowNode.querySelector('.app'),
-      messagesDiv = document.createElement("div"),
-      txtArea = document.createElement("textarea"),
-      input = document.createElement("input");
+      appNode = windowNode.querySelector('.app');
 
-    txtArea.classList.add("message-input");
-    mainNode.appendChild(txtArea);
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', require.toUrl('apps/labbyMezzage/tpl/board.mst'));
 
-    input.setAttribute("value", "skriv");
-    input.setAttribute("type", "button");
-    input.setAttribute("click", this.sendMessage);
-    mainNode.appendChild(input);
+      xhr.onreadystatechange = function () {
+        var rendered;
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          rendered = Mustache.render(xhr.responseText, {});
+          appNode.innerHTML = rendered;
 
-    messagesDiv.classList.add("messages-div");
-    mainNode.appendChild(messagesDiv);
+          appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
+            var textNode = appNode.querySelector(".message-input");
 
+            if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
+              e.preventDefault();
+              that.sendMessage(textNode.value);
+              textNode.value = "";
 
-    mainNode.querySelector(".message-input").addEventListener("keydown", function (e) {
-      if (e.keyCode === 13 && e.shiftKey === false) {
-        e.preventDefault();
-        that.sendMessage();
-      }
-    });
+            }
+          });
 
-    this.getMessages();
+          that.getMessages();
+          that.win.setAsLoaded();
+        }
+      };
 
+      xhr.send(null);
   };
 
 
@@ -71,7 +60,7 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
     xhr.open('GET', this.url.get);
 
     xhr.onreadystatechange = function () {
-      if (xhr.status === 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         msgs = that.drawMessages(xhr.responseText);
         that.renderMessage(msgs);
       }
@@ -104,69 +93,48 @@ define(["require", "pwd/window/window","./message" ], function (require, Window,
   };
 
 
-  LabbyMezzage.prototype.removeMessage = function (pos) {
-
-    this.messages.splice(pos, 1);
-    this.clearMessages();
-    this.renderMessage(this.messages);
-    this.updateMessageCounter();
-  };
-
-
-  // Renders messages and prints this to our HTML doc.
-  // if the input is a array of messages it calls itself
-  // recursively and renders each message.
   LabbyMezzage.prototype.renderMessage = function (message) {
-
-    var that = this,
-      windowNode = document.getElementById(this.win.getId()),
-      messageArea = windowNode.querySelector(".messages-div"),
-      wrapper = document.createElement("div"),
-      footer = document.createElement("footer"),
-      author = document.createElement("p"),
-      msgP = document.createElement("p"),
-      timeP = document.createElement("p"),
-      infoImg = document.createElement("img"),
-      delImg = document.createElement("img");
-
-
+    var that = this;
+    var windowNode = document.getElementById(this.win.getId());
+    var messageNode = windowNode.querySelector(".messages-div");
 
     if (Array.isArray(message)) {
       message.forEach(function (message) { that.renderMessage(message); });
       return;
     }
 
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', require.toUrl('apps/labbyMezzage/tpl/message.mst'));
 
-    author.innerHTML = "Skrivet av: " + message.getAuthor();
-    footer.appendChild(author);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var rendered = Mustache.render(xhr.responseText, {
+            author: message.getAuthor(),
+            time: message.getDate(),
+            text: message.getText(),
+          });
+          var div = document.createElement("div");
+          div.classList.add("message");
+          div.innerHTML = rendered;
 
+          messageNode.insertBefore(div, messageNode.firstChild);
+        }
+      };
 
-    timeP.innerHTML = message.getTime();
-    footer.appendChild(timeP);
+      xhr.send(null);
 
-
-    msgP.classList.add("message-text");
-    msgP.innerHTML = message.getHTMLText();
-
-    wrapper.classList.add("message");
-    wrapper.appendChild(msgP);
-    wrapper.appendChild(footer);
-
-    messageArea.appendChild(wrapper);
   };
 
+  LabbyMezzage.prototype.sendMessage = function (text) {
+    var xhr = new XMLHttpRequest();
 
-  LabbyMezzage.prototype.sendMessage = function() {
-    var windowNode = document.getElementById(this.win.getId()),
-      textarea = windowNode.querySelector(".message-input"),
-      newMessage = new Message(textarea.value, new Date());
 
-    if (textarea.value !== "") {
-      this.messages.push(newMessage);
-      this.renderMessage(newMessage);
-      textarea.value = "";
-     this.updateMessageCounter();
-    }
+    xhr.open('POST', this.url.post);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    //xhr.send("username=" + this.user + "&text=" + text);
+
+
   };
 
   return LabbyMezzage;
