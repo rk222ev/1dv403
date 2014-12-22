@@ -1,22 +1,21 @@
-<div id="{{ID}}" class="window"
-  style="width: {{settings.width}}px;height: {{settings.height}}px;">
+<div id="{{ID}}" class="window" style="width: {{settings.width}}px;height: {{settings.height}}px;">
   <div class="window-list">
-    <img src="{{settings.icons.app}}" class="app-icon">
+    <img src="{{settings.icons.app}}" class="app-icon"></img>
     <span>{{settings.titlebarText}}</span>
 
     <ul class="window-settings hidden">
 
     </ul>
-    <a href="#"><img src="{{settings.icons.close}}" class="close-button"></a>
-    <a href="#"><img src="{{settings.icons.maximize}}" class="maximize-button"></a>
-    <a href="#" class="settings-link hidden"><img src="{{settings.icons.settings}}" class="settings-button"></a>
+    <a href="#"><img src="{{settings.icons.close}}" class="close-button"></img></a>
+    <a href="#"><img src="{{settings.icons.maximize}}" class="maximize-button"></img></a>
+    <a href="#" class="settings-link hidden"><img src="{{settings.icons.settings}}" class="settings-button"></img></a>
   </div>
 
   <div class="app">
   </div>
 
   <div class="statusbar">
-    <img src="{{settings.icons.loading}}" class="app-status-icon">
+    <img src="{{settings.icons.loading}}" class="app-status-icon"></img>
     <span class="statusbar-text"></span>
   </div>
   <div class="resize-div">

@@ -43,13 +43,10 @@ define(["jquery", "mustache", "require"], function ($, Mustache, require) {
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
           process.updateFreq = Number(winNode.find(".interval-value").val());
           process.setInterval(process);
+          winNode.find(".modal").remove();
         });
 
       });
@@ -64,13 +61,11 @@ define(["jquery", "mustache", "require"], function ($, Mustache, require) {
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
-          process.setUrl(winNode.find("input:checked").val());
+          var source =  winNode.find(".custom-source").val() || winNode.find("input:checked").val()
+          process.setUrl(source);
           process.run(process.id);
+          winNode.find(".modal").remove();
         });
 
       });

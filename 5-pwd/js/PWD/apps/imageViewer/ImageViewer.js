@@ -33,7 +33,8 @@ define(["require", "pwd/window/handlers"], function (require, handler) {
   ImageViewer.prototype.getGalleryJson = function (url) {
     var that = this;
 
-      this.XHR.onreadystatechange = function () {
+      this.XHR.onload = function () {
+        console.log("ADASDSDAADSDSA");
         that.parseJson(that.XHR);
       };
 
