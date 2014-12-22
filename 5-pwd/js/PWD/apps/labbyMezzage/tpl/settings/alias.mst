@@ -1,0 +1,9 @@
+<div class="modal">
+  <div>
+    <p>Alias:</p>
+    <input type="text" class="alias" value="{{user}}">
+  </div>
+  <div>
+    <input type="button" class="ok-button" value="ok">
+  </div>
+</div>

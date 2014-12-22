@@ -5,20 +5,27 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
 
   function LabbyMezzage (id) {
     var that = this;
-    var history = 10;
+    var labbyCookies = {};
 
+    // Ugly solution to get all cookie keys containing the word "labby"
+    document.cookie.split(";").forEach(function (c) {
+      var params = c.split("=");
+      if(params[0].indexOf("labby") !== -1) {
+        labbyCookies[params[0].trim()] = params[1];
+      }
+    });
     this.win = new Window(id);
     this.win.icons.app = "pics/icons/LabbyMezzage.svg";
     this.win.titlebarText = "LabbyMezzage";
 
-
-    this.user = "Robin";
-    this.updateInterval = 10000;
+    this.user = labbyCookies["labby-alias"] || "Anonymous";
+    this.history = labbyCookies["labby-history"] || 10;
+    this.updateInterval = labbyCookies["labby-interval"] || 10000;
     this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
 
     this.messages = "" ;
     this.url = {
-      get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=" + history,
+      get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=" + this.history,
       post: "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php",
     };
     this.messageTpl = null;
@@ -82,19 +89,16 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     "Alias": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/alias.mst'), function(template) {
 
-        var rendered = Mustache.render(template, {});
+        var rendered = Mustache.render(template, {user: app.user});
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
-          app.setUrl(winNode.find("input:checked").val());
-          app.run(app.id);
+          app.user = winNode.find(".alias").val();
+          document.cookie = "labby-alias=" + app.user;
+          winNode.find(".modal").remove();
         });
 
       });
