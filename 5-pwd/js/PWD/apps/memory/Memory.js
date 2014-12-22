@@ -83,7 +83,6 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
         winNode.append(rendered);
 
         winNode.find(".ok-button").bind("mousedown", function () {
-          //app.setUrl(winNode.find("input:checked").val());
           var size = winNode.find(".interval-value").val().split(",");
           app.setColumns(Number(size[0]));
           app.setRows(Number(size[1]));
