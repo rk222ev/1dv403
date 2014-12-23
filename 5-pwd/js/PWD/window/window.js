@@ -34,8 +34,8 @@ define(function () {
   //Updates the windows position.
   Window.prototype.setPosition = function (x, y) {
     var node = $('#' + this.getId());
-    var maxX = 1020 - this.width;
-    var maxY = 640 - this.height;
+    var maxX = window.PWD.width - this.width;
+    var maxY = window.PWD.height - this.height;
 
     /*
         Checks window posistions to make sure it isnt placed
@@ -66,14 +66,14 @@ define(function () {
   Window.prototype.setOpeningPosition = function () {
     var openedWindows = document.querySelectorAll(".pwd .app").length;
     var offset = openedWindows * 10;
-    var x = this.left + offset % (900 - this.width);
-    var y = this.top + offset % (620 - this.height);
-    var sizeDiff = 640 - this.height - this.top;
+    var x = this.left + offset % (window.PWD.width - this.width);
+    var y = this.top + offset % (window.PWD.height - this.height);
+    var sizeDiff = window.PWD.height - this.height - this.top;
 
     // Make sure too large windows are not extending outside the desktop.
     if (sizeDiff < 0) {
         x = 0;
-        this.height = sizeDiff + 650;
+        this.height = sizeDiff + window.PWD.height;
         document.getElementById(this.getId()).style.height = this.height + "px";
     }
 

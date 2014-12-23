@@ -18,8 +18,14 @@ define(
     (function () {
 
       var apps = {};
-      var process = {};
-      var caughtWindow;
+      var pwdNode = document.querySelector('.pwd');
+
+      window.PWD = {};
+      window.PWD.width = 1024;
+      window.PWD.height = 640;
+
+      pwdNode.style.width = window.PWD.width + 'px';
+      pwdNode.style.height = window.PWD.height + 'px';
 
 
       // Add all apps to be loaded to the desktop.
@@ -42,6 +48,20 @@ define(
         icon.appendTo(".pwd");
 
       });
+
+      document.querySelector(".pwd").addEventListener("mousedown", function (e) {
+        var mdTarget = e.target;
+        e.preventDefault();
+        if (e.target.classList.contains("launcher")) {
+          document.querySelector(".pwd").addEventListener("mouseup", function (e) {
+            if (e.target.classList.contains("launcher")) {
+              document.querySelector(".pwd").insertBefore(e.target.parentNode, mdTarget.parentNode);
+              document.querySelector(".pwd").removeEventListener(this);
+            }
+          });
+        }
+      });
+
     }());
 
   }
