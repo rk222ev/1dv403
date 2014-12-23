@@ -43,13 +43,16 @@ define(["pwd/window/window"], function (Window) {
       if (xhr.readyState === 4 && xhr.status === 200) {
 
         var winNode = document.getElementById(that.win.getId());
+        var appNode = winNode.querySelector('.app');
         var data = xhr.responseText;
         var parser = new DOMParser();
         var doc = parser.parseFromString(xhr.responseText, "text/html");
         var search = doc.querySelector(".search-results-container");
 
-        winNode.querySelector(".app").innerHTML = "";
-        winNode.querySelector(".app").appendChild(search);
+        search.removeChild(search.querySelector(".search-results-more"));
+
+        appNode.innerHTML = "";
+        appNode.appendChild(search);
         that.win.setAsLoaded();
       }
     };
