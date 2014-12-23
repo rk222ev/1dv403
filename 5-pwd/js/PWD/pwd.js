@@ -12,6 +12,7 @@ define(
     "apps/rssReader/RssReader",
     "apps/memory/Memory",
     "apps/labbyMezzage/labbyMezzage",
+    "apps/mdn/mdn",
   ],
 
   function ($, require, Mustache, handlers) {
@@ -33,6 +34,7 @@ define(
       apps.Memory = require("apps/memory/Memory");
       apps.RssReader = require("apps/rssReader/RssReader");
       apps.LabbyMezzage = require("apps/labbyMezzage/labbyMezzage");
+      apps.Mdn = require("apps/mdn/mdn");
 
       // Loops through all our apps.
       // Assigns apropriatehandlers.
