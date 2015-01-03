@@ -1,0 +1,9 @@
+<div class="modal">
+  <div>
+    <p>Antal meddelanden som ska visas:</p>
+    <input type="text" class="labby-message-count" value="{{numberOfMessages}}">
+  </div>
+  <div>
+    <input type="button" class="ok-button" value="ok">
+  </div>
+</div>

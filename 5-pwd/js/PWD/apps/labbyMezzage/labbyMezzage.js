@@ -14,6 +14,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
         labbyCookies[params[0].trim()] = params[1];
       }
     });
+
     this.win = new Window(id);
     this.win.icons.app = "pics/icons/LabbyMezzage.svg";
     this.win.titlebarText = "LabbyMezzage";
@@ -22,6 +23,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     this.history = labbyCookies["labby-history"] || 10;
     this.updateInterval = labbyCookies["labby-interval"] || 10000;
     this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
+    this.amountofmessages = labbyCookies["labby-msgAmount"] || 10;
 
     this.messages = "" ;
     this.url = {
@@ -106,19 +108,16 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     "Antal meddelanden": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+      $.get(require.toUrl('./tpl/settings/amountofmessages.mst'), function(template) {
 
         var rendered = Mustache.render(template, {});
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
-          app.setUrl(winNode.find("input:checked").val());
-          app.run(app.id);
+          app.user = winNode.find(".labby-message-count").val();
+          document.cookie = "labby-msgAmount=" + app.user;
+          winNode.find(".modal").remove();
         });
 
       });
