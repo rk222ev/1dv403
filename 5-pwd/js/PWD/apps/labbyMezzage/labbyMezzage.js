@@ -71,7 +71,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     "Uppdateringsintervall": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/rssReader/tpl/sources.mst'), function(template) {
+      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/interval.mst'), function(template) {
 
         var rendered = Mustache.render(template, {});
         var winNode = $('#' + winId + ' .app');
