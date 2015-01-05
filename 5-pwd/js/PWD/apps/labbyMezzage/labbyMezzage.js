@@ -7,6 +7,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     var that = this;
     var labbyCookies = {};
 
+    // Is wrong. Does not do whats intended.
     // Ugly solution to get all cookie keys containing the word "labby"
     document.cookie.split(";").forEach(function (c) {
       var params = c.split("=");
@@ -68,9 +69,10 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
       if (this.interval !== null) {
         window.clearInterval(this.interval);
       }
-      this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
 
-      console.log(this.updateInterval);
+      document.cookie = "labby-interval=" + this.interval;
+
+      this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
   };
 
 
