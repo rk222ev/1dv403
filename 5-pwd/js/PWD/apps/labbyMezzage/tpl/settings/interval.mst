@@ -1,0 +1,13 @@
+<div class="modal">
+  <div>
+    <p>Uppdateringsintervall:</p>
+    <select class="interval-value">
+      <option value="10000">10 sek</option>
+      <option value="30000">30 sek</option>
+      <option value="60000">1 minut</option>
+    </select>
+  </div>
+  <div>
+    <input type="button" class="ok-button" value="ok"></input>
+  </div>
+</div>

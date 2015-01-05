@@ -22,7 +22,8 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     this.user = labbyCookies["labby-alias"] || "Anonymous";
     this.history = labbyCookies["labby-history"] || 10;
     this.updateInterval = labbyCookies["labby-interval"] || 10000;
-    this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
+    this.interval = null;
+    // this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
     this.amountofmessages = labbyCookies["labby-msgAmount"] || 10;
 
     this.messages = "" ;
@@ -64,6 +65,12 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
       };
 
       xhr.send(null);
+      if (this.interval !== null) {
+        window.clearInterval(this.interval);
+      }
+      this.interval = window.setInterval(function () { that.getMessages();}, that.updateInterval);
+
+      console.log(this.updateInterval);
   };
 
 
