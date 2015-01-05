@@ -77,13 +77,11 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
-        winNode.find(".cancel-button").bind("mousedown", function () {
-          winNode.find(".modal").remove();
-        });
-
         winNode.find(".ok-button").bind("mousedown", function () {
-          app.setUrl(winNode.find("input:checked").val());
+          app.updateInterval = Number(winNode.find(".interval-value").val());
           app.run(app.id);
+
+          winNode.find(".modal").remove();
         });
 
       });
