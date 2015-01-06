@@ -23,7 +23,6 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     this.history = labbyCookies["labby-history"] || 10;
     this.updateInterval = labbyCookies["labby-interval"] || 10000;
     this.interval = null;
-    this.amountofmessages = labbyCookies["labby-msgAmount"] || 10;
 
     this.messages = "" ;
     this.url = {
@@ -115,13 +114,13 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
 
       $.get(require.toUrl('./tpl/settings/amountofmessages.mst'), function(template) {
 
-        var rendered = Mustache.render(template, {});
+        var rendered = Mustache.render(template, {history: app.history});
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
         winNode.find(".ok-button").bind("mousedown", function () {
-          app.user = winNode.find(".labby-message-count").val();
-          document.cookie = "labby-msgAmount=" + app.user;
+          app.history = winNode.find(".labby-message-count").val();
+          document.cookie = "labby-history=" + app.history;
           winNode.find(".modal").remove();
         });
 
