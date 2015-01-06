@@ -79,7 +79,8 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
 
       $.get(require.toUrl('apps/labbyMezzage/tpl/settings/interval.mst'), function(template) {
 
-        var rendered = Mustache.render(template, {});
+        var intervalSeconds = app.updateInterval / 1000;
+        var rendered = Mustache.render(template, {interval: app.updateInterval, seconds: intervalSeconds});
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
