@@ -26,6 +26,13 @@ body {
   width: 15px;
 }
 
+
+.board table {
+  margin: auto;
+  padding-top: 10px;
+}
+
+
 .gallery-pic {
  float: left;
  background-color: #B0BEC5;
@@ -149,6 +156,7 @@ body {
   top: 0; left: 0; bottom: 0; right: 0;
   background-color: #90A4AE;
   border: 1px;
+  padding-top: 10px;
 }
 
 
