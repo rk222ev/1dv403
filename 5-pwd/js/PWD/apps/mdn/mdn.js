@@ -37,9 +37,11 @@ define(["pwd/window/window"], function (Window) {
     var that = this;
     var xhr = new XMLHttpRequest();
 
-    xhr.open('get', this.url + "?q=" + text);
+    xhr.open('GET', this.url + "?q=" + text);
 
     xhr.onreadystatechange = function (e) {
+      var links;
+
       if (xhr.readyState === 4 && xhr.status === 200) {
 
         var winNode = document.getElementById(that.win.getId());
@@ -51,6 +53,14 @@ define(["pwd/window/window"], function (Window) {
 
         search.removeChild(search.querySelector(".search-results-more"));
 
+        links = search.querySelectorAll("a");
+
+        Array.prototype.forEach.call(links, function (link) {
+          link.addEventListener("click", function (e) {
+            linkClick(e, that.win.getId());
+          });
+        });
+
         appNode.innerHTML = "";
         appNode.appendChild(search);
         that.win.setAsLoaded();
@@ -58,6 +68,35 @@ define(["pwd/window/window"], function (Window) {
     };
 
     xhr.send(null) ;
+  };
+
+  var linkClick = function (e, winId) {
+    var that = this;
+    var xhr = new XMLHttpRequest();
+    var url = e.target.getAttribute("href");
+
+    e.preventDefault();
+
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function () {
+      var winNode, appNode, data, parser, doc, page;
+
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        winNode = document.getElementById(winId);
+        appNode = winNode.querySelector('.app');
+        parser = new DOMParser();
+        doc = parser.parseFromString(xhr.responseText, "text/html");
+        page = doc.querySelector('#wikiArticle');
+
+        appNode.innerHTML = "";
+        appNode.appendChild(page);
+
+      }
+
+    };
+
+    xhr.send(null);
+
   };
 
 
