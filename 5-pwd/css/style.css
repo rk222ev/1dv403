@@ -124,7 +124,6 @@ body {
   list-style: none;
   float:left;
   border: 1px solid;
-
   position: absolute;
   top: 7px;
   right: 20px;
@@ -139,6 +138,10 @@ body {
 
 .window-settings li:hover {
   background-color: #78909C;
+}
+
+.result-list li {
+  list-style: none;
 }
 
 .hidden {
