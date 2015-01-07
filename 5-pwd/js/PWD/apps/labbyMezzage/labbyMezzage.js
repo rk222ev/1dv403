@@ -53,6 +53,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
               e.preventDefault();
               that.sendMessage(textNode.value);
               textNode.value = "";
+              that.getMessages();
 
             }
           });
@@ -86,8 +87,6 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
 
         winNode.find(".ok-button").bind("mousedown", function () {
           app.updateInterval = Number(winNode.find(".interval-value").val());
-          app.run(app.id);
-
           winNode.find(".modal").remove();
         });
 
@@ -205,22 +204,15 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
       };
 
       xhr.send(null);
-
   };
 
   LabbyMezzage.prototype.sendMessage = function (text) {
     var xhr = new XMLHttpRequest();
-
-
     xhr.open('POST', this.url.post);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
     xhr.send("username=" + this.user + "&text=" + text);
-
 
   };
 
   return LabbyMezzage;
-
-
 });
