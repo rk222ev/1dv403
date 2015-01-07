@@ -162,9 +162,9 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     var msgs = Array.prototype.map.call(domMsgs, function (msg) {
      var m = new Message();
 
-     m.setText(msg.querySelector("text").innerHTML);
-     m.setDate(msg.querySelector("time").innerHTML);
-     m.setAuthor(msg.querySelector("author").innerHTML);
+     m.setText(msg.querySelector("text").textContent);
+     m.setDate(msg.querySelector("time").textContent);
+     m.setAuthor(msg.querySelector("author").textContent);
 
      return m;
 
