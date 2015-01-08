@@ -3,7 +3,6 @@
 
 define(
   [
-    "jquery", // v-2.1.1 ATM
     "require",
     "mustache",
     "pwd/window/handlers",
@@ -15,7 +14,7 @@ define(
     "apps/mdn/mdn",
   ],
 
-  function ($, require, Mustache, handlers) {
+  function (require, Mustache, handlers) {
     (function () {
 
       var apps = {};
@@ -39,16 +38,17 @@ define(
       // Loops through all our apps.
       // Assigns apropriatehandlers.
       Object.keys(apps).forEach(function (app) {
-        var icon = $('<a href="#">');
-        var img = $('<img class="launcher">');
+        var icon = document.createElement('a'),
+            img = document.createElement('img');
 
-        img.attr("src", "pics/icons/" + app + ".svg");
-        img.appendTo(icon);
+        icon.setAttribute('href', '#');
+        img.classList.add('launcher');
+        img.setAttribute('src', "pics/icons/" + app + ".svg");
+        icon.appendChild(img);
 
-        icon.click(function (e) { handlers.openWindow(apps[app]); } );
+        icon.addEventListener('click', function (e) { handlers.openWindow(apps[app]); } );
 
-        icon.appendTo(".pwd");
-
+        document.querySelector('.pwd').appendChild(icon);
       });
     }());
 
