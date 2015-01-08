@@ -58,13 +58,17 @@ define(
     };
 
     handlers.click = function (e, obj) {
-      var node = $('#' + obj.win.getId());
+      var node = $('#' + obj.win.getId()),
+          appNode,
+          scroll;
       obj.win.caughtX = e.clientX;
       obj.win.caughtY = e.clientY;
 
       // Send the window node to the top
       if (node.is(":last-child") === false) {
+        scroll = obj.node.scrollTop;
         $('.pwd').append(node);
+        obj.node.scrollTop = scroll;
       }
 
       if (node.find('.window-settings').hasClass("hidden") === false) {
