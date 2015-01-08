@@ -1,7 +1,13 @@
 /*global document, window, define */
 "use strict";
 
-define(["require", "mustache", "pwd/window/window","./message" ], function (require, Mustache, Window, Message) {
+define([
+  "require",
+  "mustache",
+  "pwd/window/window",
+  "./message" ,
+  "pwd/helper/utils"
+], function (require, Mustache, Window, Message, utils) {
 
   function LabbyMezzage (id) {
     var that = this;
@@ -36,35 +42,28 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     var that = this,
       windowNode = document.getElementById(this.win.getId()),
       appNode = windowNode.querySelector('.app');
+      this.getMessages();
 
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', require.toUrl('apps/labbyMezzage/tpl/board.mst'));
+      utils.getTemplate('apps/labbyMezzage/tpl/board.mst', function (template) {
+        var rendered = Mustache.render(template, {});
+        appNode.innerHTML = rendered;
 
-      xhr.onreadystatechange = function () {
-        var rendered;
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          rendered = Mustache.render(xhr.responseText, {});
-          appNode.innerHTML = rendered;
+        appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
+          var textNode = appNode.querySelector(".message-input");
 
-          appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
-            var textNode = appNode.querySelector(".message-input");
+          if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
+            e.preventDefault();
+            that.sendMessage(textNode.value);
+            textNode.value = "";
+            that.getMessages();
 
-            if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
-              e.preventDefault();
-              that.sendMessage(textNode.value);
-              textNode.value = "";
-              that.getMessages();
+          }
+        });
+        that.win.setAsLoaded();
 
-            }
-          });
+      });
 
-          that.getMessages();
-          that.win.setAsLoaded();
-        }
-      };
-
-      xhr.send(null);
-      if (this.interval !== null) {
+     if (this.interval !== null) {
         window.clearInterval(this.interval);
       }
 
@@ -78,33 +77,36 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     "Uppdateringsintervall": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/interval.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/interval.mst', function(template) {
 
         var intervalSeconds = app.updateInterval / 1000;
         var rendered = Mustache.render(template, {interval: app.updateInterval, seconds: intervalSeconds});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.updateInterval = Number(winNode.find(".interval-value").val());
-          winNode.find(".modal").remove();
+        winNode.appendChild(utils.templateParser(rendered, "modal"));
+
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.updateInterval = Number(winNode.querySelector(".interval-value").value);
+          winNode.querySelector(".modal").remove();
         });
 
       });
+
     },
+
     "Alias": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/alias.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/alias.mst', function(template) {
 
         var rendered = Mustache.render(template, {user: app.user});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
+        winNode.appendChild(utils.templateParser(rendered));
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.user = winNode.find(".alias").val();
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.user = winNode.querySelector(".alias").value;
           document.cookie = "labby-alias=" + app.user;
-          winNode.find(".modal").remove();
+          winNode.querySelector(".modal").remove();
         });
 
       });
@@ -112,16 +114,16 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
     "Antal meddelanden": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('./tpl/settings/amountofmessages.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/amountofmessages.mst', function(template) {
 
         var rendered = Mustache.render(template, {history: app.history});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
+        winNode.appendChild(utils.templateParser(rendered));
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.history = winNode.find(".labby-message-count").val();
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.history = winNode.querySelector(".labby-message-count").value;
           document.cookie = "labby-history=" + app.history;
-          winNode.find(".modal").remove();
+          winNode.querySelector(".modal").remove();
         });
 
       });

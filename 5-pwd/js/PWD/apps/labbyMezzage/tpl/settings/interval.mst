@@ -1,14 +1,12 @@
-<div class="modal">
-  <div>
-    <p>Uppdateringsintervall:</p>
-    <select class="interval-value">
-      <option value="{{interval}}">{{seconds}} sek</option>
-      <option value="10000">10 sek</option>
-      <option value="30000">30 sek</option>
-      <option value="60000">60 sek</option>
-    </select>
-  </div>
-  <div>
-    <input type="button" class="ok-button" value="ok"></input>
-  </div>
+<div>
+  <p>Uppdateringsintervall:</p>
+  <select class="interval-value">
+    <option value="{{interval}}">{{seconds}} sek</option>
+    <option value="10000">10 sek</option>
+    <option value="30000">30 sek</option>
+    <option value="60000">60 sek</option>
+  </select>
+</div>
+<div>
+  <input type="button" class="ok-button" value="ok"></input>
 </div>
