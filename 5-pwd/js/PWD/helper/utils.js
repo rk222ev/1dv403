@@ -9,11 +9,13 @@ define(["require"], function (require) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('GET', require.toUrl(url));
+
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         onload(xhr.responseText);
       }
     };
+
     xhr.send(null);
 
   };

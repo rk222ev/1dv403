@@ -42,55 +42,28 @@ define([
     var that = this,
       windowNode = document.getElementById(this.win.getId()),
       appNode = windowNode.querySelector('.app');
+      this.getMessages();
 
       utils.getTemplate('apps/labbyMezzage/tpl/board.mst', function (template) {
+        var rendered = Mustache.render(template, {});
+        appNode.innerHTML = rendered;
 
-          var rendered = Mustache.render(template, {});
-          appNode.innerHTML = rendered;
+        appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
+          var textNode = appNode.querySelector(".message-input");
 
-          appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
-            var textNode = appNode.querySelector(".message-input");
+          if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
+            e.preventDefault();
+            that.sendMessage(textNode.value);
+            textNode.value = "";
+            that.getMessages();
 
-            if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
-              e.preventDefault();
-              that.sendMessage(textNode.value);
-              textNode.value = "";
-              that.getMessages();
-              that.win.setAsLoaded();
+          }
+        });
+        that.win.setAsLoaded();
 
-            }
-
-          });
       });
 
-/*      var xhr = new XMLHttpRequest();
-      xhr.open('GET', require.toUrl('apps/labbyMezzage/tpl/board.mst'));
-
-      xhr.onreadystatechange = function () {
-        var rendered;
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          rendered = Mustache.render(xhr.responseText, {});
-          appNode.innerHTML = rendered;
-
-          appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
-            var textNode = appNode.querySelector(".message-input");
-
-            if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
-              e.preventDefault();
-              that.sendMessage(textNode.value);
-              textNode.value = "";
-              that.getMessages();
-
-            }
-          });
-
-          that.getMessages();
-          that.win.setAsLoaded();
-        }
-      };
-
-      xhr.send(null);
- */     if (this.interval !== null) {
+     if (this.interval !== null) {
         window.clearInterval(this.interval);
       }
 
