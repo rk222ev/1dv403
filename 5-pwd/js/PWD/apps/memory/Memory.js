@@ -3,13 +3,12 @@
 
 /*global document, window, RandomGenerator */
 define([
-  "jquery",
   "require",
   "mustache",
   "./random",
   "pwd/helper/utils"
 ],
-function ($, require, Mustache, random, utils) {
+function (require, Mustache, random, utils) {
 
   var Win = require("pwd/window/window");
 
