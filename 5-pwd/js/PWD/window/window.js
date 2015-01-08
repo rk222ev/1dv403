@@ -1,4 +1,5 @@
-define(function () {
+"use strict"
+define(["pwd/helper/settings"], function (settings) {
 
   var Window = function (id) {
 
@@ -34,8 +35,8 @@ define(function () {
   //Updates the windows position.
   Window.prototype.setPosition = function (x, y) {
     var node = $('#' + this.getId());
-    var maxX = window.PWD.width - this.width;
-    var maxY = window.PWD.height - this.height;
+    var maxX = settings.width - this.width;
+    var maxY = settings.height - this.height;
 
     /*
         Checks window posistions to make sure it isnt placed
@@ -66,14 +67,14 @@ define(function () {
   Window.prototype.setOpeningPosition = function () {
     var openedWindows = document.querySelectorAll(".pwd .app").length;
     var offset = openedWindows * 10;
-    var x = this.left + offset % (window.PWD.width - this.width);
-    var y = this.top + offset % (window.PWD.height - this.height);
-    var sizeDiff = window.PWD.height - this.height - this.top;
+    var x = this.left + offset % (settings.width - this.width);
+    var y = this.top + offset % (settings.height - this.height);
+    var sizeDiff = settings.height - this.height - this.top;
 
     // Make sure too large windows are not extending outside the desktop.
     if (sizeDiff < 0) {
         x = 0;
-        this.height = sizeDiff + window.PWD.height;
+        this.height = sizeDiff + settings.height;
         document.getElementById(this.getId()).style.height = this.height + "px";
     }
 

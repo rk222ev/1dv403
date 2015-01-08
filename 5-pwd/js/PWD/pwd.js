@@ -6,6 +6,7 @@ define(
     "jquery", // v-2.1.1 ATM
     "require",
     "mustache",
+    "pwd/helper/settings",
     "pwd/window/handlers",
     "pwd/window/window",
     "apps/imageViewer/ImageViewer",
@@ -15,19 +16,14 @@ define(
     "apps/mdn/mdn",
   ],
 
-  function ($, require, Mustache, handlers) {
+  function ($, require, Mustache, settings, handlers) {
     (function () {
 
       var apps = {};
       var pwdNode = document.querySelector('.pwd');
 
-      window.PWD = {};
-      window.PWD.width = 1500;
-      window.PWD.height = 640;
-
-      pwdNode.style.width = window.PWD.width + 'px';
-      pwdNode.style.height = window.PWD.height + 'px';
-
+      pwdNode.style.width = settings.width + 'px';
+      pwdNode.style.height = settings.height + 'px';
 
       // Add all apps to be loaded to the desktop.
       apps.ImageViewer = require("apps/imageViewer/ImageViewer");
