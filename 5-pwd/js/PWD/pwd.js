@@ -48,7 +48,6 @@ define(
         document.querySelector('.pwd').appendChild(icon);
       });
     }());
-
   }
 );
 
