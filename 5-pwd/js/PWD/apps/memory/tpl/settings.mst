@@ -1,13 +1,11 @@
-<div class="modal">
-  <div>
-    <p>Brädstorlek:</p>
-    <select class="interval-value">
-      <option value="2,2"> 2 X 2</option>
-      <option value="3,2"> 3 X 2</option>
-      <option value="4,4">4 x 4</option>
-    </select>
-  </div>
-  <div>
-    <input type="button" class="ok-button" value="ok"></input>
-  </div>
+<div>
+  <p>Brädstorlek:</p>
+  <select class="interval-value">
+    <option value="2,2"> 2 X 2</option>
+    <option value="3,2"> 3 X 2</option>
+    <option value="4,4">4 x 4</option>
+  </select>
+</div>
+<div>
+  <input type="button" class="ok-button" value="ok"></input>
 </div>

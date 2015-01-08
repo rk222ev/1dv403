@@ -3,13 +3,12 @@
 
 /*global document, window, RandomGenerator */
 define([
-  "jquery",
   "require",
   "mustache",
   "./random",
   "pwd/helper/utils"
 ],
-function ($, require, Mustache, random, utils) {
+function (require, Mustache, random, utils) {
 
   var Win = require("pwd/window/window");
 
@@ -27,7 +26,6 @@ function ($, require, Mustache, random, utils) {
         node;
 
     this.win = new Win(id);
-
 
     appSettings.picFolder = "js/PWD/apps/memory/pics/";
 
@@ -61,7 +59,6 @@ function ($, require, Mustache, random, utils) {
       }
     };
 
-
     this.getPictureLink = function (img) {
       var windowNode = document.getElementById(this.getId());
       var images = windowNode.querySelectorAll(".app img");
@@ -71,12 +68,14 @@ function ($, require, Mustache, random, utils) {
     };
 
     this.run = function () {
+      this.win.node = document.getElementById(this.win.getId());
+      this.node = this.win.node.querySelector('.app');
+
       pictures = random({rows: rows, cols: cols});
       this.buildBoard(pictures);
       this.win.setAsLoaded();
     };
   };
-
 
   Memory.prototype.settings = {
     "Nytt spel": function (game) { game.run(); },
@@ -84,37 +83,31 @@ function ($, require, Mustache, random, utils) {
     "Inställningar": function (app) {
 
       utils.getTemplate('apps/memory/tpl/settings.mst', function(template) {
-        var winId = app.win.getId();
-
         var rendered = Mustache.render(template);
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        app.node.appendChild(utils.templateParser(rendered, "modal"));
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          var size = winNode.find(".interval-value").val().split(",");
+        app.node.querySelector(".ok-button").addEventListener("mousedown", function () {
+          var size = app.node.querySelector(".interval-value").value.split(",");
+
           app.setColumns(Number(size[0]));
           app.setRows(Number(size[1]));
           app.run();
-          winNode.find(".modal").remove();
         });
       });
     },
   };
 
-
   Memory.prototype.buildBoard = function (pics) {
 
-    var gameNode  = $('#' + this.getId() + ' ' + '.app'),
-        newBoard  = document.createElement("div"),
+    var newBoard  = document.createElement("div"),
         game      = this.generateTable(pics, this.getColumns());
 
     newBoard.classList.add("board");
     newBoard.appendChild(game);
 
-    gameNode.html(newBoard);
+    this.node.innerHTML = "";
+    this.node.appendChild(newBoard);
   };
-
-
 
   Memory.prototype.generateTable = function (picArray, cols) {
 
@@ -156,8 +149,6 @@ function ($, require, Mustache, random, utils) {
     return table;
   };
 
-
-
    Memory.prototype.clickEvent = function (e) {
       var target = e.target,
           turned = this.getTurnedPics().length;
@@ -177,7 +168,6 @@ function ($, require, Mustache, random, utils) {
     }
   };
 
-
   Memory.prototype.checkMatch = function () {
     var that = this,
         pics = this.getTurnedPics();
@@ -190,9 +180,7 @@ function ($, require, Mustache, random, utils) {
        window.setTimeout(function () { that.resetGuess(that.getTurnedPics()); }, 1000);
 
       }
-
   };
-
 
   Memory.prototype.resetGuess = function (pics) {
     var that = this;
@@ -205,11 +193,8 @@ function ($, require, Mustache, random, utils) {
     this.clearTurned();
   };
 
-
-
   Memory.prototype.victory = function () {
     var windowNode = document.getElementById(this.getId()),
-        div = windowNode.querySelector('.board'),
         replacement = document.createElement("div"),
         p = document.createElement("p");
 
@@ -218,7 +203,7 @@ function ($, require, Mustache, random, utils) {
     replacement.appendChild(p);
     replacement.classList.add("board");
 
-    div.parentNode.replaceChild(replacement, div);
+    this.node.parentNode.replaceChild(replacement, this.node);
   };
 
   return Memory;

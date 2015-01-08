@@ -1,41 +1,40 @@
-/*global document, window, define */
+/*global document, window, define, DOMParser, XMLHttpRequest */
 "use strict";
 
 define(["pwd/window/window"], function (Window) {
 
   function Mdn(id) {
 
+    // Windowsettings
     this.win = new Window(id);
     this.win.icons.app = "pics/icons/Mdn.svg";
     this.win.titlebarText = "Mozilla Developer Network";
 
     this.url = "https://developer.mozilla.org/en-US/search";
-
   }
 
-
   Mdn.prototype.run = function () {
-    var that = this;
-    var winNode = document.getElementById(this.win.getId());
-    var input = document.createElement("input");
+    var that = this,
+        input = document.createElement("input");
 
+    this.win.node = document.getElementById(this.win.getId());
+    this.node = this.win.node.querySelector('.app');
     that.win.setAsLoaded();
 
     input.setAttribute("type", "text");
     input.addEventListener("keydown", function (e) {
       if (e.keyCode === 13) {
         that.win.setAsLoading();
-        that.search(winNode.querySelector("input").value);
+        that.search(that.node.querySelector("input").value);
       }
     });
 
-    winNode.querySelector('.app').appendChild(input);
+    that.node.appendChild(input);
   };
 
-
   Mdn.prototype.search = function (text) {
-    var that = this;
-    var xhr = new XMLHttpRequest();
+    var that = this,
+        xhr = new XMLHttpRequest();
 
     xhr.open('GET', this.url + "?q=" + text);
 
@@ -44,12 +43,10 @@ define(["pwd/window/window"], function (Window) {
 
       if (xhr.readyState === 4 && xhr.status === 200) {
 
-        var winNode = document.getElementById(that.win.getId());
-        var appNode = winNode.querySelector('.app');
-        var data = xhr.responseText;
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(xhr.responseText, "text/html");
-        var search = doc.querySelector(".search-results-container");
+        var data = xhr.responseText,
+            parser = new DOMParser(),
+            doc = parser.parseFromString(xhr.responseText, "text/html"),
+            search = doc.querySelector(".search-results-container");
 
         search.removeChild(search.querySelector(".search-results-more"));
 
@@ -57,12 +54,12 @@ define(["pwd/window/window"], function (Window) {
 
         Array.prototype.forEach.call(links, function (link) {
           link.addEventListener("click", function (e) {
-            linkClick(e, that.win.getId());
+            linkClick(e, that.node);
           });
         });
 
-        appNode.innerHTML = "";
-        appNode.appendChild(search);
+        that.node.innerHTML = "";
+        that.node.appendChild(search);
         that.win.setAsLoaded();
       }
     };
@@ -70,35 +67,28 @@ define(["pwd/window/window"], function (Window) {
     xhr.send(null) ;
   };
 
-  var linkClick = function (e, winId) {
-    var that = this;
-    var xhr = new XMLHttpRequest();
-    var url = e.target.getAttribute("href");
+  var linkClick = function (e, appNode) {
+    var xhr = new XMLHttpRequest(),
+        url = e.target.getAttribute("href");
 
     e.preventDefault();
 
     xhr.open('GET', url);
     xhr.onreadystatechange = function () {
-      var winNode, appNode, data, parser, doc, page;
+      var data, parser, doc, page;
 
       if (xhr.readyState === 4 && xhr.status === 200) {
-        winNode = document.getElementById(winId);
-        appNode = winNode.querySelector('.app');
         parser = new DOMParser();
         doc = parser.parseFromString(xhr.responseText, "text/html");
         page = doc.querySelector('#wikiArticle');
 
         appNode.innerHTML = "";
         appNode.appendChild(page);
-
       }
-
     };
 
     xhr.send(null);
-
   };
-
 
   return Mdn;
 });
