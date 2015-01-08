@@ -88,8 +88,10 @@ define(["jquery", "mustache", "require"], function ($, Mustache, require) {
     var that = this;
     var date = new Date();
     var windowId = this.win.getId();
+    var winNode = document.getElementById(windowId);
 
     this.win.setAsLoading();
+    this.node = winNode.querySelector('.app');
 
     if (this.interval === undefined) {
       this.interval = window.setInterval(function () { that.run(windowId); }, this.updateFreq);
