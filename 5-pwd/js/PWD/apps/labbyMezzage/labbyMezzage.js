@@ -77,33 +77,36 @@ define([
     "Uppdateringsintervall": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/interval.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/interval.mst', function(template) {
 
         var intervalSeconds = app.updateInterval / 1000;
         var rendered = Mustache.render(template, {interval: app.updateInterval, seconds: intervalSeconds});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.updateInterval = Number(winNode.find(".interval-value").val());
-          winNode.find(".modal").remove();
+        winNode.appendChild(utils.templateParser(rendered, "modal"));
+
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.updateInterval = Number(winNode.querySelector(".interval-value").value);
+          winNode.querySelector(".modal").remove();
         });
 
       });
+
     },
+
     "Alias": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('apps/labbyMezzage/tpl/settings/alias.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/alias.mst', function(template) {
 
         var rendered = Mustache.render(template, {user: app.user});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
+        winNode.appendChild(utils.templateParser(rendered));
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.user = winNode.find(".alias").val();
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.user = winNode.querySelector(".alias").value;
           document.cookie = "labby-alias=" + app.user;
-          winNode.find(".modal").remove();
+          winNode.querySelector(".modal").remove();
         });
 
       });
@@ -111,16 +114,16 @@ define([
     "Antal meddelanden": function (app) {
       var winId = app.win.getId();
 
-      $.get(require.toUrl('./tpl/settings/amountofmessages.mst'), function(template) {
+      utils.getTemplate('apps/labbyMezzage/tpl/settings/amountofmessages.mst', function(template) {
 
         var rendered = Mustache.render(template, {history: app.history});
-        var winNode = $('#' + winId + ' .app');
-        winNode.append(rendered);
+        var winNode = document.getElementById(winId).querySelector(".app");
+        winNode.appendChild(utils.templateParser(rendered));
 
-        winNode.find(".ok-button").bind("mousedown", function () {
-          app.history = winNode.find(".labby-message-count").val();
+        winNode.querySelector(".ok-button").addEventListener("mousedown", function () {
+          app.history = winNode.querySelector(".labby-message-count").value;
           document.cookie = "labby-history=" + app.history;
-          winNode.find(".modal").remove();
+          winNode.querySelector(".modal").remove();
         });
 
       });

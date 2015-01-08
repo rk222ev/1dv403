@@ -20,6 +20,15 @@ define(["require"], function (require) {
 
   };
 
+  utils.templateParser = function (html, className) {
+    var element = document.createElement("div");
+
+    element.classList.add(className);
+    element.innerHTML= html;
+
+    return element;
+  };
+
   return utils;
 
 });
