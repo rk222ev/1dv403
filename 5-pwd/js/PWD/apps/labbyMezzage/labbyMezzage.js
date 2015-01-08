@@ -1,7 +1,13 @@
 /*global document, window, define */
 "use strict";
 
-define(["require", "mustache", "pwd/window/window","./message" ], function (require, Mustache, Window, Message) {
+define([
+  "require",
+  "mustache",
+  "pwd/window/window",
+  "./message" ,
+  "pwd/helper/utils"
+], function (require, Mustache, Window, Message, utils) {
 
   function LabbyMezzage (id) {
     var that = this;
@@ -37,7 +43,27 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
       windowNode = document.getElementById(this.win.getId()),
       appNode = windowNode.querySelector('.app');
 
-      var xhr = new XMLHttpRequest();
+      utils.getTemplate('apps/labbyMezzage/tpl/board.mst', function (template) {
+
+          var rendered = Mustache.render(template, {});
+          appNode.innerHTML = rendered;
+
+          appNode.querySelector(".message-input").addEventListener("keydown", function (e) {
+            var textNode = appNode.querySelector(".message-input");
+
+            if(e.keyCode === 13 && e.shiftKey === false && textNode.value !== "") {
+              e.preventDefault();
+              that.sendMessage(textNode.value);
+              textNode.value = "";
+              that.getMessages();
+              that.win.setAsLoaded();
+
+            }
+
+          });
+      });
+
+/*      var xhr = new XMLHttpRequest();
       xhr.open('GET', require.toUrl('apps/labbyMezzage/tpl/board.mst'));
 
       xhr.onreadystatechange = function () {
@@ -64,7 +90,7 @@ define(["require", "mustache", "pwd/window/window","./message" ], function (requ
       };
 
       xhr.send(null);
-      if (this.interval !== null) {
+ */     if (this.interval !== null) {
         window.clearInterval(this.interval);
       }
 
