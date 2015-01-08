@@ -40,6 +40,7 @@ define(
 
         icon.setAttribute('href', '#');
         img.classList.add('launcher');
+        img.setAttribute('title', app);
         img.setAttribute('src', "pics/icons/" + app + ".svg");
         icon.appendChild(img);
 
