@@ -2,7 +2,14 @@
 
 
 /*global document, window, RandomGenerator */
-define(["jquery", "require", "mustache", "./random"], function ($, require, Mustache, random) {
+define([
+  "jquery",
+  "require",
+  "mustache",
+  "./random",
+  "pwd/helper/utils"
+],
+function ($, require, Mustache, random, utils) {
 
   var Win = require("pwd/window/window");
 
@@ -30,7 +37,7 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
     this.win.height       = 200;
 
     this.getColumns     = function () { return cols; };
-    this.setColumns     = function (c) { cols = c; }
+    this.setColumns     = function (c) { cols = c; };
     this.setRows        = function (r) {rows = r; };
     this.getId          = function () { return id; };
     this.getTurnedPics  = function () { return turnedPics; };
@@ -75,10 +82,11 @@ define(["jquery", "require", "mustache", "./random"], function ($, require, Must
     "Nytt spel": function (game) { game.run(); },
 
     "Inställningar": function (app) {
-      $.get(require.toUrl('apps/memory/tpl/settings.mst'), function(template) {
+
+      utils.getTemplate('apps/memory/tpl/settings.mst', function(template) {
         var winId = app.win.getId();
 
-        var rendered = Mustache.render(template, {});
+        var rendered = Mustache.render(template);
         var winNode = $('#' + winId + ' .app');
         winNode.append(rendered);
 
