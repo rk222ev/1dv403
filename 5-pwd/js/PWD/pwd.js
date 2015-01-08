@@ -1,3 +1,4 @@
+/* global define, document */
 "use strict";
 
 
@@ -15,7 +16,7 @@ define(
     "apps/mdn/mdn",
   ],
 
-  function (require, Mustache, handlers) {
+  function (require, Mustache, settings, handlers) {
     (function () {
 
       var apps = {};
