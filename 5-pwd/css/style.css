@@ -149,6 +149,14 @@ body {
 }
 
 
+.message-header {
+  background-color: #CFD8DC;
+}
+
+.message-header p {
+  display: inline;
+}
+
 
 .modal {
   max-width: 75%;
