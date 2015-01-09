@@ -1,5 +1,7 @@
 "use strict";
 
+/*global define, document, escape, window */
+
 
 define(["jquery", "mustache", "require"], function ($, Mustache, require) {
 
@@ -62,7 +64,7 @@ define(["jquery", "mustache", "require"], function ($, Mustache, require) {
         winNode.append(rendered);
 
         winNode.find(".ok-button").bind("mousedown", function () {
-          var source =  winNode.find(".custom-source").val() || winNode.find("input:checked").val()
+          var source =  winNode.find(".custom-source").val() || winNode.find("input:checked").val();
           process.setUrl(source);
           process.run(process.id);
           winNode.find(".modal").remove();
@@ -80,8 +82,11 @@ define(["jquery", "mustache", "require"], function ($, Mustache, require) {
   RssReader.prototype.setInterval = function (process) {
 
     window.clearInterval(process.interval);
-    // The anonymous function make this point to the correct this.
-    process.interval = window.setInterval(function () { return process.run(process.id); }, process.updateFreq);
+
+    process.interval = window.setInterval(function () {
+      return process.run(process.id);
+    }, process.updateFreq);
+
   };
 
   RssReader.prototype.run = function () {
