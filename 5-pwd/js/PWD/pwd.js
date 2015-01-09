@@ -1,5 +1,6 @@
-/* global define, document */
 "use strict";
+
+/* global define, document */
 
 
 define(
