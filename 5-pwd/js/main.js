@@ -1,5 +1,6 @@
-/*global document, requirejs, window */
 "use strict";
+
+/*global document, requirejs, window */
 
 requirejs.config({
   baseUrl: 'js/lib',
