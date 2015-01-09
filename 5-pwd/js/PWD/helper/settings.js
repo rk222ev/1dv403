@@ -1,5 +1,7 @@
 "use strict"
 
+/*global define */
+
 /*
 The module contains global settings.
 */
