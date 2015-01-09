@@ -31,7 +31,7 @@ define([
 		this.interval = null;
 		this.messages = "" ;
 		this.url = {
-			get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=" + this.history,
+			get: "http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php?history=",
 			post: "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php",
 		};
 	};
@@ -113,6 +113,7 @@ define([
 					app.history = app.node.querySelector(".labby-message-count").value;
 					document.cookie = "labby-history=" + app.history;
 					app.node.querySelector(".modal").remove();
+					app.getMessages();
 				});
 			});
 		},
@@ -125,7 +126,7 @@ define([
 		var that = this;
 		var msgs;
 
-		xhr.open('GET', this.url.get);
+		xhr.open('GET', this.url.get + this.history || 10);
 
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -165,6 +166,7 @@ define([
 			messageNode = this.node.querySelector(".messages-div");
 
 		if (Array.isArray(message)) {
+			messageNode.innerHTML = "";
 			message.forEach(function (message) { that.renderMessage(message); });
 			return;
 		}
