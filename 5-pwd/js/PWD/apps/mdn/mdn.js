@@ -1,5 +1,6 @@
-/*global document, window, define, DOMParser, XMLHttpRequest */
 "use strict";
+
+/*global document, window, define, DOMParser, XMLHttpRequest */
 
 define(["pwd/window/window"], function (Window) {
 
@@ -32,6 +33,10 @@ define(["pwd/window/window"], function (Window) {
     that.node.appendChild(input);
   };
 
+  /*
+    Pulls in the element with classname search-results-container.
+    Removes the show more search results link
+  */
   Mdn.prototype.search = function (text) {
     var that = this,
         xhr = new XMLHttpRequest();
