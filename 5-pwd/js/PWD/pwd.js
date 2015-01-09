@@ -22,6 +22,7 @@ define(
       var apps = {};
       var pwdNode = document.querySelector('.pwd');
 
+      // Sets desktop window dimensions.
       pwdNode.style.width = settings.width + 'px';
       pwdNode.style.height = settings.height + 'px';
 
@@ -38,6 +39,7 @@ define(
         var icon = document.createElement('a'),
             img = document.createElement('img');
 
+        // Creates launcher icon.
         icon.setAttribute('href', '#');
         img.classList.add('launcher');
         img.setAttribute('title', app);
