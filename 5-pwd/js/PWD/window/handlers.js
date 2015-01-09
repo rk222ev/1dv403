@@ -1,5 +1,7 @@
 "use strict";
 
+/* global define, document, window */
+
 
 define(
   [
@@ -41,7 +43,7 @@ define(
       }
 
       if (obj.win.height < 230) {
-        obj.win.height = 230
+        obj.win.height = 230;
       }
 
       node.css('width', obj.win.width+ 'px');
