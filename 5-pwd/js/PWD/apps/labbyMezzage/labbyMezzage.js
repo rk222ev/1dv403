@@ -1,5 +1,6 @@
-/*global document, window, define, DOMParser, XMLHttpRequest */
 "use strict";
+
+/*global document, window, define, DOMParser, XMLHttpRequest */
 
 define([
 	"require",
