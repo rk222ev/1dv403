@@ -96,7 +96,6 @@ define(
       }
     };
 
-
     handlers.openWindow = function (App, params) {
       var winSelector;
       var windowNode;
