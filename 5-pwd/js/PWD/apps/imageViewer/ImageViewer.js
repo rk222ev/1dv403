@@ -1,6 +1,6 @@
 "use strict";
 
-/*global document, PWD, XMLHttpRequest */
+/*global define, document, PWD, XMLHttpRequest */
 
 define(["require", "pwd/window/handlers"], function (require, handler) {
 
