@@ -17,11 +17,16 @@ define(
     handlers.dragWindow = function (e, obj) {
       var id = obj.win.getId();
       var node = $("#" + id);
+      var pwd = document.querySelector('.pwd');
 
       var x = (e.clientX - obj.win.caughtX);
       var y = (e.clientY - obj.win.caughtY);
 
       document.querySelector(".pwd").classList.add("drag");
+
+      // To ensure that IE doesnt select anything while dragging a window.
+      pwd.onselectstart = function() {return false;};
+      pwd.unselectable = "on";
 
       obj.win.setPosition(x, y);
       obj.win.caughtX = e.clientX;
