@@ -189,6 +189,7 @@ define([
 		xhr.open('POST', this.url.post);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("username=" + this.user + "&text=" + text);
+		this.getMessages();
 	};
 
 	return LabbyMezzage;
