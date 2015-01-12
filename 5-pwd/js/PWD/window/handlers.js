@@ -3,14 +3,7 @@
 /* global define, document, window */
 
 
-define(
-  [
-    "jquery", // v-2.1.1 ATM
-    "require",
-    "mustache",
-  ],
-
-  function ($, require, Mustache) {
+define(['mustache'], function (Mustache) {
 
     var handlers = {};
 
@@ -107,7 +100,7 @@ define(
       var winSelector;
       var windowNode;
 
-      $.get(require.toUrl('./tpl/window.mst'), function(template) {
+      $.get(require.toUrl('pwd/window/tpl/window.mst'), function(template) {
         var id = Date.now();
         var process = {};
         var Constructor = App;

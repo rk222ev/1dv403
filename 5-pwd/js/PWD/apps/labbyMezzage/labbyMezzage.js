@@ -1,14 +1,13 @@
 "use strict";
 
-/*global document, window, define, DOMParser, XMLHttpRequest */
+/*global document, window, define, require, DOMParser, XMLHttpRequest */
 
 define([
-	"require",
 	"mustache",
 	"pwd/window/window",
 	"./message" ,
 	"pwd/helper/utils"
-], function (require, Mustache, Window, Message, utils) {
+], function (Mustache, Window, Message, utils) {
 
 	var LabbyMezzage = function (id) {
 		var that = this;

@@ -1,12 +1,10 @@
 "use strict";
 
-/* global define, document */
+/* global define, document, require */
 
 
 define(
   [
-    "require",
-    "mustache",
     "pwd/helper/settings",
     "pwd/window/handlers",
     "pwd/window/window",
@@ -17,7 +15,7 @@ define(
     "apps/mdn/mdn",
   ],
 
-  function (require, Mustache, settings, handlers) {
+  function (settings, handlers) {
     (function () {
 
       var apps = {};

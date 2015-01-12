@@ -1,8 +1,8 @@
 "use strict";
 
-/*global define, document, PWD, XMLHttpRequest */
+/*global define, document, require, PWD, XMLHttpRequest */
 
-define(["require", "pwd/window/handlers"], function (require, handler) {
+define(["pwd/window/handlers"], function (handler) {
 
   var Window = require("pwd/window/window");
 

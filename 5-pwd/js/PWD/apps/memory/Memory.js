@@ -1,14 +1,13 @@
 "use strict";
 
 
-/*global document, window, RandomGenerator */
+/*global document, window, RandomGenerator, require */
 define([
-  "require",
   "mustache",
   "./random",
   "pwd/helper/utils"
 ],
-function (require, Mustache, random, utils) {
+function (Mustache, random, utils) {
 
   var Win = require("pwd/window/window");
 

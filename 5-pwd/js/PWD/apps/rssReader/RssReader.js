@@ -1,9 +1,9 @@
 "use strict";
 
-/*global define, document, escape, window */
+/*global define, document, escape, require, window, $ */
 
 
-define(["jquery", "mustache", "require"], function ($, Mustache, require) {
+define(["mustache"], function (Mustache) {
 
   var Window = require("pwd/window/window");
 

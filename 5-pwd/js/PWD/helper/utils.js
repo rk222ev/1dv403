@@ -1,13 +1,13 @@
 "use strict"
 
-/* global define, document, XMLHttpRequest */
+/* global define, document, require, XMLHttpRequest */
 
 /*
   Library of helper functions.
 
 */
 
-define(["require"], function (require) {
+define(function () {
 
   var utils = {};
 

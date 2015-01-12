@@ -13,7 +13,7 @@ requirejs.config({
   }
 });
 
-requirejs(["pwd/pwd"],
-function   (pwd) {
+requirejs(["jquery", "pwd/pwd"],
+function   ($, pwd) {
 
 });
